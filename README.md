@@ -9,11 +9,11 @@ A Distributed Key-Value System
 
 3. (N, R, W) - Make sure W + R > N
 
-N - nodes containing data
+N - number of nodes containing replicated data
 
-R - minimum read nodes
+R - minimum number of read nodes
 
-W - minimun write nodes
+W - minimun number of write nodes
 
 
 ## Centralized Manager
