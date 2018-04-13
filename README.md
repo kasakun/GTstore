@@ -9,7 +9,7 @@ A Distributed Key-Value System
 
 3. (N, R, W) - Make sure W + R > N
 
-N - number of nodes containing replicated data
+N - Each data item is replicated at N storage nodes.
 
 R - minimum number of read nodes
 
