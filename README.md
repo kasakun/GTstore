@@ -58,3 +58,13 @@ control path cleanup operations
 
 ## Example
 Shopping cart
+
+
+## List To Do
+
+### Data Block Structure
+key, size, timestamp, data
+
+### Manager
+
+### Storage Nodes
