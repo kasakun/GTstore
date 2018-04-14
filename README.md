@@ -11,9 +11,9 @@ A Distributed Key-Value System
 
 N - Each data item is replicated at N storage nodes.
 
-R - minimum number of read nodes
+R - Minimum number of nodes that must participate in a successful read operation.
 
-W - minimun number of write nodes
+W - Minimum number of nodes that must participate in a successful write operation.
 
 
 ## Centralized Manager
