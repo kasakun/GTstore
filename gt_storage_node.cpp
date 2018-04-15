@@ -35,9 +35,9 @@ bool VirtualNode::writeKeyValuePair(ObjectKeyType key, ObjectValueType value){
     return true;
 }
 // Storage
-StorageNode::StorageNode(const std::string& nodeID_ = "unnamed_node", const int& numVirtualNodes_ = 1)
-        :nodeID(nodeID_), \
-                numVirtualNodes(numVirtualNodes_) {
+StorageNode::StorageNode(const std::string& nodeID_, const int& numVirtualNodes_)\
+                        :nodeID(nodeID_), \
+                        numVirtualNodes(numVirtualNodes_) {
     for(int i = 0; i < numVirtualNodes; ++i){
         std::string vnodeID = constructVirtualNodeID(i);
         VirtualNode vnode(vnodeID, nodeID, i);
@@ -45,19 +45,19 @@ StorageNode::StorageNode(const std::string& nodeID_ = "unnamed_node", const int&
     }
 }
 
-std::string StorageNode::getNodeID() const{
+std::string StorageNode::getNodeID() const {
     return nodeID;
 }
 
-int StorageNode::getNumVirtualNodes() const{
+int StorageNode::getNumVirtualNodes() const {
     return numVirtualNodes;
 }
 
-std::vector<VirtualNode> StorageNode::getVirtualNodes() const{
+std::vector<VirtualNode> StorageNode::getVirtualNodes() const {
     return vnodes;
 }
 
-bool StorageNode::writeToVNode(int rank, ObjectKeyType key, ObjectValueType value){
+bool StorageNode::writeToVNode(int rank, ObjectKeyType key, ObjectValueType value) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
         return false;
@@ -70,20 +70,8 @@ std::string StorageNode::constructVirtualNodeID(int i){
     return nodeID + "_" + std::to_string(i);
 }
 // virtual node
-VirtualNodeHasher::VirtualNodeHasher();
-std::size_t VirtualNodeHasher::operator()(const VirtualNode& vnode) const{
+VirtualNodeHasher::VirtualNodeHasher(){};
+std::size_t VirtualNodeHasher::operator()(const VirtualNode& vnode) const {
     std::string key = vnode.getVNodeID();
     return stringHasher(key);
-}
-
-//
-
-inline std::ostream& operator<<(std::ostream& os, const StorageNode& node){
-    os << node.getNodeID();
-    return os;
-}
-
-inline std::ostream& operator<<(std::ostream& os, const VirtualNode& vnode){
-    os << vnode.getVNodeID();
-    return os;
 }

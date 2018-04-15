@@ -24,15 +24,7 @@ private:
 
 class StorageNode{
 public:
-    StorageNode(const std::string& nodeID_ = "unnamed_node", const int& numVirtualNodes_ = 1)
-                :nodeID(nodeID_), \
-                numVirtualNodes(numVirtualNodes_) {
-        for(int i = 0; i < numVirtualNodes; ++i){
-            std::string vnodeID = constructVirtualNodeID(i);
-            VirtualNode vnode(vnodeID, nodeID, i);
-            vnodes.push_back(vnode);
-        }
-    }
+    StorageNode(const std::string& nodeID_ = "unnamed_node", const int& numVirtualNodes_ = 1);
     
     std::string getNodeID() const;
     int getNumVirtualNodes() const;
@@ -57,5 +49,15 @@ private:
     std::hash<std::string> stringHasher;
 };
 
+// << overload
+inline std::ostream& operator<<(std::ostream& os, const StorageNode& node) {
+    os << node.getNodeID();
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const VirtualNode& vnode) {
+    os << vnode.getVNodeID();
+    return os;
+}
 
 #endif
