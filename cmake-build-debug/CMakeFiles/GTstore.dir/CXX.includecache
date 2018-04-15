@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
+/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
 map
 -
 unordered_map
@@ -22,7 +22,7 @@ iostream
 limits
 -
 
-/media/sf_CS6210/Projects/Project4/GTstore/gt_manager.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
 vector
 -
 iostream
@@ -32,17 +32,17 @@ unordered_map
 limits
 -
 consistent_hash_ring.h
-/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
+/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
 gt_storage_node.h
-/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 
-/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 string
 -
 vector
 -
 
-/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 string
 -
 vector
@@ -50,9 +50,9 @@ vector
 unordered_map
 -
 gt_object.h
-/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 
-/media/sf_CS6210/Projects/Project4/GTstore/test_gt_manager.cpp
+/home/chenzy/Desktop/Code/OS/GTstore/test_gt_manager.cpp
 iostream
 -
 string
@@ -62,11 +62,11 @@ unordered_map
 utility
 -
 consistent_hash_ring.h
-/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
+/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
 gt_object.h
-/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 gt_storage_node.h
-/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 gt_manager.h
-/media/sf_CS6210/Projects/Project4/GTstore/gt_manager.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
 
