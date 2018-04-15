@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/chenzy/Desktop/Code/OS/GTstore/main.cpp" "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/main.cpp.o"
+  "/media/sf_CS6210/Projects/Project4/GTstore/test_gt_manager.cpp" "/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/test_gt_manager.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

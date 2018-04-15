@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/chenzy/clion/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/chenzy/clion/bin/cmake/bin/cmake -E remove -f
+RM = /home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/chenzy/Desktop/Code/OS/GTstore
+CMAKE_SOURCE_DIR = /media/sf_CS6210/Projects/Project4/GTstore
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug
+CMAKE_BINARY_DIR = /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/GTstore.dir/depend.make
@@ -57,41 +57,41 @@ include CMakeFiles/GTstore.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/GTstore.dir/flags.make
 
-CMakeFiles/GTstore.dir/main.cpp.o: CMakeFiles/GTstore.dir/flags.make
-CMakeFiles/GTstore.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/GTstore.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/GTstore.dir/main.cpp.o -c /home/chenzy/Desktop/Code/OS/GTstore/main.cpp
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: CMakeFiles/GTstore.dir/flags.make
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: ../test_gt_manager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/GTstore.dir/test_gt_manager.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/GTstore.dir/test_gt_manager.cpp.o -c /media/sf_CS6210/Projects/Project4/GTstore/test_gt_manager.cpp
 
-CMakeFiles/GTstore.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GTstore.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/chenzy/Desktop/Code/OS/GTstore/main.cpp > CMakeFiles/GTstore.dir/main.cpp.i
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/GTstore.dir/test_gt_manager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /media/sf_CS6210/Projects/Project4/GTstore/test_gt_manager.cpp > CMakeFiles/GTstore.dir/test_gt_manager.cpp.i
 
-CMakeFiles/GTstore.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GTstore.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/chenzy/Desktop/Code/OS/GTstore/main.cpp -o CMakeFiles/GTstore.dir/main.cpp.s
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/GTstore.dir/test_gt_manager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /media/sf_CS6210/Projects/Project4/GTstore/test_gt_manager.cpp -o CMakeFiles/GTstore.dir/test_gt_manager.cpp.s
 
-CMakeFiles/GTstore.dir/main.cpp.o.requires:
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.requires:
 
-.PHONY : CMakeFiles/GTstore.dir/main.cpp.o.requires
+.PHONY : CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.requires
 
-CMakeFiles/GTstore.dir/main.cpp.o.provides: CMakeFiles/GTstore.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/GTstore.dir/main.cpp.o.provides
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.provides: CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.requires
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.provides.build
+.PHONY : CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.provides
 
-CMakeFiles/GTstore.dir/main.cpp.o.provides.build: CMakeFiles/GTstore.dir/main.cpp.o
+CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.provides.build: CMakeFiles/GTstore.dir/test_gt_manager.cpp.o
 
 
 # Object files for target GTstore
 GTstore_OBJECTS = \
-"CMakeFiles/GTstore.dir/main.cpp.o"
+"CMakeFiles/GTstore.dir/test_gt_manager.cpp.o"
 
 # External object files for target GTstore
 GTstore_EXTERNAL_OBJECTS =
 
-GTstore: CMakeFiles/GTstore.dir/main.cpp.o
+GTstore: CMakeFiles/GTstore.dir/test_gt_manager.cpp.o
 GTstore: CMakeFiles/GTstore.dir/build.make
 GTstore: CMakeFiles/GTstore.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable GTstore"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable GTstore"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/GTstore.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -99,7 +99,7 @@ CMakeFiles/GTstore.dir/build: GTstore
 
 .PHONY : CMakeFiles/GTstore.dir/build
 
-CMakeFiles/GTstore.dir/requires: CMakeFiles/GTstore.dir/main.cpp.o.requires
+CMakeFiles/GTstore.dir/requires: CMakeFiles/GTstore.dir/test_gt_manager.cpp.o.requires
 
 .PHONY : CMakeFiles/GTstore.dir/requires
 
@@ -108,6 +108,6 @@ CMakeFiles/GTstore.dir/clean:
 .PHONY : CMakeFiles/GTstore.dir/clean
 
 CMakeFiles/GTstore.dir/depend:
-	cd /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/chenzy/Desktop/Code/OS/GTstore /home/chenzy/Desktop/Code/OS/GTstore /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/DependInfo.cmake --color=$(COLOR)
+	cd /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /media/sf_CS6210/Projects/Project4/GTstore /media/sf_CS6210/Projects/Project4/GTstore /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/GTstore.dir/depend
 

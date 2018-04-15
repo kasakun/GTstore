@@ -1,1 +1,1 @@
-/usr/bin/c++  -g   CMakeFiles/GTstore.dir/main.cpp.o  -o GTstore 
+/usr/bin/c++  -g   CMakeFiles/GTstore.dir/test_gt_manager.cpp.o  -o GTstore 

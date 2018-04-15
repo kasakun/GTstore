@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/chenzy/clion/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/chenzy/clion/bin/cmake/bin/cmake -E remove -f
+RM = /home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/chenzy/Desktop/Code/OS/GTstore
+CMAKE_SOURCE_DIR = /media/sf_CS6210/Projects/Project4/GTstore
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug
+CMAKE_BINARY_DIR = /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/chenzy/clion/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/chenzy/clion/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,32 +123,32 @@ GTstore/fast:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/build
 .PHONY : GTstore/fast
 
-main.o: main.cpp.o
+test_gt_manager.o: test_gt_manager.cpp.o
 
-.PHONY : main.o
+.PHONY : test_gt_manager.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/main.cpp.o
-.PHONY : main.cpp.o
+test_gt_manager.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.o
+.PHONY : test_gt_manager.cpp.o
 
-main.i: main.cpp.i
+test_gt_manager.i: test_gt_manager.cpp.i
 
-.PHONY : main.i
+.PHONY : test_gt_manager.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/main.cpp.i
-.PHONY : main.cpp.i
+test_gt_manager.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.i
+.PHONY : test_gt_manager.cpp.i
 
-main.s: main.cpp.s
+test_gt_manager.s: test_gt_manager.cpp.s
 
-.PHONY : main.s
+.PHONY : test_gt_manager.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/main.cpp.s
-.PHONY : main.cpp.s
+test_gt_manager.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.s
+.PHONY : test_gt_manager.cpp.s
 
 # Help Target
 help:
@@ -159,9 +159,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... GTstore"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... test_gt_manager.o"
+	@echo "... test_gt_manager.i"
+	@echo "... test_gt_manager.s"
 .PHONY : help
 
 

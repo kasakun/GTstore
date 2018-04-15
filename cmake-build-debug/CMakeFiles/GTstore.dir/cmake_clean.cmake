@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/GTstore.dir/main.cpp.o"
+  "CMakeFiles/GTstore.dir/test_gt_manager.cpp.o"
   "GTstore.pdb"
   "GTstore"
 )

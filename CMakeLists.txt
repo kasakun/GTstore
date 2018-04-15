@@ -3,4 +3,7 @@ project(GTstore)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(GTstore main.cpp)
+add_executable(GTstore
+#        main.cpp
+#        test_consistent_hash_ring.cpp
+        test_gt_manager.cpp)
