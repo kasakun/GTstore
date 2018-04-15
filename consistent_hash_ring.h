@@ -22,8 +22,8 @@ public:
     ConsistentHashRing(){
         minKey = std::numeric_limits<KeyType>::min();
         maxKey = std::numeric_limits<KeyType>::max();
-        std::cout << "min key is " << minKey << std::endl;
-        std::cout << "max key is " << maxKey << std::endl;
+        //std::cout << "min key is " << minKey << std::endl;
+        //std::cout << "max key is " << maxKey << std::endl;
     }
     
     std::size_t size() const{
@@ -36,7 +36,7 @@ public:
 
     std::pair<iterator, bool> insert(const T& node){ 
         KeyType key = hasher(node);
-        std::cout << "node is" << node << ", key is " << key << std::endl;
+        //std::cout << "node = " << node << ", key = " << key << std::endl;
         return nodes.insert(std::pair<KeyType, T>(key, node));
     }
 
@@ -74,7 +74,7 @@ public:
             T node = cur->second;
             KeyType diff = cur->first > pre->first ? (cur->first - pre->first) : (maxKey - pre->first + cur->first + 1);
             numKeys.insert(std::pair<T, KeyType>(node, diff));
-            std::cout << "node is " << node << " num of keys is " << diff << std::endl;
+            std::cout << "node = " << node << ", number of keys = " << diff << std::endl;
             pre = cur;
             cur++;
         }

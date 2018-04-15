@@ -17,6 +17,10 @@ public:
         return vnodeID;
     }
     
+    std::string getNodeID() const{
+        return nodeID;
+    }
+    
     bool operator==(const VirtualNode& other) const{
         return this->vnodeID == other.vnodeID; 
     }
