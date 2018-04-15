@@ -18,15 +18,16 @@ public:
         addVirturalNodes(node.getVirtualNodes());
     }
     
-    std::vector<std::string> getPreferenceList(const ObjectKeyType& objectKey){
+    std::vector<std::pair<std::string, int>> getPreferenceList(const ObjectKeyType& objectKey){
         std::hash<ObjectKeyType> hasher;
         auto hashedKey = hasher(objectKey);
         std::cout << "hashed key = " << hashedKey << std::endl;
         
-        std::vector<std::string> preferenceList;  // a list of storage nodes that should contain objectKey
+        std::vector<std::pair<std::string, int>> preferenceList;  // a list of storage nodes that should contain objectKey
         auto it = ring.find(hashedKey);
         std::string nodeID = (it->second).getNodeID();
-        preferenceList.push_back(nodeID);
+        int rank = (it->second).getRank();
+        preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
         int k = 1;
         std::cout << "key = " << (it->first) << ", virtual node ID = " << (it->second).getVNodeID() << std::endl;
         
@@ -37,15 +38,16 @@ public:
             nodeID = (cur->second).getNodeID();
             
             bool skip = false;
-            for(auto id : preferenceList){
-                if(nodeID == id){
+            for(auto x : preferenceList){
+                if(nodeID == x.first){
                     skip = true;
                     break;
                 }
             }
             
             if(skip) continue;
-            preferenceList.push_back(nodeID);
+            rank = (cur->second).getRank();
+            preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
             k++;
             std::cout << "key = " << (cur->first) << ", virtual node ID = " << (cur->second).getVNodeID() << std::endl;
         }
@@ -55,15 +57,16 @@ public:
             nodeID = (cur->second).getNodeID();
             
             bool skip = false;
-            for(auto id : preferenceList){
-                if(nodeID == id){
+            for(auto x : preferenceList){
+                if(nodeID == x.first){
                     skip = true;
                     break;
                 }
             }
             
             if(skip) continue;
-            preferenceList.push_back(nodeID);
+            rank = (cur->second).getRank();
+            preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
             k++;
             std::cout << "key = " << (cur->first) << ", virtual node ID = " << (cur->second).getVNodeID() << std::endl;
         }
@@ -72,8 +75,8 @@ public:
             std::cout << "too few storage node!" << std::endl;
         }
         
-        for(auto id : preferenceList){
-            std::cout << "node ID = " << id << std::endl;
+        for(auto x : preferenceList){
+            std::cout << "node ID = " << x.first << ", rank = " << x.second << std::endl;
         }
         
         return preferenceList;
