@@ -84,6 +84,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.cpp">
+			<Option target="GTstore"/>
+		</Unit>
+		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h">
+			<Option target="GTstore"/>
+		</Unit>
 		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/test_gt_manager.cpp">
 			<Option target="GTstore"/>
 		</Unit>

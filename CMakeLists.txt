@@ -6,4 +6,5 @@ set(CMAKE_CXX_STANDARD 11)
 add_executable(GTstore
 #        main.cpp
 #        test_consistent_hash_ring.cpp
-        test_gt_manager.cpp)
+        test_gt_manager.cpp
+        gt_storage_node.cpp)

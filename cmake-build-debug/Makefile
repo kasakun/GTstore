@@ -123,6 +123,33 @@ GTstore/fast:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/build
 .PHONY : GTstore/fast
 
+gt_storage_node.o: gt_storage_node.cpp.o
+
+.PHONY : gt_storage_node.o
+
+# target to build an object file
+gt_storage_node.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.o
+.PHONY : gt_storage_node.cpp.o
+
+gt_storage_node.i: gt_storage_node.cpp.i
+
+.PHONY : gt_storage_node.i
+
+# target to preprocess a source file
+gt_storage_node.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.i
+.PHONY : gt_storage_node.cpp.i
+
+gt_storage_node.s: gt_storage_node.cpp.s
+
+.PHONY : gt_storage_node.s
+
+# target to generate assembly for a file
+gt_storage_node.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.s
+.PHONY : gt_storage_node.cpp.s
+
 test_gt_manager.o: test_gt_manager.cpp.o
 
 .PHONY : test_gt_manager.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... GTstore"
+	@echo "... gt_storage_node.o"
+	@echo "... gt_storage_node.i"
+	@echo "... gt_storage_node.s"
 	@echo "... test_gt_manager.o"
 	@echo "... test_gt_manager.i"
 	@echo "... test_gt_manager.s"
