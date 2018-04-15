@@ -5,9 +5,9 @@ CMakeFiles/GTstore.dir/gt_storage_node.cpp.o: ../gt_object.h
 CMakeFiles/GTstore.dir/gt_storage_node.cpp.o: ../gt_storage_node.cpp
 CMakeFiles/GTstore.dir/gt_storage_node.cpp.o: ../gt_storage_node.h
 
-CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: ../consistent_hash_ring.h
-CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: ../gt_manager.h
-CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: ../gt_object.h
-CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: ../gt_storage_node.h
-CMakeFiles/GTstore.dir/test_gt_manager.cpp.o: ../test_gt_manager.cpp
+CMakeFiles/GTstore.dir/test_gt_nodes.cpp.o: ../consistent_hash_ring.h
+CMakeFiles/GTstore.dir/test_gt_nodes.cpp.o: ../gt_manager.h
+CMakeFiles/GTstore.dir/test_gt_nodes.cpp.o: ../gt_object.h
+CMakeFiles/GTstore.dir/test_gt_nodes.cpp.o: ../gt_storage_node.h
+CMakeFiles/GTstore.dir/test_gt_nodes.cpp.o: ../test_gt_nodes.cpp
 

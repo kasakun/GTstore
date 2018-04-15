@@ -150,32 +150,32 @@ gt_storage_node.cpp.s:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.s
 .PHONY : gt_storage_node.cpp.s
 
-test_gt_manager.o: test_gt_manager.cpp.o
+test_gt_nodes.o: test_gt_nodes.cpp.o
 
-.PHONY : test_gt_manager.o
+.PHONY : test_gt_nodes.o
 
 # target to build an object file
-test_gt_manager.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.o
-.PHONY : test_gt_manager.cpp.o
+test_gt_nodes.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_nodes.cpp.o
+.PHONY : test_gt_nodes.cpp.o
 
-test_gt_manager.i: test_gt_manager.cpp.i
+test_gt_nodes.i: test_gt_nodes.cpp.i
 
-.PHONY : test_gt_manager.i
+.PHONY : test_gt_nodes.i
 
 # target to preprocess a source file
-test_gt_manager.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.i
-.PHONY : test_gt_manager.cpp.i
+test_gt_nodes.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_nodes.cpp.i
+.PHONY : test_gt_nodes.cpp.i
 
-test_gt_manager.s: test_gt_manager.cpp.s
+test_gt_nodes.s: test_gt_nodes.cpp.s
 
-.PHONY : test_gt_manager.s
+.PHONY : test_gt_nodes.s
 
 # target to generate assembly for a file
-test_gt_manager.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.s
-.PHONY : test_gt_manager.cpp.s
+test_gt_nodes.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_nodes.cpp.s
+.PHONY : test_gt_nodes.cpp.s
 
 # Help Target
 help:
@@ -189,9 +189,9 @@ help:
 	@echo "... gt_storage_node.o"
 	@echo "... gt_storage_node.i"
 	@echo "... gt_storage_node.s"
-	@echo "... test_gt_manager.o"
-	@echo "... test_gt_manager.i"
-	@echo "... test_gt_manager.s"
+	@echo "... test_gt_nodes.o"
+	@echo "... test_gt_nodes.i"
+	@echo "... test_gt_nodes.s"
 .PHONY : help
 
 

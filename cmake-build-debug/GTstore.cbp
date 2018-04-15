@@ -90,7 +90,7 @@
 		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h">
 			<Option target="GTstore"/>
 		</Unit>
-		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/test_gt_manager.cpp">
+		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/test_gt_nodes.cpp">
 			<Option target="GTstore"/>
 		</Unit>
 		<Unit filename="/home/chenzy/Desktop/Code/OS/GTstore/CMakeLists.txt">
