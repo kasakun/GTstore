@@ -1,5 +1,5 @@
 //
-// Created by chenzy on 4/15/18.
+// Created by Zeyu Chen on 4/15/18.
 //
 
 #include <iostream>
@@ -8,9 +8,9 @@
 #include <utility>
 
 #include "consistent_hash_ring.h"
-#include "gt_object.h"
 #include "gt_storage_node.h"
 #include "gt_manager.h"
+#include "gt_client.h"
 
 
 int main(int argc, char** args) {
@@ -18,6 +18,8 @@ int main(int argc, char** args) {
     StorageNode node2("node2", 4);
     StorageNode node3("node3", 4);
     StorageNode node4("node4", 4);
+
+
 
 
 }

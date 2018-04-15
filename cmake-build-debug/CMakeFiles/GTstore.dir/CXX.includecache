@@ -22,6 +22,8 @@ iostream
 limits
 -
 
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+
 /home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
 vector
 -
@@ -69,10 +71,10 @@ utility
 -
 consistent_hash_ring.h
 /home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
-gt_object.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 gt_storage_node.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 gt_manager.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
+gt_client.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
 

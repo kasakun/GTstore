@@ -14,6 +14,7 @@ VirtualNode::VirtualNode(const std::string& vnodeID_, const std::string& nodeID_
     data = new std::unordered_map<ObjectKeyType, ObjectValueType>();
 }
 
+VirtualNode::~VirtualNode() {}
 std::string VirtualNode::getVNodeID() const{
     return vnodeID;
 }
@@ -44,7 +45,7 @@ StorageNode::StorageNode(const std::string& nodeID_, const int& numVirtualNodes_
         vnodes.push_back(vnode);
     }
 }
-
+StorageNode::~StorageNode() {}
 std::string StorageNode::getNodeID() const {
     return nodeID;
 }
@@ -70,7 +71,8 @@ std::string StorageNode::constructVirtualNodeID(int i){
     return nodeID + "_" + std::to_string(i);
 }
 // virtual node
-VirtualNodeHasher::VirtualNodeHasher(){};
+VirtualNodeHasher::VirtualNodeHasher(){}
+VirtualNodeHasher::~VirtualNodeHasher() {}
 std::size_t VirtualNodeHasher::operator()(const VirtualNode& vnode) const {
     std::string key = vnode.getVNodeID();
     return stringHasher(key);

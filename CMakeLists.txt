@@ -7,4 +7,5 @@ add_executable(GTstore
 #        main.cpp
 #        test_consistent_hash_ring.cpp
         test_gt_nodes.cpp
-        gt_storage_node.cpp)
+        gt_storage_node.cpp
+        gt_client.cpp)

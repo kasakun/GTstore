@@ -8,6 +8,7 @@ public:
     VirtualNode(const std::string& vnodeID_, \
                 const std::string& nodeID_, \
                 const int& rank_);
+    ~VirtualNode();
     std::string getVNodeID() const;
     std::string getNodeID() const;
     int getRank() const;
@@ -25,7 +26,7 @@ private:
 class StorageNode{
 public:
     StorageNode(const std::string& nodeID_ = "unnamed_node", const int& numVirtualNodes_ = 1);
-    
+    ~StorageNode();
     std::string getNodeID() const;
     int getNumVirtualNodes() const;
     std::vector<VirtualNode> getVirtualNodes() const;
@@ -34,7 +35,7 @@ public:
 private:
     std::string constructVirtualNodeID(int i);
     
-    std::string nodeID;  // ID = IP address?
+    std::string nodeID;   // ID = IP address?
     int numVirtualNodes;  // for better load balancing
     std::vector<VirtualNode> vnodes;
 };
@@ -43,6 +44,7 @@ private:
 class VirtualNodeHasher{
 public:
     VirtualNodeHasher();
+    ~VirtualNodeHasher();
     std::size_t operator()(const VirtualNode& vnode) const;
     typedef std::size_t ResultType;
 private:
