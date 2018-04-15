@@ -7,4 +7,9 @@
 typedef std::string ObjectKeyType;
 typedef std::vector<std::string> ObjectValueType;
 
+typedef struct __Msg {
+    ObjectKeyType key;
+    ObjectValueType value;
+} Msg;
+
 #endif
