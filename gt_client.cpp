@@ -29,6 +29,8 @@ void Client::init(Env& env) {
 
 bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     ssize_t ret;
+    int numofNodes;
+
     std::vector<std::pair<std::string, int>> preferenceList;
     /*
      * Connect manager first
@@ -64,7 +66,38 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
         }
     }while(ret == 0);
 
-    //end manager
+    //start node communication
+    numofNodes = preferenceList.size();
+
+    //send requests to whole preference lists
+    std::string base = "store";
+    std::vector<struct sockaddr_un> nodesAddr;
+    std::vector<int> nodesfd;
+    for (int i = 0; i < numofNodes; ++i) {
+        // load nodes
+        std::string tempDomain = base;
+        tempDomain.append(std::to_string(i));
+        struct sockaddr_un tempAddr;
+        tempAddr.sun_family = AF_UNIX;
+        strcpy (tempAddr.sun_path, tempDomain.data());
+        nodesAddr.push_back(tempAddr);
+
+        // connect
+        int nodefd = socket();
+    }
+
+    // check if num of return reach quo.w, write success
+    int counter = 0;
+    do {
+
+        counter++;
+    }while(counter == quo.w);
+
+
+
+
+
+
     shutdown(env.clientfd, SHUT_RDWR);
 
     // go to nodes
