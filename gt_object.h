@@ -12,4 +12,11 @@ typedef struct __Msg {
     ObjectValueType value;
 } Msg;
 
+// current is ten elements in preference list, can be extended.
+typedef struct __ManagerMsg {
+    int num;
+    char node[10][10];
+    int value[10];
+} ManagerMsg;
+
 #endif

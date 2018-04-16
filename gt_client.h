@@ -5,9 +5,11 @@
 #ifndef GTSTORE_GT_CLIENT_H
 #define GTSTORE_GT_CLIENT_H
 
+#include <sys/un.h>
 #include <unordered_map>
 
-typedef struct sockaddr_un sockaddr;
+#include "gt_object.h"
+
 
 typedef struct __Quorum {
     int n;
@@ -17,12 +19,10 @@ typedef struct __Quorum {
 
 typedef struct __Env {
     Quorum q;                // quorum mechanism
-    sockaddr managerAddr;    // manager address
-    sockaddr nodesAddr[10];  // quorum addresses
-    int managerfd;
-    int nodesfd[10];
-
-    char buf[1024];          // message buf
+    int clientfd;            // called by client
+    struct sockaddr_un managerAddr;    // manager address
+    struct sockaddr_un nodesAddr[10];  // quorum addresses
+//    char buf[1024];          // message buf
 } Env;
 
 
@@ -30,15 +30,19 @@ typedef struct __Env {
 class Client {
 public:
     Client();
+    Client(int id, char* addr, Quorum q); // set manager addr, quorum rule
     ~Client();
 
-    bool init(Env& env);   // connect to manager
-    void put(Env& env, ObjectKeyType key, ObjectValueType value);
+    void init(Env& env);   // set the env input
+    bool put(Env& env, ObjectKeyType key, ObjectValueType value);
     void get(Env& env, ObjectKeyType key, ObjectValueType value);
     void finalize(Env &env);
 
 private:
-    Env env;         //session env
+    int id;
+    int clientfd;
+    struct sockaddr_un managerAddr;
+
     Quorum quo;      //determine the quorum mechanism
     std::unordered_map<ObjectKeyType, ObjectValueType>* data;
 };

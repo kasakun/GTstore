@@ -22,7 +22,23 @@ iostream
 limits
 -
 
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.cpp
+sys/types.h
+-
+sys/socket.h
+-
+iostream
+-
+gt_client.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+sys/un.h
+-
+unordered_map
+-
+gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 
 /home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
 vector
@@ -68,6 +84,10 @@ string
 unordered_map
 -
 utility
+-
+sys/socket.h
+-
+zconf.h
 -
 consistent_hash_ring.h
 /home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
