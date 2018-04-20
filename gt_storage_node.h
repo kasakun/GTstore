@@ -3,6 +3,8 @@
 
 #include "gt_object.h"
 
+
+using  Pair = std::unordered_map<ObjectKeyType, ObjectValueType>;
 class VirtualNode{
 public:
     VirtualNode(const std::string& vnodeID_, \
@@ -19,7 +21,7 @@ private:
     std::string vnodeID;                                       // its own ID
     std::string nodeID;                                        // the ID of the actual storage node
     int rank;                                                  // the rank among the virtual nodes of the same storage node
-    std::unordered_map<ObjectKeyType, ObjectValueType>* data;  // the actual key-value pairs
+    Pair* data;  // the actual key-value pairs
 };
 
 
@@ -31,13 +33,23 @@ public:
     int getNumVirtualNodes() const;
     std::vector<VirtualNode> getVirtualNodes() const;
     bool writeToVNode(int rank, ObjectKeyType key, ObjectValueType value);
+    void sendBack(Packet& p, unsigned int seq);
+    Packet unPack(char* buf);
+    void run();
     
 private:
     std::string constructVirtualNodeID(int i);
-    
+
     std::string nodeID;   // ID = IP address?
     int numVirtualNodes;  // for better load balancing
     std::vector<VirtualNode> vnodes;
+
+    /* data store
+     * store -> store0 --- (key, value)
+     *                 --- (key, value)
+     *       -> store1
+     */
+    std::vector<Pair::iterator> store;
 };
 
 

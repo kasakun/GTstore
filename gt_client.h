@@ -21,7 +21,8 @@ typedef struct __Env {
     Quorum q;                // quorum mechanism
     int clientfd;            // called by client
     struct sockaddr_un managerAddr;    // manager address
-    struct sockaddr_un nodesAddr[10];  // quorum addresses
+    std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
+    std::vector<int> nodesfd;
 //    char buf[1024];          // message buf
 } Env;
 
@@ -39,7 +40,7 @@ public:
     void finalize(Env &env);
 
 private:
-    int id;
+    int clientID;
     int clientfd;
     struct sockaddr_un managerAddr;
 

@@ -68,3 +68,7 @@ key, size, timestamp, data
 ### Manager
 
 ### Storage Nodes
+
+##
+### dev log
+add packet structure, define head.

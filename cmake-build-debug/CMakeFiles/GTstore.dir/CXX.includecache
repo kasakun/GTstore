@@ -29,6 +29,10 @@ sys/socket.h
 -
 iostream
 -
+future
+-
+gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 gt_client.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
 
@@ -69,6 +73,12 @@ vector
 -
 unordered_map
 -
+sys/un.h
+-
+sys/socket.h
+-
+zconf.h
+-
 gt_storage_node.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 
@@ -76,7 +86,7 @@ gt_storage_node.h
 gt_object.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/test_gt_nodes.cpp
+/home/chenzy/Desktop/Code/OS/GTstore/test_client_stroage_node.cpp
 iostream
 -
 string

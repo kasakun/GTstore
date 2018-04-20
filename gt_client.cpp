@@ -4,16 +4,19 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <iostream>
+#include <future>
 
+#include "gt_object.h"
 #include "gt_client.h"
 
+#define MAX_THREAD 4
 #define DEBUG 1
 
 Client::Client() {
 
 }
-Client::Client(int id_, char* addr, Quorum q) {
-    id = id_;
+Client::Client(int id, char* addr, Quorum q) {
+    clientID = id;
     managerAddr.sun_family = AF_UNIX;
     strcpy (managerAddr.sun_path, addr);
     quo = q;
@@ -52,57 +55,96 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     }
 
     // wait until receive
-    ManagerMsg buf;
+    ManagerMsg msg;
     do {
-        ret = recv(env.clientfd, &buf, sizeof(buf), 0);
-        if (ret == sizeof(buf)) {
+        ret = recv(env.clientfd, &msg, sizeof(msg), 0);
+        if (ret == sizeof(msg)) {
             std::cout << "Client: receive preference list from manager" << std::endl;
             //fetch
-            for (int i = 0; i < buf.num; ++i) {
-                std::cout << "Client receive " << buf.node[i] << " " << buf.value[i] << std::endl;
-                preferenceList.push_back(std::pair<std::string, int>(buf.node[i], buf.value[i]));
+            for (int i = 0; i < msg.num; ++i) {
+                std::cout << "Client receive " << msg.node[i] << " " << msg.value[i] << std::endl;
+                preferenceList.push_back(std::pair<std::string, int>(msg.node[i], msg.value[i]));
             }
 
         }
     }while(ret == 0);
 
-    //start node communication
-    numofNodes = preferenceList.size();
-
-    //send requests to whole preference lists
-    std::string base = "store";
-    std::vector<struct sockaddr_un> nodesAddr;
-    std::vector<int> nodesfd;
-    for (int i = 0; i < numofNodes; ++i) {
-        // load nodes
-        std::string tempDomain = base;
-        tempDomain.append(std::to_string(i));
-        struct sockaddr_un tempAddr;
-        tempAddr.sun_family = AF_UNIX;
-        strcpy (tempAddr.sun_path, tempDomain.data());
-        nodesAddr.push_back(tempAddr);
-
-        // connect
-        int nodefd = socket();
-    }
-
-    // check if num of return reach quo.w, write success
-    int counter = 0;
-    do {
-
-        counter++;
-    }while(counter == quo.w);
-
-
-
-
-
-
     shutdown(env.clientfd, SHUT_RDWR);
 
-    // go to nodes
-    //
+    // node communication
+    numofNodes = preferenceList.size();
+#if DEBUG
+    std::cout << "test nodes begin, size " << preferenceList.size() << std::endl;
+#endif
+    //send requests to whole preference lists, temporary test
+    // ts, seq, ack, size, rank
+    PacketHead head = {0, 0, 0, 10, 1};
+    Packet p;
+    p.head = head;
+    memcpy(p.key, key.data(), key.size());
+    memcpy(p.value, value.data()->data(), p.head.size);
 
+    std::vector<std::pair<std::string, int>>::iterator it;it = preferenceList.begin();
+    for (int i = 0; i < numofNodes; ++i, ++it) {
+        // load nodes.
+        struct sockaddr_un tempAddr;
+        tempAddr.sun_family = AF_UNIX;
+        strcpy (tempAddr.sun_path, it->first.data());
+        // create socket
+        int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
+        if (nodefd == -1) {
+            std::cout<< "Client: fail to create socket with " << it->first << ", " << strerror(errno) << std::endl;
+        }
+        // connect
+        ret = connect(nodefd, (struct sockaddr*)&tempAddr, sizeof(tempAddr));
+        if (ret == -1) {
+            std::cout << "Client fail to connect " << it->first << ", " << strerror(errno) << std::endl;
+            exit(0);
+        }
+        env.nodesfd.push_back(nodefd);
+        env.nodesAddr.push_back(tempAddr);
+#if DEBUG
+        std::cout<<"Client: send packet to " << it->first << std::endl;
+#endif
+        ret = send(nodefd, &p, sizeof(p), 0);
+        if (ret == -1) {
+            std::cout << "Client: send error, " << strerror(errno) << std::endl;
+        }
+    }
+
+    // check if num of return reach quo.w, write success, parallel
+    std::future<void> foo[MAX_THREAD];
+    std::mutex mtxcounter;
+    int counter = 0;
+
+    for (int i = 0; i < quo.w; ++i) {
+        foo[i] = std::async(std::launch::async, [i, &env, &counter, &mtxcounter]{
+            char buf[1064];
+            int ret = recv(env.nodesfd[i], &buf, sizeof(buf), 0);
+            if (ret == -1) {
+                std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
+            }
+            if (ret == sizeof(Packet)) {
+                std::cout << "Client receive ack from " << (buf + 20) << std::endl;
+                mtxcounter.lock();
+                ++counter;
+                mtxcounter.unlock();
+            }
+            return;
+        });
+    }
+    for (int i = 0; i < quo.w; ++i) {
+        foo[i].get();
+    }
+
+    if (counter == quo.w) {
+        std::cout<<"Client: all send finish" << std::endl;
+        return true;
+    }
+    else {
+        std::cout<<"Client: send fail" << std::endl;
+        return false;
+    }
 }
 void Client::get(Env& env, ObjectKeyType key, ObjectValueType value){}
 void Client::finalize(Env &env){}

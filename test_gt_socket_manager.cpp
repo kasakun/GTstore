@@ -87,6 +87,7 @@ int main(int argc, char** args) {
     if (ret == -1) {
         std::cout << "Server fail to set socket opt, " << strerror(errno) << std::endl;
     }
+
     while(1) {
         bytecount = recv(serverfd2, buf,sizeof(buf), 0);
         if (bytecount == -1) {
