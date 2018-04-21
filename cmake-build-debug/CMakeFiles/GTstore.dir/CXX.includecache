@@ -22,6 +22,28 @@ iostream
 limits
 -
 
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.cpp
+sys/types.h
+-
+sys/socket.h
+-
+iostream
+-
+future
+-
+gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+gt_client.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+sys/un.h
+-
+unordered_map
+-
+gt_object.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+
 /home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
 vector
 -
@@ -51,6 +73,12 @@ vector
 -
 unordered_map
 -
+sys/un.h
+-
+sys/socket.h
+-
+zconf.h
+-
 gt_storage_node.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 
@@ -58,7 +86,7 @@ gt_storage_node.h
 gt_object.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/test_gt_manager.cpp
+/home/chenzy/Desktop/Code/OS/GTstore/test_client_stroage_node.cpp
 iostream
 -
 string
@@ -67,12 +95,16 @@ unordered_map
 -
 utility
 -
+sys/socket.h
+-
+zconf.h
+-
 consistent_hash_ring.h
 /home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
-gt_object.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
 gt_storage_node.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 gt_manager.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
+gt_client.h
+/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
 

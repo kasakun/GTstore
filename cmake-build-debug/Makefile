@@ -123,6 +123,33 @@ GTstore/fast:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/build
 .PHONY : GTstore/fast
 
+gt_client.o: gt_client.cpp.o
+
+.PHONY : gt_client.o
+
+# target to build an object file
+gt_client.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_client.cpp.o
+.PHONY : gt_client.cpp.o
+
+gt_client.i: gt_client.cpp.i
+
+.PHONY : gt_client.i
+
+# target to preprocess a source file
+gt_client.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_client.cpp.i
+.PHONY : gt_client.cpp.i
+
+gt_client.s: gt_client.cpp.s
+
+.PHONY : gt_client.s
+
+# target to generate assembly for a file
+gt_client.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_client.cpp.s
+.PHONY : gt_client.cpp.s
+
 gt_storage_node.o: gt_storage_node.cpp.o
 
 .PHONY : gt_storage_node.o
@@ -150,32 +177,32 @@ gt_storage_node.cpp.s:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.s
 .PHONY : gt_storage_node.cpp.s
 
-test_gt_manager.o: test_gt_manager.cpp.o
+test_client_stroage_node.o: test_client_stroage_node.cpp.o
 
-.PHONY : test_gt_manager.o
+.PHONY : test_client_stroage_node.o
 
 # target to build an object file
-test_gt_manager.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.o
-.PHONY : test_gt_manager.cpp.o
+test_client_stroage_node.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.o
+.PHONY : test_client_stroage_node.cpp.o
 
-test_gt_manager.i: test_gt_manager.cpp.i
+test_client_stroage_node.i: test_client_stroage_node.cpp.i
 
-.PHONY : test_gt_manager.i
+.PHONY : test_client_stroage_node.i
 
 # target to preprocess a source file
-test_gt_manager.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.i
-.PHONY : test_gt_manager.cpp.i
+test_client_stroage_node.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.i
+.PHONY : test_client_stroage_node.cpp.i
 
-test_gt_manager.s: test_gt_manager.cpp.s
+test_client_stroage_node.s: test_client_stroage_node.cpp.s
 
-.PHONY : test_gt_manager.s
+.PHONY : test_client_stroage_node.s
 
 # target to generate assembly for a file
-test_gt_manager.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_manager.cpp.s
-.PHONY : test_gt_manager.cpp.s
+test_client_stroage_node.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.s
+.PHONY : test_client_stroage_node.cpp.s
 
 # Help Target
 help:
@@ -186,12 +213,15 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... GTstore"
+	@echo "... gt_client.o"
+	@echo "... gt_client.i"
+	@echo "... gt_client.s"
 	@echo "... gt_storage_node.o"
 	@echo "... gt_storage_node.i"
 	@echo "... gt_storage_node.s"
-	@echo "... test_gt_manager.o"
-	@echo "... test_gt_manager.i"
-	@echo "... test_gt_manager.s"
+	@echo "... test_client_stroage_node.o"
+	@echo "... test_client_stroage_node.i"
+	@echo "... test_client_stroage_node.s"
 .PHONY : help
 
 

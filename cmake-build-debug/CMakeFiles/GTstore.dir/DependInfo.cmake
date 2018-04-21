@@ -4,8 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/chenzy/Desktop/Code/OS/GTstore/gt_client.cpp" "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/gt_client.cpp.o"
   "/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.cpp" "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/gt_storage_node.cpp.o"
-  "/home/chenzy/Desktop/Code/OS/GTstore/test_gt_manager.cpp" "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/test_gt_manager.cpp.o"
+  "/home/chenzy/Desktop/Code/OS/GTstore/test_client_stroage_node.cpp" "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
