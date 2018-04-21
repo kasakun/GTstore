@@ -78,7 +78,7 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
 #endif
     //send requests to whole preference lists, temporary test
     // ts, seq, ack, size, rank
-    PacketHead head = {0, 0, 0, 10, 1};
+    PacketHead head = {0, 0, 0, value.back().size(), 1};
     Packet p;
     p.head = head;
     memcpy(p.key, key.data(), key.size());
@@ -106,6 +106,7 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
 #if DEBUG
         std::cout<<"Client: send packet to " << it->first << std::endl;
 #endif
+        nodefd = env.nodesfd.back();
         ret = send(nodefd, &p, sizeof(p), 0);
         if (ret == -1) {
             std::cout << "Client: send error, " << strerror(errno) << std::endl;

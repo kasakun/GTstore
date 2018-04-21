@@ -49,6 +49,13 @@ StorageNode::StorageNode(const std::string& nodeID_, const int& numVirtualNodes_
         VirtualNode vnode(vnodeID, nodeID, i);
         vnodes.push_back(vnode);
     }
+
+    for (int i = 0; i < numVirtualNodes; i++) {
+        Map vstore;
+        store.push_back(vstore);
+    }
+
+
 }
 StorageNode::~StorageNode() {}
 std::string StorageNode::getNodeID() const {
@@ -76,21 +83,55 @@ std::string StorageNode::constructVirtualNodeID(int i) {
     return nodeID + "_" + std::to_string(i);
 }
 
-void StorageNode::sendBack(Packet& p, unsigned int seq) {
-    p.head.timpStamp = 0; // Time stamp of the value
-    p.head.seq = 0;       // sequence number of the packet
-    p.head.ack = seq - 1; // ack = seq - 1, succeeds, otherwise fails.
-    p.head.size = 0;      // size of the value
-    p.head.rank = 0;
-
-    memcpy(p.key, nodeID.data(), sizeof(nodeID.data()));
-}
-
 Packet StorageNode::unPack(char* buf) {
     Packet p;
     memcpy(&p, buf, sizeof(Packet));
     return p;
 }
+
+void StorageNode::writeSendBack(Packet& p) {
+    p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
+    p.head.seq = 0;       // sequence number of the packet
+    p.head.size = 0;      // size of the value
+
+    memcpy(p.key, nodeID.data(), sizeof(nodeID.data()));
+}
+
+void StorageNode::readSendBack(Packet& p) {
+    p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
+    p.head.seq = 0;       // sequence number of the packet
+}
+
+
+bool StorageNode::write(Packet& p) {
+    std::string keyBuf = p.key;
+    std::string valueBuf = p.value;
+
+    keyBuf.resize(20, 0);
+    valueBuf.resize(p.head.size, 0);
+
+    ObjectKeyType key = keyBuf;
+    ObjectValueType value;
+    value.push_back(valueBuf);
+    Map map;
+    std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
+    store[p.head.rank].insert(pair);
+    return writeToVNode(p.head.rank, key, value);
+}
+bool StorageNode::read(Packet& p) {
+    //get key
+    std::string keyBuf = p.key;
+    keyBuf.resize(20, 0);
+    ObjectKeyType key = keyBuf;
+
+    if (store[p.head.rank].find(key) == store[p.head.rank].end())
+        return false; // not found
+    else {
+        memcpy(p.value, store[p.head.rank].find(key)->second.data(),  store[p.head.rank].find(key)->second.size());
+        return true;
+    }
+}
+
 void StorageNode::run() {
     struct sockaddr_un nodeAddr;
     int nodefd;
@@ -106,9 +147,7 @@ void StorageNode::run() {
     nodeAddr.sun_family = AF_UNIX;
     strcpy(nodeAddr.sun_path, nodeID.data());
     unlink(nodeID.data());  //clear the socket established
-#if DEBUG
-    std::cout << nodeID.data() << " socket created" << std::endl;
-#endif
+
     // bind
     ret = bind(nodefd,  (struct sockaddr*)&nodeAddr, sizeof(nodeAddr));
     if (ret == -1) {
@@ -119,11 +158,9 @@ void StorageNode::run() {
     if (ret == -1) {
         std::cout <<  nodeID << " fail to listen, " << strerror(errno) << std::endl;
     }
-
     // start serving
     std::cout << nodeID << " start serving.." << std::endl;
     while(1) {
-        //accept
         nodeAccept = accept(nodefd, NULL, NULL);
         std::cout << nodeID << ": connected." << std::endl;
         if (nodeAccept == -1) {
@@ -131,7 +168,7 @@ void StorageNode::run() {
         }
         ssize_t bytecount = 0;
         int opt = 1000;
-        char buf[2000];
+        char buf[1064];
         ret = setsockopt(nodeAccept, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
         if (ret == -1) {
             std::cout << nodeID << " fail to set socket opt, " << strerror(errno) << std::endl;
@@ -147,20 +184,28 @@ void StorageNode::run() {
             // check the size of the packet
             std::cout << nodeID << " receive " << bytecount << " bytes." << std::endl;
             Packet p = unPack(buf);
-#if DEBUG
-            std::cout << "Key verify: " << p.key << std::endl;
-            std::cout << "Value verify: " << p.value << std::endl;
-#endif
-            //
-            Packet ack;
-            sendBack(ack, p.head.seq);
-            bytecount = send(nodeAccept, &ack, sizeof(ack), 0);
-            std::cout << bytecount << std::endl;
-            if (bytecount == -1) {
-                std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
-                break;
+            if (p.head.size != 0) {
+                //write
+                write(p);
+                writeSendBack(p);
+                bytecount = send(nodeAccept, &p, sizeof(p), 0);
+                std::cout << bytecount << std::endl;
+                if (bytecount == -1) {
+                    std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+                    break;
+                }
+            } else {
+                //read
+                read(p);
+                readSendBack(p);
+                bytecount = send(nodeAccept, &p, sizeof(p), 0);
+                std::cout << bytecount << std::endl;
+                if (bytecount == -1) {
+                    std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+                    break;
+                }
             }
-            // test end break it!
+            
         }
     }
 }
