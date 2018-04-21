@@ -2,7 +2,7 @@
 A Distributed Key-Value System
 
 
-## Defination
+## Definition
 1. Ring - A circular dynamic list, the range of consistent hashing.
 
 2. Object - The partitioned data block. A (key, value) pair.
