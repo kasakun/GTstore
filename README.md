@@ -1,28 +1,30 @@
-# GTstore
+# GTStore
 A Distributed Key-Value System
 
 
 ## Defination
-1. Ring - A circular dynamic list. Consistent Hashing.
+1. Ring - A circular dynamic list, the range of consistent hashing.
 
-2. Object - The partitioned data block.
+2. Object - The partitioned data block. A (key, value) pair.
 
-3. (N, R, W) - Make sure W + R > N
+3. (N, R, W) - Make sure W + R > N, and W + W > N.
 
-N - Each data item is replicated at N storage nodes.
+   N - Each data item is replicated at N storage nodes.
 
-R - Minimum number of nodes that must participate in a successful read operation.
+   R - Minimum number of nodes that must participate in a successful read operation.
 
-W - Minimum number of nodes that must participate in a successful write operation.
+   W - Minimum number of nodes that must participate in a successful write operation.
 
 
 ## Centralized Manager
 ### Ring
 Consistent Hashing Table.
 Range of hash function.
+Should the ring be in every storage node so that a client can send its request to each storage node?
 
-### Client Prerequst
-Determine the object key position in the ring. Which nodes they should send their requests. Only called once per object?
+### Client Pre-requst
+Determine the object key position in the ring.
+Find the coordinator, i.e. the first storage node in the preference list, for an object?
 
 
 ## Storage Nodes
@@ -36,25 +38,25 @@ Handle write form clients.
 A storage node can have multiple (the number decided by its capacity) "virtual nodes" (or "token"). A virtual node is mapped to a position in the ring. Thus, a node can have multiple positions in the ring. This technique can lead to more uniform data distribution on the ring, i.e. load balancing.
 
 ### Data Replication
-Know the other replication nodes?
+Determine the other replication nodes by asking the ring.
 
 
 ## Client
 ### Pre-Request
-Request centralized manager to get the right position in the ring.
+Request centralized manager (or any storage node for better performance) to get the right position in the ring.
 
 ### Request
-Randomly choose
+Find the coordinator (a storage node) for an object key. Let the coordinator do the stuff!
 
 
 ## Client library
-### init(&env) 
-initialize the client session with the manager and other control path operations. `env` stores the session info related to current client session.
+### init(&env)
+Initialize the client session with the manager and other control path operations. `env` stores the session info related to current client session.
 
 ### put(&env,key, value)
 ### get(&env,key)
 ### finalize(&env) 
-control path cleanup operations
+Control path cleanup operations.
 
 ## Example
 Shopping cart
