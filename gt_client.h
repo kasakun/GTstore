@@ -36,7 +36,7 @@ public:
 
     void init(Env& env);   // set the env input
     bool put(Env& env, ObjectKeyType key, ObjectValueType value);
-    void get(Env& env, ObjectKeyType key, ObjectValueType value);
+    bool get(Env& env, ObjectKeyType key, ObjectValueType value);
     void finalize(Env &env);
 
 private:
