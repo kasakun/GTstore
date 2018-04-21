@@ -40,6 +40,15 @@ bool VirtualNode::writeKeyValuePair(ObjectKeyType key, ObjectValueType value) {
     (*data)[key] = value;
     return true;
 }
+
+bool VirtualNode::readKeyValuePair(ObjectKeyType key, ObjectValueType& value) {
+    if (data->find(key) != data->end()) {
+        value =  (*data)[key];
+        return true;
+    }
+    else
+        return false;
+}
 // Storage
 StorageNode::StorageNode(const std::string& nodeID_, const int& numVirtualNodes_):\
                         nodeID(nodeID_), \
@@ -75,8 +84,15 @@ bool StorageNode::writeToVNode(int rank, ObjectKeyType key, ObjectValueType valu
         std::cout << "wrong rank" << std::endl;
         return false;
     }
-    if(vnodes[rank].writeKeyValuePair(key, value)) return true;
-    else return false;
+    return vnodes[rank].writeKeyValuePair(key, value);
+}
+
+bool StorageNode::readVNode(int rank, ObjectKeyType& key, ObjectValueType& value) {
+    if(rank < 0 || rank >= vnodes.size()) {
+        std::cout << "wrong rank" << std::endl;
+        return false;
+    }
+    return vnodes[rank].readKeyValuePair(key, value);
 }
 
 std::string StorageNode::constructVirtualNodeID(int i) {
@@ -116,6 +132,12 @@ bool StorageNode::write(Packet& p) {
     Map map;
     std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
     store[p.head.rank].insert(pair);
+//    writeToVNode(p.head.rank, key, value);
+//    ObjectKeyType tempk = key;
+//    ObjectValueType tempv;
+//    vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
+//    std::cout<< tempv.back().data() << std::endl;
+//    return true;
     return writeToVNode(p.head.rank, key, value);
 }
 bool StorageNode::read(Packet& p) {

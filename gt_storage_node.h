@@ -16,6 +16,7 @@ public:
     int getRank() const;
     bool operator==(const VirtualNode& other) const;
     bool writeKeyValuePair(ObjectKeyType key, ObjectValueType value);
+    bool readKeyValuePair(ObjectKeyType key, ObjectValueType& value);
 
 private:
     std::string vnodeID;                                       // its own ID
@@ -33,6 +34,7 @@ public:
     int getNumVirtualNodes() const;
     std::vector<VirtualNode> getVirtualNodes() const;
     bool writeToVNode(int rank, ObjectKeyType key, ObjectValueType value);
+    bool readVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
     Packet unPack(char* buf);      //unpack buf to the packet
     // rewrite the packet
     void writeSendBack(Packet& p); //sendback ack, replace value with wirte node of the operation,
