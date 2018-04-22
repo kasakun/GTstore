@@ -8,15 +8,20 @@
 #include <unordered_map>
 #include <sys/un.h>
 #include <sys/socket.h>
-#include <zconf.h>
+//#include <zconf.h>
+#include <unistd.h>
 #include <future>
 
 #include "gt_storage_node.h"
 
-#define ROOT "/tmp/"
+
 #define MAX_THREAD 4
 #define DEBUG 1
 
+
+/* 
+ * Virtual Node
+ */
 VirtualNode::VirtualNode(const std::string& vnodeID_, const std::string& nodeID_, const int& rank_):\
                          vnodeID(vnodeID_), nodeID(nodeID_), rank(rank_) {
     data = new std::unordered_map<ObjectKeyType, ObjectValueType>();
@@ -52,7 +57,11 @@ bool VirtualNode::readKeyValuePair(ObjectKeyType key, ObjectValueType& value) {
     else
         return false;
 }
-// Storage
+
+
+/* 
+ * Storage Node
+ */
 StorageNode::StorageNode(const std::string& nodeID_, const int& numVirtualNodes_):\
                         nodeID(nodeID_), \
                         numVirtualNodes(numVirtualNodes_) {
@@ -62,12 +71,10 @@ StorageNode::StorageNode(const std::string& nodeID_, const int& numVirtualNodes_
         vnodes.push_back(vnode);
     }
 
-    for (int i = 0; i < numVirtualNodes; i++) {
-        Map vstore;
-        store.push_back(vstore);
-    }
-
-
+    // for (int i = 0; i < numVirtualNodes; i++) {
+        // Map vstore;
+        // store.push_back(vstore);
+    // }
 }
 StorageNode::~StorageNode() {}
 std::string StorageNode::getNodeID() const {
@@ -82,7 +89,7 @@ std::vector<VirtualNode> StorageNode::getVirtualNodes() const {
     return vnodes;
 }
 
-bool StorageNode::writeToVNode(int rank, ObjectKeyType key, ObjectValueType value) {
+bool StorageNode::writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
         return false;
@@ -90,7 +97,7 @@ bool StorageNode::writeToVNode(int rank, ObjectKeyType key, ObjectValueType valu
     return vnodes[rank].writeKeyValuePair(key, value);
 }
 
-bool StorageNode::readVNode(int rank, ObjectKeyType& key, ObjectValueType& value) {
+bool StorageNode::readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
         return false;
@@ -134,8 +141,8 @@ bool StorageNode::write(Packet& p) {
     value.push_back(valueBuf);
     Map map;
     std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
-    store[p.head.rank].insert(pair);
-    writeToVNode(p.head.rank, key, value);
+    //store[p.head.rank].insert(pair); // deleted -Yaohong
+    writeToLocalVNode(p.head.rank, key, value);
     ObjectKeyType tempk = key;
     ObjectValueType tempv;
     vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
@@ -143,6 +150,8 @@ bool StorageNode::write(Packet& p) {
     return true;
 //    return writeToVNode(p.head.rank, key, value);
 }
+
+
 bool StorageNode::read(Packet& p) {
     //get key
     std::string keyBuf = p.key;

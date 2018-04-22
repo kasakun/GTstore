@@ -26,6 +26,17 @@ private:
 };
 
 
+class VirtualNodeHasher{
+public:
+    VirtualNodeHasher();
+    ~VirtualNodeHasher();
+    std::size_t operator()(const VirtualNode& vnode) const;
+    typedef std::size_t ResultType;
+private:
+    std::hash<std::string> stringHasher;
+};
+
+
 class StorageNode{
 public:
     StorageNode(const std::string& nodeID_ = "unnamed_node", const int& numVirtualNodes_ = 1);
@@ -33,8 +44,10 @@ public:
     std::string getNodeID() const;
     int getNumVirtualNodes() const;
     std::vector<VirtualNode> getVirtualNodes() const;
-    bool writeToVNode(int rank, ObjectKeyType key, ObjectValueType value);
-    bool readVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
+    
+    bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value);
+    bool readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
+    
     Packet unPack(char* buf);      //unpack buf to the packet
     bool createListenSocket(int& nodefd);
     bool receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p);
@@ -48,8 +61,8 @@ public:
     /*
      * node communication
      */
-    bool write(Packet& p);
-    bool read(Packet& p);
+    bool write(Packet& p);  // write to a local virtual node
+    bool read(Packet& p);  // read from a local virtual node
     void writeBackPack(Packet& p); //sendback ack, replace value with wirte nodeID
     void readBackPack(Packet& p);  //sendback ack and data
 
@@ -59,11 +72,13 @@ public:
     bool writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> preferenceList);
     bool readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list);
     
+    
+    std::string nodeID;   // node ID is used to identify a storage node
+    int numVirtualNodes;  // number of virtual nodes of this storage node
+    
 private:
     std::string constructVirtualNodeID(int i);
 
-    std::string nodeID;   // ID = IP address?
-    int numVirtualNodes;  // for better load balancing
     std::vector<VirtualNode> vnodes;
 
     /* data store
@@ -71,19 +86,11 @@ private:
      *                 --- (key, value)
      *       -> store1
      */
-    std::vector<Map> store;
+    //std::vector<Map> store;  // no need to use store -Yaohong
 };
 
 
-class VirtualNodeHasher{
-public:
-    VirtualNodeHasher();
-    ~VirtualNodeHasher();
-    std::size_t operator()(const VirtualNode& vnode) const;
-    typedef std::size_t ResultType;
-private:
-    std::hash<std::string> stringHasher;
-};
+
 
 // << overload
 inline std::ostream& operator<<(std::ostream& os, const StorageNode& node) {

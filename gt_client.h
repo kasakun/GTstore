@@ -20,8 +20,9 @@ typedef struct __Quorum {
 typedef struct __Env {
     Quorum q;                // quorum mechanism
     int clientfd;            // called by client
-    struct sockaddr_un managerAddr;    // manager address
-    std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
+    struct sockaddr_un managerAddr;    // manager's address
+    std::vector<std::string> nodeIDs;  // nodes' IDs
+    std::vector<struct sockaddr_un> nodesAddr; // nodes' addresses
     std::vector<int> nodesfd;
 //    char buf[1024];          // message buf
 } Env;
@@ -40,12 +41,14 @@ public:
     void finalize(Env &env);
 
 private:
+    bool getNodeInfos(Env& env);
+
     int clientID;
     int clientfd;
     struct sockaddr_un managerAddr;
 
     Quorum quo;      //determine the quorum mechanism
-    std::unordered_map<ObjectKeyType, ObjectValueType>* data;
+    std::unordered_map<ObjectKeyType, ObjectValueType>* data;  // client doesn't store data -Yaohong
 };
 
 

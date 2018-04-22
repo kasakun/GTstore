@@ -11,7 +11,9 @@
 
 class Manager{
 public:
-    Manager(const int& numReplicas_ = 1):numReplicas(numReplicas_){}
+    Manager(const int& numReplicas_ = 1):numReplicas(numReplicas_){
+        managerID = MANAGERID;
+    }
 
     void addStorageNode(const StorageNode& node){
         nodes.push_back(node);
@@ -91,7 +93,13 @@ public:
         computeNumKeyPerStorageNode();
     }
     
-
+    
+    bool createListenSocket(int& managerfd);
+    bool receiveMessage(int& managerfd, int& managerAccept, char* buf, int& type);
+    bool requestHandler(int managerfd, int managerAccept, int type);
+    void run();
+    
+    
 private:
     void addVirturalNodes(const std::vector<VirtualNode>& vnodes){
         for(auto vnode : vnodes){
@@ -123,9 +131,10 @@ private:
     std::vector<StorageNode> nodes;
     ConsistentHashRing<VirtualNode, VirtualNodeHasher> ring;
     
-    std::unordered_map<std::string, unsigned long> numKeys;
+    std::unordered_map<std::string, unsigned long> numKeys;  // for analysis only
     
-    int numReplicas;  // number of replicas per item
+    std::string managerID;  // name of manager
+    int numReplicas;  // number of replicas per object
 };
 
 #endif

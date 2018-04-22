@@ -29,6 +29,40 @@ void Client::init(Env& env) {
     int clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
     // set env
     env = {quo, clientfd, managerAddr}; //quorum, fd, addr, addrs
+    
+    
+    // send request to manager to get all the names of storage nodes
+    getNodeInfos(env);
+        
+}
+
+bool Client::getNodeInfos(Env& env){
+    ssize_t ret;
+    ret = connect(env.clientfd, (struct sockaddr*)&env.managerAddr, sizeof(env.managerAddr));
+    if(ret == -1){
+        std::cout << "Client fail to connect the manager, " << strerror(errno) << std::endl;
+        return false;
+    }
+
+    int requestType = 8;  // hard code
+    ret = send(env.clientfd, &requestType, sizeof(requestType), 0);
+    if(ret == -1){
+        std::cout << "Client fail to send the key, " << strerror(errno) << std::endl;
+        return false;
+    }
+    NodeInfoPacket nipacket;
+    do{
+        ret = recv(env.clientfd, &nipacket, sizeof(nipacket), 0);
+        if(ret == sizeof(nipacket)){
+            std::cout << "client: receive node list" << std::endl;
+            for(int i = 0; i < nipacket.size; ++i){
+                std::string nodeID = std::string(nipacket.nodes[i].nodeID);
+                std::cout << "client: node ID = " << nodeID << std::endl;
+                env.nodeIDs.push_back(nodeID);
+            }
+        }
+    }while(ret == 0);
+    shutdown(env.clientfd, SHUT_RDWR);    
 }
 
 bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {

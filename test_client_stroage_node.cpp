@@ -14,7 +14,7 @@
 #include "gt_manager.h"
 #include "gt_client.h"
 
-#define MANAGER "/tmp/MANAGER.domain"
+
 
 /*
  * This test is to test communication between client lib with manager and node.

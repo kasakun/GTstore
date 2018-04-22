@@ -7,6 +7,8 @@ set(CMAKE_CXX_FLAGS -pthread)
 add_executable(GTstore
 #        main.cpp
 #        test_consistent_hash_ring.cpp
-        test_client_stroage_node.cpp
+#        test_client_stroage_node.cpp
+        test_client_init.cpp
+        gt_manager.cpp
         gt_storage_node.cpp
         gt_client.cpp)
