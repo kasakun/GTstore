@@ -211,7 +211,6 @@ void StorageNode::run() {
                 write(p);
                 writeSendBack(p);
                 bytecount = send(nodeAccept, &p, sizeof(p), 0);
-                std::cout << bytecount << std::endl;
                 if (bytecount == -1) {
                     std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
                     break;
@@ -221,7 +220,6 @@ void StorageNode::run() {
                 read(p);
                 readSendBack(p);
                 bytecount = send(nodeAccept, &p, sizeof(p), 0);
-                std::cout << bytecount << std::endl;
                 if (bytecount == -1) {
                     std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
                     break;

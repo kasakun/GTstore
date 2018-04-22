@@ -20,11 +20,12 @@ typedef struct __ManagerMsg {
 } ManagerMsg;
 
 typedef struct __PacketHead {
+    int type;               // 0 for client message, 1 for node message
     unsigned int timpStamp; // Time stamp of the value
     unsigned int seq;       // sequence number of the packet
     unsigned int ack;       // ack = seq - 1, succeeds, otherwise fails.
     unsigned int size;      // size of the value
-    int rank;               // rank of the virtual node at the node
+    int rank;               // rank of the virtual node at the node, -1 for require ring
 } PacketHead;
 
 typedef struct __Packet {
