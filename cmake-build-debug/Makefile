@@ -204,32 +204,32 @@ gt_storage_node.cpp.s:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.s
 .PHONY : gt_storage_node.cpp.s
 
-test_client_stroage_node.o: test_client_stroage_node.cpp.o
+test_client_init.o: test_client_init.cpp.o
 
-.PHONY : test_client_stroage_node.o
+.PHONY : test_client_init.o
 
 # target to build an object file
-test_client_stroage_node.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.o
-.PHONY : test_client_stroage_node.cpp.o
+test_client_init.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_init.cpp.o
+.PHONY : test_client_init.cpp.o
 
-test_client_stroage_node.i: test_client_stroage_node.cpp.i
+test_client_init.i: test_client_init.cpp.i
 
-.PHONY : test_client_stroage_node.i
+.PHONY : test_client_init.i
 
 # target to preprocess a source file
-test_client_stroage_node.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.i
-.PHONY : test_client_stroage_node.cpp.i
+test_client_init.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_init.cpp.i
+.PHONY : test_client_init.cpp.i
 
-test_client_stroage_node.s: test_client_stroage_node.cpp.s
+test_client_init.s: test_client_init.cpp.s
 
-.PHONY : test_client_stroage_node.s
+.PHONY : test_client_init.s
 
 # target to generate assembly for a file
-test_client_stroage_node.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.s
-.PHONY : test_client_stroage_node.cpp.s
+test_client_init.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_init.cpp.s
+.PHONY : test_client_init.cpp.s
 
 # Help Target
 help:
@@ -249,9 +249,9 @@ help:
 	@echo "... gt_storage_node.o"
 	@echo "... gt_storage_node.i"
 	@echo "... gt_storage_node.s"
-	@echo "... test_client_stroage_node.o"
-	@echo "... test_client_stroage_node.i"
-	@echo "... test_client_stroage_node.s"
+	@echo "... test_client_init.o"
+	@echo "... test_client_init.i"
+	@echo "... test_client_init.s"
 .PHONY : help
 
 

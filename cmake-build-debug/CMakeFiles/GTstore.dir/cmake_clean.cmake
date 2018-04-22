@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/GTstore.dir/test_client_stroage_node.cpp.o"
+  "CMakeFiles/GTstore.dir/test_client_init.cpp.o"
   "CMakeFiles/GTstore.dir/gt_manager.cpp.o"
   "CMakeFiles/GTstore.dir/gt_storage_node.cpp.o"
   "CMakeFiles/GTstore.dir/gt_client.cpp.o"

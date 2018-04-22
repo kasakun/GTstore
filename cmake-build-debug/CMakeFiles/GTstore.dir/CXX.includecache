@@ -110,7 +110,7 @@ gt_object.h
 consistent_hash_ring.h
 /home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/test_client_stroage_node.cpp
+/home/chenzy/Desktop/Code/OS/GTstore/test_client_init.cpp
 iostream
 -
 string
