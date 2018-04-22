@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <utility>
 #include <sys/socket.h>
-#include <zconf.h>
+#include <unistd.h>
 
 #include "consistent_hash_ring.h"
 #include "gt_storage_node.h"
@@ -30,20 +30,24 @@
 int main(int argc, char** args) {
     int pid = fork();
 
-    if (pid != 0) {
+    if (pid == 0) {
         // client
         sleep(3);
         Quorum q = {3, 2, 2};
         Env session;
         ObjectKeyType key = "21faf31r1f21faf31r1f";
         ObjectValueType value;
-        value.push_back("21faf31r1f");
+        value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
 
         Client client(1, MANAGER, q);
         // test manager <==> client
         client.init(session);
         // put
+        std::cout<<"put test"<<std::endl;
         client.put(session, key, value);
+        // get
+        std::cout<<"get test"<<std::endl;
+        client.get(session, key, value);
         exit(0);
     }
     /*
@@ -54,7 +58,7 @@ int main(int argc, char** args) {
 
     //
     pid = fork();
-    if (pid == 0) {
+    if (pid != 0) {
         StorageNode node1("node1", 4);
 //        StorageNode node2("node2", 4);
         pid = fork();
@@ -123,8 +127,8 @@ int main(int argc, char** args) {
             std::vector<std::pair<std::string, int>>::iterator it;
             // if the preference list is like:
             preferenceList.push_back(std::pair<std::string, int>("node1", 2));
-            preferenceList.push_back(std::pair<std::string, int>("node2", 1));
-            preferenceList.push_back(std::pair<std::string, int>("node3", 1));
+//            preferenceList.push_back(std::pair<std::string, int>("node2", 1));
+//            preferenceList.push_back(std::pair<std::string, int>("node3", 1));
 
             int i = 0;
             ManagerMsg msg;

@@ -79,6 +79,8 @@ sys/socket.h
 -
 zconf.h
 -
+future
+-
 gt_storage_node.h
 /home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
 
@@ -97,7 +99,7 @@ utility
 -
 sys/socket.h
 -
-zconf.h
+unistd.h
 -
 consistent_hash_ring.h
 /home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
