@@ -11,6 +11,7 @@
 
 #define MAX_THREAD 4
 #define DEBUG 1
+#define ROOT "/tmp/"
 
 Client::Client() {
 
@@ -89,7 +90,10 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
         // load nodes.
         struct sockaddr_un tempAddr;
         tempAddr.sun_family = AF_UNIX;
-        strcpy (tempAddr.sun_path, it->first.data());
+        std::string address = ROOT;
+        address += it->first.data();
+        std::cout << address << std::endl;
+        strcpy (tempAddr.sun_path, address.data());
         // create socket
         int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
         if (nodefd == -1) {

@@ -7,7 +7,7 @@
 #include <unordered_map>
 #include <utility>
 #include <sys/socket.h>
-#include <zconf.h>
+#include <unistd.h>
 
 #include "consistent_hash_ring.h"
 #include "gt_storage_node.h"

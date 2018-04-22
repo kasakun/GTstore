@@ -36,7 +36,7 @@ public:
     bool writeToVNode(int rank, ObjectKeyType key, ObjectValueType value);
     bool readVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
     Packet unPack(char* buf);      //unpack buf to the packet
-    bool createSocket(int& nodefd);
+    bool createListenSocket(int& nodefd);
     bool receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p);
 
     bool managerHandler(int& nodefd, int& nodeAccept, Packet& p);
@@ -53,6 +53,10 @@ public:
     void writeSendBack(Packet& p); //sendback ack, replace value with wirte node of the operation,
     void readSendBack(Packet& p);  //sendback ack and data
 
+    /*
+     * node communication
+     */
+    bool writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> preferenceList);
     
 private:
     std::string constructVirtualNodeID(int i);
