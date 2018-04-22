@@ -50,8 +50,8 @@ public:
      */
     bool write(Packet& p);
     bool read(Packet& p);
-    void writeSendBack(Packet& p); //sendback ack, replace value with wirte node of the operation,
-    void readSendBack(Packet& p);  //sendback ack and data
+    void writeBackPack(Packet& p); //sendback ack, replace value with wirte nodeID
+    void readBackPack(Packet& p);  //sendback ack and data
 
     /*
      * node communication

@@ -108,7 +108,7 @@ Packet StorageNode::unPack(char* buf) {
     return p;
 }
 
-void StorageNode::writeSendBack(Packet& p) {
+void StorageNode::writeBackPack(Packet& p) {
     p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
     p.head.seq = 0;       // sequence number of the packet
     p.head.size = 0;      // size of the value
@@ -116,7 +116,7 @@ void StorageNode::writeSendBack(Packet& p) {
     memcpy(p.key, nodeID.data(), sizeof(nodeID.data()));
 }
 
-void StorageNode::readSendBack(Packet& p) {
+void StorageNode::readBackPack(Packet& p) {
     p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
     p.head.seq = 0;       // sequence number of the packet
 }
@@ -148,12 +148,13 @@ bool StorageNode::read(Packet& p) {
     std::string keyBuf = p.key;
     keyBuf.resize(20, 0);
     ObjectKeyType key = keyBuf;
-
-    if (store[p.head.rank].find(key) == store[p.head.rank].end())
-        return false; // not found
-    else {
-        memcpy(p.value, store[p.head.rank].find(key)->second.data(),  store[p.head.rank].find(key)->second.size());
+    ObjectValueType value;
+    if (vnodes[p.head.rank].readKeyValuePair(key, value)) {
+        p.head.size = value.back().size();
+        memcpy(p.value, value.back().data(), p.head.size);
         return true;
+    } else {
+        return false;
     }
 }
 
@@ -229,7 +230,7 @@ bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
     if (p.head.size != 0) {
         //write
         write(p);
-        writeSendBack(p);
+        writeBackPack(p);
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
 
         if (bytecount == -1) {
@@ -239,8 +240,56 @@ bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
     } else {
         //read
         read(p);
-        readSendBack(p);
+        readBackPack(p);
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
+        if (bytecount == -1) {
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
+    //
+    std::vector<std::pair<std::string, int>> preferenceList;
+    preferenceList.push_back(std::pair<std::string, int>("node1", 2));
+    preferenceList.push_back(std::pair<std::string, int>("node2", 1));
+    preferenceList.push_back(std::pair<std::string, int>("node3", 1));
+
+    //
+    ssize_t bytecount;
+    if (p.head.size != 0) {
+        //write to all nodes on the list
+        write(p);
+//        std::cout << "I read"<< p.value << std::endl;
+        p.head.type = 1; // node communication
+        writeToNodes(p, preferenceList);
+        writeBackPack(p);
+
+        bytecount = send(nodeAccept, &p, sizeof(p), 0);
+
+        if (bytecount == -1) {
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+            return false;
+        }
+
+    } else {
+        //read
+        read(p);// the head.size of the packet is changed
+        p.head.type = 1; // node communication
+        Packet temp;
+        temp.head = p.head;temp.head.size = 0;memcpy(temp.key, p.key, 20);
+        readFromNodes(temp, preferenceList);
+        if (p.head.timpStamp > temp.head.timpStamp) {
+            readBackPack(p);
+            bytecount = send(nodeAccept, &p, sizeof(p), 0);
+        }
+
+        else {
+            readBackPack(temp);
+            bytecount = send(nodeAccept, &p, sizeof(p), 0);
+        }
+
         if (bytecount == -1) {
             std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
             return false;
@@ -358,17 +407,24 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
     // check if num of return reach quo.w, write success, parallel
     std::future<void> foo[MAX_THREAD];
     std::mutex mtxcounter;
+    std::mutex mtxpacket;
     int counter = 0;
 
     for (int i = 0; i < 2; ++i) {
-        foo[i] = std::async(std::launch::async, [i, &nodesfd, &counter, &mtxcounter]{
+        foo[i] = std::async(std::launch::async, [i, &p, &nodesfd, &counter, &mtxpacket, &mtxcounter]{
             char buf[1068];
             int ret = recv(nodesfd[i], &buf, sizeof(buf), 0);
             if (ret == -1) {
                 std::cout << "receive error, " << strerror(errno) << std::endl;
             }
             if (ret == sizeof(Packet)) {
-                std::cout << "receive value " << (buf + 24) << std::endl;
+                std::cout << "receive value " << (buf + sizeof(p.head) + 20) << std::endl;
+                Packet temp;
+                memcpy(&temp, buf, sizeof(Packet));
+                mtxpacket.lock();
+                if (p.head.timpStamp < temp.head.timpStamp)
+                    memcpy(&p, buf, sizeof(Packet));
+                mtxpacket.unlock();
                 mtxcounter.lock();
                 ++counter;
                 mtxcounter.unlock();
@@ -388,45 +444,6 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
         std::cout << nodeID << " send fail" << std::endl;
         return false;
     }
-}
-bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
-    //
-    std::vector<std::pair<std::string, int>> preferenceList;
-    preferenceList.push_back(std::pair<std::string, int>("node1", 2));
-    preferenceList.push_back(std::pair<std::string, int>("node2", 1));
-    preferenceList.push_back(std::pair<std::string, int>("node3", 1));
-
-    //
-    ssize_t bytecount;
-    if (p.head.size != 0) {
-        //write to all nodes on the list
-        write(p);
-        std::cout << "I read"<< p.value << std::endl;
-        p.head.type = 1; // node communication
-        writeToNodes(p, preferenceList);
-        writeSendBack(p);
-
-        bytecount = send(nodeAccept, &p, sizeof(p), 0);
-
-        if (bytecount == -1) {
-            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
-            return false;
-        }
-
-    } else {
-        //read
-        read(p);
-        p.head.type = 1; // node communication
-        readFromNodes(p, preferenceList);
-        readSendBack(p);
-        bytecount = send(nodeAccept, &p, sizeof(p), 0);
-
-        if (bytecount == -1) {
-            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
-            return false;
-        }
-    }
-    return true;
 }
 
 void StorageNode::run() {

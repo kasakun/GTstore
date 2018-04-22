@@ -30,21 +30,23 @@
 int main(int argc, char** args) {
     int pid = fork();
 
-    if (pid != 0) {
+    if (pid == 0) {
         // client
         sleep(3);
         Quorum q = {3, 2, 2};
         Env session;
         ObjectKeyType key = "21faf31r1f21faf31r1f";
         ObjectValueType value;
-        value.push_back("21faf31r1f");
+        value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
 
         Client client(1, MANAGER, q);
         // test manager <==> client
         client.init(session);
         // put
+        std::cout<<"put test"<<std::endl;
         client.put(session, key, value);
-        //
+        // get
+        std::cout<<"get test"<<std::endl;
         client.get(session, key, value);
         exit(0);
     }
@@ -56,7 +58,7 @@ int main(int argc, char** args) {
 
     //
     pid = fork();
-    if (pid == 0) {
+    if (pid != 0) {
         StorageNode node1("node1", 4);
 //        StorageNode node2("node2", 4);
         pid = fork();

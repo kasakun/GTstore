@@ -156,7 +156,7 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType value){
         std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
     }
     if (ret == sizeof(Packet)) {
-        std::cout << "Client receive ack from " << (buf + 24) << std::endl;
+        std::cout << "Client receive ack from " << (buf + sizeof(p.head) + 20) << std::endl;
     }
     return true;
 }
