@@ -2,6 +2,7 @@
 #define GT_STORAGE_NODE_H
 
 #include "gt_object.h"
+#include "consistent_hash_ring.h"
 
 
 using  Map = std::unordered_map<ObjectKeyType, ObjectValueType>;
@@ -55,7 +56,7 @@ public:
     bool managerHandler(int& nodefd, int& nodeAccept, Packet& p);
     bool nodeHandler(int& nodefd, int& nodeAccept, Packet& p);
     bool clientHandler(int& nodefd, int& nodeAccept, Packet& p);
-
+    bool clientCoordinator(int& nodefd, int& nodeAccept, Packet& p);
     void run();
 
     /*
@@ -71,7 +72,9 @@ public:
      */
     bool writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> preferenceList);
     bool readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list);
-    
+
+    //
+    std::pair<std::string, int> findCoordinator(ObjectKeyType key);
     
     std::string nodeID;   // node ID is used to identify a storage node
     int numVirtualNodes;  // number of virtual nodes of this storage node
@@ -87,6 +90,7 @@ private:
      *       -> store1
      */
     //std::vector<Map> store;  // no need to use store -Yaohong
+    ConsistentHashRing<VirtualNode,VirtualNodeHasher> ring;
 };
 
 

@@ -67,36 +67,40 @@ bool Client::getNodeInfos(Env& env){
 
 bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     ssize_t ret;
-    std::vector<std::pair<std::string, int>> preferenceList;
+    std::pair<std::string, int> coordinator;
     // Manager, to be removed
-    ret = connect(env.clientfd, (struct sockaddr*)&env.managerAddr, sizeof(env.managerAddr));
+    struct sockaddr_un randomNodeAddr;
+    randomNodeAddr.sun_family = AF_UNIX;
+    std::string address = ROOT;
+    address += env.nodeIDs.back().data();
+    strcpy (randomNodeAddr.sun_path, address.data());
+
+    ret = connect(env.clientfd, (struct sockaddr*)&randomNodeAddr, sizeof(randomNodeAddr));
     if (ret == -1) {
         std::cout << "Client fail to connect the manager, " << strerror(errno) << std::endl;
         return false;
     }
-    ret = send(env.clientfd, key.c_str(), key.length(), 0);
+    Packet temp;
+    PacketHead tempHead = {3, 0, 0, 0, 0, 0};
+    temp.head = tempHead;
+    ret = send(env.clientfd, &temp, sizeof(Packet), 0);
     if (ret == -1) {
         std::cout << "Client fail to send the key, " << strerror(errno) << std::endl;
         return false;
     }
-    ManagerMsg msg;
-    do {
-        ret = recv(env.clientfd, &msg, sizeof(msg), 0);
-        if (ret == sizeof(msg)) {
-            std::cout << "Client: receive preference list from manager" << std::endl;
-            //fetch
-            for (int i = 0; i < msg.num; ++i) {
-                std::cout << "Client receive " << msg.node[i] << " " << msg.value[i] << std::endl;
-                preferenceList.push_back(std::pair<std::string, int>(msg.node[i], msg.value[i]));
-            }
-
-        }
-    }while(ret == 0);
+    char buf[1068];
+    ret = recv(env.clientfd, &buf, sizeof(buf), 0);
+    if (ret == sizeof(buf)) {
+        memcpy(&temp, buf, sizeof(Packet));
+        std::cout << "Client receive " << temp.value << std::endl;
+        coordinator.first = temp.value;
+        coordinator.second = temp.head.rank;
+    }
     shutdown(env.clientfd, SHUT_RDWR);
 
     // nodes
 #if DEBUG
-    std::cout << "test nodes begin, size " << preferenceList.size() << std::endl;
+    std::cout << "test nodes begin, coordinator " << coordinator.first << std::endl;
 #endif
     //send requests to whole preference lists, temporary test
     // type, ts, seq, ack, size, rank
@@ -106,33 +110,31 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     memcpy(p.key, key.data(), key.size());
     memcpy(p.value, value.data()->data(), p.head.size);
 
-    std::vector<std::pair<std::string, int>>::iterator it;it = preferenceList.begin();
     // load nodes.
     struct sockaddr_un tempAddr;
     tempAddr.sun_family = AF_UNIX;
-    std::string address = ROOT;
-    address += it->first.data();
-    strcpy (tempAddr.sun_path, address.data());
+    std::string coorAddr = ROOT;
+    coorAddr += coordinator.first.data();
+    strcpy (tempAddr.sun_path, coorAddr.data());
     // create socket
     int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
     if (nodefd == -1) {
-        std::cout<< "Client: fail to create socket with " << it->first << ", " << strerror(errno) << std::endl;
+        std::cout<< "Client: fail to create socket with " << coordinator.first << ", " << strerror(errno) << std::endl;
     }
     // connect
     ret = connect(nodefd, (struct sockaddr*)&tempAddr, sizeof(tempAddr));
     if (ret == -1) {
-        std::cout << "Client fail to connect " << it->first << ", " << strerror(errno) << std::endl;
+        std::cout << "Client fail to connect " << coordinator.first << ", " << strerror(errno) << std::endl;
         exit(0);
     }
 #if DEBUG
-    std::cout<<"Client: send packet to " << it->first << std::endl;
+    std::cout<<"Client: send packet to " << coordinator.first << std::endl;
 #endif
     ret = send(nodefd, &p, sizeof(p), 0);
     if (ret == -1) {
         std::cout << "Client: send error, " << strerror(errno) << std::endl;
     }
 
-    char buf[1068];
     ret = recv(nodefd, &buf, sizeof(buf), 0);
     if (ret == -1) {
         std::cout << "Client receive ack error, " << strerror(errno) << std::endl;

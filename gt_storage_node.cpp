@@ -305,6 +305,25 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     }
     return true;
 }
+bool StorageNode::clientCoordinator(int& nodefd, int& nodeAccept, Packet& p) {
+    ssize_t bytecount;
+
+//    writeBackPack(p);
+    ObjectKeyType key = p.key;
+    key.resize(20);
+
+    std::pair<std::string, int> pair = findCoordinator(key);
+
+    p.head.rank = pair.second;
+    memcpy(p.key, pair.first.data(), sizeof(pair.first.data()));
+    bytecount = send(nodeAccept, &p, sizeof(p), 0);
+
+    if (bytecount == -1) {
+        std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+        return false;
+    }
+    return true;
+}
 
 bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> list) {
     int ret;
@@ -454,6 +473,17 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
     }
 }
 
+std::pair<std::string, int> StorageNode::findCoordinator(ObjectKeyType key) {
+    std::hash<ObjectKeyType> hasher;
+    auto hashedKey = hasher(key);
+    std::cout << "hashed key = " << hashedKey << std::endl;
+
+    auto it = ring.find(hashedKey);
+    std::string nodeID = (it->second).getNodeID();
+    int rank = (it->second).getRank();
+
+    return std::pair<std::string, int>(nodeID, rank);
+}
 void StorageNode::run() {
     int nodefd;
     int nodeAccept;
@@ -481,6 +511,8 @@ void StorageNode::run() {
             case 2: // client
                 clientHandler(nodefd, nodeAccept, p);
                 break;
+            case 3: // return coorrdinator to client
+                clientCoordinator(nodefd, nodeAccept, p);
             default:
                 std::cout << nodeID << ": Message type not found!" << std::endl;
                 break;

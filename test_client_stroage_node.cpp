@@ -58,7 +58,7 @@ int main(int argc, char** args) {
 
     //
     pid = fork();
-    if (pid != 0) {
+    if (pid == 0) {
         StorageNode node1("node1", 4);
 //        StorageNode node2("node2", 4);
         pid = fork();
