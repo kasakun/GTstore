@@ -9,10 +9,12 @@
 #include <sys/un.h>
 #include <sys/socket.h>
 #include <zconf.h>
+#include <future>
 
 #include "gt_storage_node.h"
 
 #define ROOT "/tmp/"
+#define MAX_THREAD 4
 #define DEBUG 1
 
 VirtualNode::VirtualNode(const std::string& vnodeID_, const std::string& nodeID_, const int& rank_):\
@@ -133,13 +135,13 @@ bool StorageNode::write(Packet& p) {
     Map map;
     std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
     store[p.head.rank].insert(pair);
-//    writeToVNode(p.head.rank, key, value);
-//    ObjectKeyType tempk = key;
-//    ObjectValueType tempv;
-//    vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
-//    std::cout<< tempv.back().data() << std::endl;
-//    return true;
-    return writeToVNode(p.head.rank, key, value);
+    writeToVNode(p.head.rank, key, value);
+    ObjectKeyType tempk = key;
+    ObjectValueType tempv;
+    vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
+    std::cout << nodeID << ":" << tempv.back().data() << std::endl;
+    return true;
+//    return writeToVNode(p.head.rank, key, value);
 }
 bool StorageNode::read(Packet& p) {
     //get key
@@ -248,100 +250,177 @@ bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
 }
 
 bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> list) {
-//    p.head;
-//    memcpy(p.key, key.data(), key.size());
-//    memcpy(p.value, value.data()->data(), p.head.size);
     int ret;
     std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
     std::vector<int> nodesfd;
     std::vector<std::pair<std::string, int>>::iterator it;it = list.begin();
     for (; it != list.end();++it) {
+        if (it->first == nodeID)
+            continue;
         struct sockaddr_un tempAddr;
         tempAddr.sun_family = AF_UNIX;
         std::string address = ROOT;
-        address += it->first.data();
-        std::cout << address << std::endl;
+        address += it->first;
         strcpy (tempAddr.sun_path, address.data());
         int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
         if (nodefd == -1) {
-            std::cout<< "Client: fail to create socket with " << it->first << ", " << strerror(errno) << std::endl;
+            std::cout << nodeID << " fail to create socket with " << it->first << ", " << strerror(errno) << std::endl;
         }
         // connect
         ret = connect(nodefd, (struct sockaddr*)&tempAddr, sizeof(tempAddr));
         if (ret == -1) {
-            std::cout << "Client fail to connect " << it->first << ", " << strerror(errno) << std::endl;
+            std::cout << nodeID <<" fail to connect " << it->first << ", " << strerror(errno) << std::endl;
             exit(0);
         }
         nodesfd.push_back(nodefd);
         nodesAddr.push_back(tempAddr);
 #if DEBUG
-        std::cout << nodeID<< "send packet to " << it->first << std::endl;
+        std::cout << nodeID<< " send packet to " << it->first << std::endl;
 #endif
         nodefd = nodesfd.back();
         ret = send(nodefd, &p, sizeof(p), 0);
         if (ret == -1) {
-            std::cout << "Client: send error, " << strerror(errno) << std::endl;
+            std::cout <<nodeID <<" send error, " << strerror(errno) << std::endl;
         }
     }
 
-//    // check if num of return reach quo.w, write success, parallel
-//    std::future<void> foo[MAX_THREAD];
-//    std::mutex mtxcounter;
-//    int counter = 0;
-//
-//    for (int i = 0; i < quo.w; ++i) {
-//        foo[i] = std::async(std::launch::async, [i, &env, &counter, &mtxcounter]{
-//            char buf[1068];
-//            int ret = recv(env.nodesfd[i], &buf, sizeof(buf), 0);
-//            if (ret == -1) {
-//                std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
-//            }
-//            if (ret == sizeof(Packet)) {
-//                std::cout << "Client receive ack from " << (buf + 24) << std::endl;
-//                mtxcounter.lock();
-//                ++counter;
-//                mtxcounter.unlock();
-//            }
-//            return;
-//        });
-//    }
-//    for (int i = 0; i < quo.w; ++i) {
-//        foo[i].get();
-//    }
-//
-//    if (counter == quo.w) {
-//        std::cout<<"Client: all send finish" << std::endl;
-//        return true;
-//    }
-//    else {
-//        std::cout<<"Client: send fail" << std::endl;
-//        return false;
-//    }
+    // check if num of return reach quo.w, write success, parallel
+    std::future<int> foo[MAX_THREAD];
+    std::mutex mtxcounter;
+    int counter = 0;
+
+    for (int i = 0; i < 2; ++i) {
+        foo[i] = std::async(std::launch::async, [i, &nodesfd, &counter, &mtxcounter]{
+            char buf[1068];
+            int ret = recv(nodesfd[i], &buf, sizeof(buf), 0);
+            if (ret == -1) {
+                std::cout << "receive ack error, " << strerror(errno) << std::endl;
+            }
+            if (ret == sizeof(Packet)) {
+                std::cout << "receive ack from " << (buf + 24) << std::endl;
+                mtxcounter.lock();
+                ++counter;
+                mtxcounter.unlock();
+            }
+            return ret;
+        });
+    }
+    for (int i = 0; i < 2; ++i) {
+        foo[i].get();
+    }
+
+    if (counter == 2) {
+        std::cout << nodeID << " all send finish" << std::endl;
+        return true;
+    }
+    else {
+        std::cout << nodeID << " send fail" << std::endl;
+        return false;
+    }
+}
+bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list) {
+    int ret;
+    std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
+    std::vector<int> nodesfd;
+    std::vector<std::pair<std::string, int>>::iterator it;it = list.begin();
+
+    for (; it != list.end();++it) {
+        if (it->first == nodeID)
+            continue;
+        struct sockaddr_un tempAddr;
+        tempAddr.sun_family = AF_UNIX;
+        std::string address = ROOT;
+        address += it->first;
+
+        strcpy (tempAddr.sun_path, address.data());
+        int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
+        if (nodefd == -1) {
+            std::cout << nodeID <<" fail to create socket with " << it->first << ", " << strerror(errno) << std::endl;
+        }
+        // connect
+        ret = connect(nodefd, (struct sockaddr*)&tempAddr, sizeof(tempAddr));
+        if (ret == -1) {
+            std::cout << nodeID <<" fail to connect " << it->first << ", " << strerror(errno) << std::endl;
+            exit(0);
+        }
+        nodesfd.push_back(nodefd);
+        nodesAddr.push_back(tempAddr);
+#if DEBUG
+        std::cout << nodeID<< " send request to " << it->first << std::endl;
+#endif
+        nodefd = nodesfd.back();
+        ret = send(nodefd, &p, sizeof(p), 0);
+        if (ret == -1) {
+            std::cout << nodeID << " send error, " << strerror(errno) << std::endl;
+        }
+    }
+
+    // check if num of return reach quo.w, write success, parallel
+    std::future<void> foo[MAX_THREAD];
+    std::mutex mtxcounter;
+    int counter = 0;
+
+    for (int i = 0; i < 2; ++i) {
+        foo[i] = std::async(std::launch::async, [i, &nodesfd, &counter, &mtxcounter]{
+            char buf[1068];
+            int ret = recv(nodesfd[i], &buf, sizeof(buf), 0);
+            if (ret == -1) {
+                std::cout << "receive error, " << strerror(errno) << std::endl;
+            }
+            if (ret == sizeof(Packet)) {
+                std::cout << "receive value " << (buf + 24) << std::endl;
+                mtxcounter.lock();
+                ++counter;
+                mtxcounter.unlock();
+            }
+            return;
+        });
+    }
+    for (int i = 0; i < 2; ++i) {
+        foo[i].get();
+    }
+
+    if (counter == 2) {
+        std::cout << nodeID << " all send finish" << std::endl;
+        return true;
+    }
+    else {
+        std::cout << nodeID << " send fail" << std::endl;
+        return false;
+    }
 }
 bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     //
     std::vector<std::pair<std::string, int>> preferenceList;
-    std::vector<std::pair<std::string, int>>::iterator it;
     preferenceList.push_back(std::pair<std::string, int>("node1", 2));
     preferenceList.push_back(std::pair<std::string, int>("node2", 1));
     preferenceList.push_back(std::pair<std::string, int>("node3", 1));
 
-    it = preferenceList.begin();
     //
     ssize_t bytecount;
     if (p.head.size != 0) {
         //write to all nodes on the list
-        for (;it != preferenceList.end(); ++it) {
+        write(p);
+        std::cout << "I read"<< p.value << std::endl;
+        p.head.type = 1; // node communication
+        writeToNodes(p, preferenceList);
+        writeSendBack(p);
 
-        }
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
+
         if (bytecount == -1) {
             std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
             return false;
         }
+
     } else {
         //read
+        read(p);
+        p.head.type = 1; // node communication
+        readFromNodes(p, preferenceList);
+        readSendBack(p);
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
+
         if (bytecount == -1) {
             std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
             return false;
@@ -371,7 +450,7 @@ void StorageNode::run() {
             case 0: // manager
                 managerHandler(nodefd, nodeAccept, p);
                 break;
-            case 1: // node
+            case 1: // node1
                 nodeHandler(nodefd, nodeAccept, p);
                 break;
             case 2: // client

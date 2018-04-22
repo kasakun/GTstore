@@ -44,6 +44,8 @@ int main(int argc, char** args) {
         client.init(session);
         // put
         client.put(session, key, value);
+        //
+        client.get(session, key, value);
         exit(0);
     }
     /*
@@ -123,8 +125,8 @@ int main(int argc, char** args) {
             std::vector<std::pair<std::string, int>>::iterator it;
             // if the preference list is like:
             preferenceList.push_back(std::pair<std::string, int>("node1", 2));
-            preferenceList.push_back(std::pair<std::string, int>("node2", 1));
-            preferenceList.push_back(std::pair<std::string, int>("node3", 1));
+//            preferenceList.push_back(std::pair<std::string, int>("node2", 1));
+//            preferenceList.push_back(std::pair<std::string, int>("node3", 1));
 
             int i = 0;
             ManagerMsg msg;

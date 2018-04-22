@@ -57,6 +57,7 @@ public:
      * node communication
      */
     bool writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> preferenceList);
+    bool readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list);
     
 private:
     std::string constructVirtualNodeID(int i);

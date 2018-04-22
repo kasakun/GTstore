@@ -64,13 +64,10 @@ Shopping cart
 
 ## List To Do
 
-### Data Block Structure
-key, size, timestamp, data
+## Manager to nodes communication
 
-### Manager
+## get, timestamp in database required
 
-### Storage Nodes
+## init, finalized
 
-##
-### dev log
-add packet structure, define head.
+## test file
