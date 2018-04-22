@@ -487,8 +487,10 @@ std::pair<std::string, int> StorageNode::findCoordinator(ObjectKeyType key) {
 void StorageNode::run() {
     int nodefd;
     int nodeAccept;
-    if (!createListenSocket(nodefd))
+    if (!createListenSocket(nodefd)){
+        std::cout << nodeID << "cannot create and listen socket" << std::endl;
         return;
+    }
     // start serving
     std::cout << nodeID << " start serving.." << std::endl;
     while(1) {

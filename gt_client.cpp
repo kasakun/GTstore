@@ -33,7 +33,6 @@ void Client::init(Env& env) {
     
     // send request to manager to get all the names of storage nodes
     getNodeInfos(env);
-        
 }
 
 bool Client::getNodeInfos(Env& env){
@@ -73,12 +72,13 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     struct sockaddr_un randomNodeAddr;
     randomNodeAddr.sun_family = AF_UNIX;
     std::string address = ROOT;
-    address += env.nodeIDs.back().data();
+    address += env.nodeIDs.back().data();  // Yaohong Wu
+    std::cout << "address of random node is " << address << std::endl;
     strcpy (randomNodeAddr.sun_path, address.data());
 
     ret = connect(env.clientfd, (struct sockaddr*)&randomNodeAddr, sizeof(randomNodeAddr));
     if (ret == -1) {
-        std::cout << "Client fail to connect the manager, " << strerror(errno) << std::endl;
+        std::cout << "Client fail to connect the random node, " << strerror(errno) << std::endl;
         return false;
     }
     Packet temp;

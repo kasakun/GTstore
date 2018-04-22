@@ -14,20 +14,25 @@
 int main(){
     int pid = fork();
     
-    if (pid != 0) {
+    if (pid == 0) {
         // client
         sleep(3);
         Quorum q = {3, 2, 2};
         Env session;
-        // ObjectKeyType key = "21faf31r1f21faf31r1f";
-        // ObjectValueType value;
-        // value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
+        
+        ObjectKeyType key = "ywu669";
+        ObjectValueType value;
+        value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
 
         Client client(1, MANAGER, q);
-        // test manager <==> client
-        client.init(session);
         
-        std::cout << "number of nodeIDs = " << session.nodeIDs.size() << std::endl;
+        client.init(session);
+
+        sleep(10);
+
+        client.put(session, key, value);
+        
+        //std::cout << "number of nodeIDs = " << session.nodeIDs.size() << std::endl;
         
         exit(0);
     }
@@ -38,8 +43,16 @@ int main(){
     manager.addStorageNode(node1);
     manager.addStorageNode(node2);
     
+    
+    pid = fork();
+    if(pid == 0){
+        pid = fork();
+        if(pid == 0){
+            node2.run();
+        }
+        node1.run();
+    }
+    
     manager.run();
     
-    
-
 }
