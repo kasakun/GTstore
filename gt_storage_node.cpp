@@ -245,6 +245,7 @@ bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
 }
 bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     //
+    std::vector<std::pair<std::string, int>> preferenceList;
     preferenceList.push_back(std::pair<std::string, int>("node1", 2));
     preferenceList.push_back(std::pair<std::string, int>("node2", 1));
     preferenceList.push_back(std::pair<std::string, int>("node3", 1));
@@ -262,7 +263,6 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
         }
     } else {
         //read
-]
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
         if (bytecount == -1) {
             std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
