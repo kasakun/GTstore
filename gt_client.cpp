@@ -37,6 +37,7 @@ void Client::init(Env& env) {
 
 bool Client::getNodeInfos(Env& env){
     ssize_t ret;
+    env.clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
     ret = connect(env.clientfd, (struct sockaddr*)&env.managerAddr, sizeof(env.managerAddr));
     if(ret == -1){
         std::cout << "Client fail to connect the manager, " << strerror(errno) << std::endl;
@@ -75,7 +76,8 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     address += env.nodeIDs.back().data();  // Yaohong Wu
     std::cout << "address of random node is " << address << std::endl;
     strcpy (randomNodeAddr.sun_path, address.data());
-
+    
+    env.clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
     ret = connect(env.clientfd, (struct sockaddr*)&randomNodeAddr, sizeof(randomNodeAddr));
     if (ret == -1) {
         std::cout << "Client fail to connect the random node, " << strerror(errno) << std::endl;
@@ -84,6 +86,8 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     Packet temp;
     PacketHead tempHead = {3, 0, 0, 0, 0, 0};
     temp.head = tempHead;
+    memcpy(temp.key, key.data(), key.size());
+    
     ret = send(env.clientfd, &temp, sizeof(Packet), 0);
     if (ret == -1) {
         std::cout << "Client fail to send the key, " << strerror(errno) << std::endl;

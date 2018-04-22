@@ -49,6 +49,10 @@ public:
     bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value);
     bool readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
     
+    
+    bool init();
+    
+    
     Packet unPack(char* buf);      //unpack buf to the packet
     bool createListenSocket(int& nodefd);
     bool receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p);
@@ -73,7 +77,7 @@ public:
     bool writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> preferenceList);
     bool readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list);
 
-    //
+    // find the coordinator given a key
     std::pair<std::string, int> findCoordinator(ObjectKeyType key);
     
     std::string nodeID;   // node ID is used to identify a storage node
@@ -81,7 +85,8 @@ public:
     
 private:
     std::string constructVirtualNodeID(int i);
-
+    void addNodesToRing(std::vector<StorageNode>& nodes);
+    
     std::vector<VirtualNode> vnodes;
 
     /* data store

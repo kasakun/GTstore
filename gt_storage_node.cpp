@@ -109,6 +109,59 @@ std::string StorageNode::constructVirtualNodeID(int i) {
     return nodeID + "_" + std::to_string(i);
 }
 
+
+bool StorageNode::init(){
+    // first send a request to the manager and receive a list of storage nodes
+    // then construct the ring using the list
+    ssize_t ret;
+    int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
+    struct sockaddr_un managerAddr;
+    managerAddr.sun_family = AF_UNIX;
+    strcpy(managerAddr.sun_path, MANAGER);
+    
+    ret = connect(nodefd, (struct sockaddr*)&managerAddr, sizeof(managerAddr));
+    if(ret == -1){
+        std::cout << "Node fail to connect the manager, " << strerror(errno) << std::endl;
+        return false;
+    }
+
+    int requestType = 16;  // hard code
+    ret = send(nodefd, &requestType, sizeof(requestType), 0);
+    if(ret == -1){
+        std::cout << "Node fail to send the request to manager, " << strerror(errno) << std::endl;
+        return false;
+    }
+    NodeInfoPacket nipacket;
+    std::vector<StorageNode> nodes;
+    do{
+        ret = recv(nodefd, &nipacket, sizeof(nipacket), 0);
+        if(ret == sizeof(nipacket)){
+            std::cout << "Node: receive node list" << std::endl;
+            for(int i = 0; i < nipacket.size; ++i){
+                std::string nodeID = std::string(nipacket.nodes[i].nodeID);
+                int numVNodes = nipacket.nodes[i].numVNodes;
+                std::cout << "Node: node ID = " << nodeID << " number of vnodes = " << numVNodes << std::endl;
+                nodes.push_back(StorageNode(nodeID, numVNodes));
+            }
+        }
+    }while(ret == 0);
+    shutdown(nodefd, SHUT_RDWR);
+    
+    addNodesToRing(nodes);
+}
+
+
+void StorageNode::addNodesToRing(std::vector<StorageNode> &nodes) {
+    for(auto node : nodes){
+        std::vector<VirtualNode> vnodes = node.getVirtualNodes();
+        for(auto vnode: vnodes){
+            ring.insert(vnode);
+        }
+    }
+}
+
+
+
 Packet StorageNode::unPack(char* buf) {
     Packet p;
     memcpy(&p, buf, sizeof(Packet));
@@ -515,6 +568,7 @@ void StorageNode::run() {
                 break;
             case 3: // return coorrdinator to client
                 clientCoordinator(nodefd, nodeAccept, p);
+                break;
             default:
                 std::cout << nodeID << ": Message type not found!" << std::endl;
                 break;

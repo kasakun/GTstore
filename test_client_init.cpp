@@ -27,13 +27,8 @@ int main(){
         Client client(1, MANAGER, q);
         
         client.init(session);
-
-        sleep(10);
-
         client.put(session, key, value);
-        
-        //std::cout << "number of nodeIDs = " << session.nodeIDs.size() << std::endl;
-        
+
         exit(0);
     }
     
@@ -48,9 +43,13 @@ int main(){
     if(pid == 0){
         pid = fork();
         if(pid == 0){
+            node2.init();
             node2.run();
+            exit(0);
         }
+        node1.init();
         node1.run();
+        exit(0);
     }
     
     manager.run();

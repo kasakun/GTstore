@@ -52,4 +52,7 @@ typedef struct __Packet {
 #define MANAGER "/tmp/manager.domain"
 #define MANAGERID "manager.domain"
 
+
+
+
 #endif
