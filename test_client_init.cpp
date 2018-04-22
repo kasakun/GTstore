@@ -14,7 +14,7 @@
 int main(){
     int pid = fork();
     
-    if (pid == 0) {
+    if (pid != 0) {
         // client
         sleep(3);
         Quorum q = {3, 2, 2};

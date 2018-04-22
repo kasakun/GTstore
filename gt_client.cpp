@@ -57,7 +57,8 @@ bool Client::getNodeInfos(Env& env){
             std::cout << "client: receive node list" << std::endl;
             for(int i = 0; i < nipacket.size; ++i){
                 std::string nodeID = std::string(nipacket.nodes[i].nodeID);
-                std::cout << "client: node ID = " << nodeID << std::endl;
+                int numVNodes = nipacket.nodes[i].numVNodes;
+                std::cout << "client: node ID = " << nodeID << " number of vnodes = " << numVNodes << std::endl;
                 env.nodeIDs.push_back(nodeID);
             }
         }

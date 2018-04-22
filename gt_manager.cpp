@@ -76,7 +76,7 @@ bool Manager::receiveMessage(int& managerfd, int& managerAccept, char* buf, int&
 
 bool Manager::requestHandler(int managerfd, int managerAccept, int type){
     NodeInfoPacket nipack;
-    
+    memset(&nipack, 0, sizeof(nipack));
     nipack.size = nodes.size();
     for(int i = 0; i < nodes.size(); ++i){
         //nipack.nodes[i].nodeID = nodes[i].nodeID.data();
