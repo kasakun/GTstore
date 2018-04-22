@@ -154,16 +154,14 @@ bool StorageNode::read(Packet& p) {
     }
 }
 
-void StorageNode::run() {
+bool StorageNode::createSocket(int& nodefd) {
     struct sockaddr_un nodeAddr;
-    int nodefd;
-    int nodeAccept;
     int ret;
-
     //create socket
     nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
     if (nodefd == -1) {
         std::cout << nodeID + " fail to create socket, " << strerror(errno) << std::endl;
+        return false;
     }
     // set
     nodeAddr.sun_family = AF_UNIX;
@@ -174,60 +172,135 @@ void StorageNode::run() {
     ret = bind(nodefd,  (struct sockaddr*)&nodeAddr, sizeof(nodeAddr));
     if (ret == -1) {
         std::cout <<  nodeID << " fail to bind, " << strerror(errno) << std::endl;
+        return false;
     }
     //listen, max queue size 10
     ret = listen(nodefd, 10);
     if (ret == -1) {
         std::cout <<  nodeID << " fail to listen, " << strerror(errno) << std::endl;
+        return false;
     }
+    return true;
+}
+
+bool StorageNode::receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p) {
+    int ret;
+    ssize_t bytecount = 0;
+    int opt = 1000;
+
+    nodeAccept = accept(nodefd, NULL, NULL);
+    std::cout << nodeID << ": connected." << std::endl;
+    if (nodeAccept == -1) {
+        std::cout <<  nodeID << " fail to accept, " << strerror(errno) << std::endl;
+    }
+
+    ret = setsockopt(nodeAccept, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    if (ret == -1) {
+        std::cout << nodeID << " fail to set socket opt, " << strerror(errno) << std::endl;
+    }
+
+    bytecount = recv(nodeAccept, buf, sizeof(Packet), 0);
+    if (bytecount == -1) {
+        std::cout << nodeID << " fail to receive, " << strerror(errno) << std::endl;
+        return false;
+    }
+    p = unPack(buf);
+    if (bytecount == sizeof(Packet)) {
+        // check the size of the packet
+        std::cout << nodeID << " receive " << bytecount << " bytes." << std::endl;
+        p = unPack(buf);
+        return true;
+    } else {
+        std::cout << strerror(errno) << std::endl;
+        return false;
+    }
+}
+
+bool StorageNode::managerHandler(int& nodefd, int& nodeAccept, Packet& p) {
+    return true;
+}
+bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
+    ssize_t bytecount;
+    if (p.head.size != 0) {
+        //write
+        write(p);
+        writeSendBack(p);
+        bytecount = send(nodeAccept, &p, sizeof(p), 0);
+
+        if (bytecount == -1) {
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+            return false;
+        }
+    } else {
+        //read
+        read(p);
+        readSendBack(p);
+        bytecount = send(nodeAccept, &p, sizeof(p), 0);
+        if (bytecount == -1) {
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
+    ssize_t bytecount;
+    if (p.head.size != 0) {
+        //write
+
+
+        bytecount = send(nodeAccept, &p, sizeof(p), 0);
+
+        if (bytecount == -1) {
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+            return false;
+        }
+    } else {
+        //read
+]
+        bytecount = send(nodeAccept, &p, sizeof(p), 0);
+        if (bytecount == -1) {
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
+            return false;
+        }
+    }
+    return true;
+}
+
+void StorageNode::run() {
+    int nodefd;
+    int nodeAccept;
+
+    if (!createSocket(nodefd))
+        return;
     // start serving
     std::cout << nodeID << " start serving.." << std::endl;
     while(1) {
-        nodeAccept = accept(nodefd, NULL, NULL);
-        std::cout << nodeID << ": connected." << std::endl;
-        if (nodeAccept == -1) {
-            std::cout <<  nodeID << " fail to accept, " << strerror(errno) << std::endl;
-        }
-        ssize_t bytecount = 0;
-        int opt = 1000;
-        char buf[1064];
-        ret = setsockopt(nodeAccept, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
-        if (ret == -1) {
-            std::cout << nodeID << " fail to set socket opt, " << strerror(errno) << std::endl;
-        }
-
-        bytecount = recv(nodeAccept, buf, sizeof(buf), 0);
+        char* buf = new char[sizeof(Packet)];
+        Packet p;
+        int bytecount;
+        receiveMessage(nodefd, nodeAccept, buf, p);
         if (bytecount == -1) {
-            std::cout << nodeID << " fail to receive, " << strerror(errno) << std::endl;
+            std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
             break;
         }
-        // The packet size is Packet head + value(1024)
-        if (bytecount == sizeof(Packet)) {
-            // check the size of the packet
-            std::cout << nodeID << " receive " << bytecount << " bytes." << std::endl;
-            Packet p = unPack(buf);
-            if (p.head.size != 0) {
-                //write
-                write(p);
-                writeSendBack(p);
-                bytecount = send(nodeAccept, &p, sizeof(p), 0);
-                if (bytecount == -1) {
-                    std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
-                    break;
-                }
-            } else {
-                //read
-                read(p);
-                readSendBack(p);
-                bytecount = send(nodeAccept, &p, sizeof(p), 0);
-                if (bytecount == -1) {
-                    std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
-                    break;
-                }
-            }
-            
+        switch (p.head.type)
+        {
+            case 0: // manager
+                managerHandler(nodefd, nodeAccept, p);
+                break;
+            case 1: // node
+                nodeHandler(nodefd, nodeAccept, p);
+                break;
+            case 2: // client
+                clientHandler(nodefd, nodeAccept, p);
+                break;
+            default:
+                std::cout << nodeID << ": Message type not found!" << std::endl;
+                break;
         }
     }
+
 }
 
 // virtual node

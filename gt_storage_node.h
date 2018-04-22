@@ -36,14 +36,22 @@ public:
     bool writeToVNode(int rank, ObjectKeyType key, ObjectValueType value);
     bool readVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
     Packet unPack(char* buf);      //unpack buf to the packet
-    // rewrite the packet
-    void writeSendBack(Packet& p); //sendback ack, replace value with wirte node of the operation,
-    void readSendBack(Packet& p);  //sendback ack and data
+    bool createSocket(int& nodefd);
+    bool receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p);
 
-    bool write(Packet& p);
-    bool read(Packet& p);
+    bool managerHandler(int& nodefd, int& nodeAccept, Packet& p);
+    bool nodeHandler(int& nodefd, int& nodeAccept, Packet& p);
+    bool clientHandler(int& nodefd, int& nodeAccept, Packet& p);
 
     void run();
+
+    /*
+     * node communication
+     */
+    bool write(Packet& p);
+    bool read(Packet& p);
+    void writeSendBack(Packet& p); //sendback ack, replace value with wirte node of the operation,
+    void readSendBack(Packet& p);  //sendback ack and data
 
     
 private:

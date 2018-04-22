@@ -77,8 +77,8 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     std::cout << "test nodes begin, size " << preferenceList.size() << std::endl;
 #endif
     //send requests to whole preference lists, temporary test
-    // ts, seq, ack, size, rank
-    PacketHead head = {0, 0, 0, value.back().size(), 1};
+    // type, ts, seq, ack, size, rank
+    PacketHead head = {1, 0, 0, 0, value.back().size(), 1};
     Packet p;
     p.head = head;
     memcpy(p.key, key.data(), key.size());
@@ -120,13 +120,13 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
 
     for (int i = 0; i < quo.w; ++i) {
         foo[i] = std::async(std::launch::async, [i, &env, &counter, &mtxcounter]{
-            char buf[1064];
+            char buf[1068];
             int ret = recv(env.nodesfd[i], &buf, sizeof(buf), 0);
             if (ret == -1) {
                 std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
             }
             if (ret == sizeof(Packet)) {
-                std::cout << "Client receive ack from " << (buf + 20) << std::endl;
+                std::cout << "Client receive ack from " << (buf + 24) << std::endl;
                 mtxcounter.lock();
                 ++counter;
                 mtxcounter.unlock();
