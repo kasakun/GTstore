@@ -244,6 +244,11 @@ bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
     return true;
 }
 bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
+    //
+    preferenceList.push_back(std::pair<std::string, int>("node1", 2));
+    preferenceList.push_back(std::pair<std::string, int>("node2", 1));
+    preferenceList.push_back(std::pair<std::string, int>("node3", 1));
+    //
     ssize_t bytecount;
     if (p.head.size != 0) {
         //write
@@ -270,7 +275,6 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
 void StorageNode::run() {
     int nodefd;
     int nodeAccept;
-
     if (!createSocket(nodefd))
         return;
     // start serving
