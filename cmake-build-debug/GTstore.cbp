@@ -102,7 +102,7 @@
 		<Unit filename="/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h">
 			<Option target="GTstore"/>
 		</Unit>
-		<Unit filename="/media/sf_CS6210/Projects/Project4/GTstore/test_client_init.cpp">
+		<Unit filename="/media/sf_CS6210/Projects/Project4/GTstore/test_gt_store.cpp">
 			<Option target="GTstore"/>
 		</Unit>
 		<Unit filename="/media/sf_CS6210/Projects/Project4/GTstore/CMakeLists.txt">

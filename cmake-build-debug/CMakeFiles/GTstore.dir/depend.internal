@@ -16,10 +16,10 @@ CMakeFiles/GTstore.dir/gt_storage_node.cpp.o
  /media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
  /media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.cpp
  /media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
-CMakeFiles/GTstore.dir/test_client_init.cpp.o
+CMakeFiles/GTstore.dir/test_gt_store.cpp.o
  /media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
  /media/sf_CS6210/Projects/Project4/GTstore/gt_client.h
  /media/sf_CS6210/Projects/Project4/GTstore/gt_manager.h
  /media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
  /media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
- /media/sf_CS6210/Projects/Project4/GTstore/test_client_init.cpp
+ /media/sf_CS6210/Projects/Project4/GTstore/test_gt_store.cpp

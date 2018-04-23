@@ -5,6 +5,8 @@
 #include <sys/socket.h>
 #include <iostream>
 #include <future>
+#include <stdlib.h>
+#include <time.h>
 
 #include "gt_object.h"
 #include "gt_client.h"
@@ -30,9 +32,10 @@ void Client::init(Env& env) {
     // set env
     env = {quo, clientfd, managerAddr}; //quorum, fd, addr, addrs
     
-    
     // send request to manager to get all the names of storage nodes
     getNodeInfos(env);
+    
+    versions = new std::unordered_map<ObjectKeyType, ObjectVersionType>();
 }
 
 bool Client::getNodeInfos(Env& env){
@@ -58,7 +61,7 @@ bool Client::getNodeInfos(Env& env){
             for(int i = 0; i < nipacket.size; ++i){
                 std::string nodeID = std::string(nipacket.nodes[i].nodeID);
                 int numVNodes = nipacket.nodes[i].numVNodes;
-                std::cout << "client: node ID = " << nodeID << " number of vnodes = " << numVNodes << std::endl;
+                //std::cout << "client: node ID = " << nodeID << " number of vnodes = " << numVNodes << std::endl;
                 env.nodeIDs.push_back(nodeID);
             }
         }
@@ -107,11 +110,11 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
 
     // nodes
 #if DEBUG
-    std::cout << "test nodes begin, coordinator " << coordinator.first << " rank = " << coordinator.second << std::endl;
+    std::cout << "test put begin, coordinator " << coordinator.first << " rank = " << coordinator.second << std::endl;
 #endif
     // send request (i.e. a key-value pair) to coordinator
     // type, ts, seq, ack, size, rank
-    PacketHead head = {2, 0, 0, 0, value.back().size(), coordinator.second};  // Yaohong
+    PacketHead head = {2, (*versions)[key], 0, 0, value.back().size(), coordinator.second};  // Yaohong
     Packet p;
     p.head = head;
     memcpy(p.key, key.data(), key.size());
@@ -160,7 +163,11 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     struct sockaddr_un randomNodeAddr;
     randomNodeAddr.sun_family = AF_UNIX;
     std::string address = ROOT;
-    address += env.nodeIDs.back().data();  // Yaohong Wu
+    
+    int r = rand() % env.nodeIDs.size();
+    address += env.nodeIDs[r].data();  // Yaohong Wu
+    
+    
     std::cout << "address of random node is " << address << std::endl;
     strcpy (randomNodeAddr.sun_path, address.data());
     
@@ -239,13 +246,20 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     }
     if (ret == sizeof(Packet)) {
         std::cout << "Client's value = " << (buf + sizeof(p.head) + 20) << std::endl;
-        char* tmp;
+        char* tmp = new char[1024];
         memcpy(tmp, buf + sizeof(p.head) + 20, 1024);
         std::string str(tmp);
-        value[0] = str;
+        value.push_back(str);
+        
+        (*versions)[key] = *((unsigned int*)(buf + 4));
+        std::cout << "Client's version = " << (*versions)[key] << std::endl;
     }
     return true;
 }
 
 
-void Client::finalize(Env &env){}
+void Client::finalize(Env &env){
+    shutdown(clientfd, SHUT_RDWR);
+    env.nodeIDs.clear();
+    versions->clear();
+}

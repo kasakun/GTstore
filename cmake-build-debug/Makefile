@@ -204,32 +204,32 @@ gt_storage_node.cpp.s:
 	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.s
 .PHONY : gt_storage_node.cpp.s
 
-test_client_init.o: test_client_init.cpp.o
+test_gt_store.o: test_gt_store.cpp.o
 
-.PHONY : test_client_init.o
+.PHONY : test_gt_store.o
 
 # target to build an object file
-test_client_init.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_init.cpp.o
-.PHONY : test_client_init.cpp.o
+test_gt_store.cpp.o:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_store.cpp.o
+.PHONY : test_gt_store.cpp.o
 
-test_client_init.i: test_client_init.cpp.i
+test_gt_store.i: test_gt_store.cpp.i
 
-.PHONY : test_client_init.i
+.PHONY : test_gt_store.i
 
 # target to preprocess a source file
-test_client_init.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_init.cpp.i
-.PHONY : test_client_init.cpp.i
+test_gt_store.cpp.i:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_store.cpp.i
+.PHONY : test_gt_store.cpp.i
 
-test_client_init.s: test_client_init.cpp.s
+test_gt_store.s: test_gt_store.cpp.s
 
-.PHONY : test_client_init.s
+.PHONY : test_gt_store.s
 
 # target to generate assembly for a file
-test_client_init.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_client_init.cpp.s
-.PHONY : test_client_init.cpp.s
+test_gt_store.cpp.s:
+	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_store.cpp.s
+.PHONY : test_gt_store.cpp.s
 
 # Help Target
 help:
@@ -249,9 +249,9 @@ help:
 	@echo "... gt_storage_node.o"
 	@echo "... gt_storage_node.i"
 	@echo "... gt_storage_node.s"
-	@echo "... test_client_init.o"
-	@echo "... test_client_init.i"
-	@echo "... test_client_init.s"
+	@echo "... test_gt_store.o"
+	@echo "... test_gt_store.i"
+	@echo "... test_gt_store.s"
 .PHONY : help
 
 

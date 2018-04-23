@@ -8,6 +8,8 @@
 #include <utility>
 #include <sys/socket.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "consistent_hash_ring.h"
 #include "gt_storage_node.h"
@@ -28,6 +30,8 @@
 
 
 int main(int argc, char** args) {
+    srand(time(NULL));
+    
     int pid = fork();
 
     if (pid == 0) {

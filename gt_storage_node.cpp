@@ -59,6 +59,24 @@ bool VirtualNode::readKeyValuePair(ObjectKeyType key, ObjectValueType& value) {
         return false;
 }
 
+bool VirtualNode::writeKeyVersionPair(ObjectKeyType key, ObjectVersionType version) {
+    (*versions)[key] = version;
+    return true;
+}
+
+bool VirtualNode::readKeyVersionPair(ObjectKeyType key, ObjectVersionType& version) {
+    if(versions->find(key) != versions->end()){
+        version = (*versions)[key];
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+
+
 
 /* 
  * Storage Node
@@ -90,21 +108,25 @@ std::vector<VirtualNode> StorageNode::getVirtualNodes() const {
     return vnodes;
 }
 
-bool StorageNode::writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value) {
+
+bool StorageNode::writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value, ObjectVersionType version) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
         return false;
     }
-    return vnodes[rank].writeKeyValuePair(key, value);
+    return vnodes[rank].writeKeyValuePair(key, value) && vnodes[rank].writeKeyVersionPair(key, version);
 }
 
-bool StorageNode::readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value) {
+
+bool StorageNode::readFromLocalVNode(int rank, ObjectKeyType key, ObjectValueType& value, ObjectVersionType& version) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
         return false;
     }
-    return vnodes[rank].readKeyValuePair(key, value);
+    return vnodes[rank].readKeyValuePair(key, value) && vnodes[rank].readKeyVersionPair(key, version);
 }
+
+
 
 std::string StorageNode::constructVirtualNodeID(int i) {
     return nodeID + "_" + std::to_string(i);
@@ -195,14 +217,13 @@ bool StorageNode::write(Packet& p) {
     value.push_back(valueBuf);
     Map map;
     std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
-    //store[p.head.rank].insert(pair); // deleted -Yaohong
-    writeToLocalVNode(p.head.rank, key, value);
+    
+    writeToLocalVNode(p.head.rank, key, value, p.head.timpStamp);
     ObjectKeyType tempk = key;
     ObjectValueType tempv;
     vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
     std::cout << nodeID << ":" << tempv.back().data() << std::endl;
     return true;
-//    return writeToVNode(p.head.rank, key, value);
 }
 
 
@@ -212,7 +233,7 @@ bool StorageNode::read(Packet& p) {
     keyBuf.resize(20, 0);
     ObjectKeyType key = keyBuf;
     ObjectValueType value;
-    if (vnodes[p.head.rank].readKeyValuePair(key, value)) {
+    if (readFromLocalVNode(p.head.rank, key, value, p.head.timpStamp)){
         p.head.size = value.back().size();
         memcpy(p.value, value.back().data(), p.head.size);
         return true;
@@ -324,7 +345,8 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     preferenceList.erase(preferenceList.begin()); // skip the first one, i.e. the coorrdinator
     
     ssize_t bytecount;
-    if (p.head.size != 0) {  // write request 
+    if (p.head.size != 0) {  // write request
+        p.head.timpStamp++;  // update version, i.e. time stamp
         // first write to local 
         write(p);
         
@@ -334,7 +356,6 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
         writeToNodes(p, preferenceList);
         
         writeBackPack(p);
-
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
 
         if (bytecount == -1) {

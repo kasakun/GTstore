@@ -15,7 +15,7 @@
 int main(){
     int pid = fork();
     
-    if (pid == 0) {
+    if (pid != 0) {
         // client
         sleep(3);
         Quorum q = {QUORUM_N, QUORUM_R, QUORUM_W};
@@ -26,16 +26,19 @@ int main(){
         value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
 
         Client client(1, MANAGER, q);
+        client.init(session);
         
         std::cout << "test put() " << std::endl;
-        
-        client.init(session);
         client.put(session, key, value);
+        std::cout << "before get(), version of key = " << (*client.versions)[key] << std::endl;
 
         std::cout << "test get() " << std::endl;
         sleep(2);
         ObjectValueType newValue;
         client.get(session, key, newValue);
+        std::cout << "after get(), value = " << newValue[0] << " version = " << (*client.versions)[key] << std::endl;
+        
+        client.finalize(session);
         
         exit(0);
     }

@@ -31,6 +31,10 @@ iostream
 -
 future
 -
+stdlib.h
+-
+time.h
+-
 gt_object.h
 /media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 gt_client.h
@@ -110,7 +114,7 @@ gt_object.h
 consistent_hash_ring.h
 /media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
 
-/media/sf_CS6210/Projects/Project4/GTstore/test_client_init.cpp
+/media/sf_CS6210/Projects/Project4/GTstore/test_gt_store.cpp
 iostream
 -
 string

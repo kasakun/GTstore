@@ -50,9 +50,12 @@ public:
     int getNumVirtualNodes() const;
     std::vector<VirtualNode> getVirtualNodes() const;
     
-    bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value);
-    bool readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
+    //bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value);
+    //bool readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
     
+    bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value, ObjectVersionType version);
+    bool readFromLocalVNode(int rank, ObjectKeyType key, ObjectValueType& value, ObjectVersionType& version);
+
     
     bool init();
     

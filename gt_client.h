@@ -22,9 +22,6 @@ typedef struct __Env {
     int clientfd;            // called by client
     struct sockaddr_un managerAddr;    // manager's address
     std::vector<std::string> nodeIDs;  // nodes' IDs
-    std::vector<struct sockaddr_un> nodesAddr; // nodes' addresses
-    std::vector<int> nodesfd;
-//    char buf[1024];          // message buf
 } Env;
 
 
@@ -40,6 +37,8 @@ public:
     bool get(Env& env, ObjectKeyType key, ObjectValueType& value);
     void finalize(Env &env);
 
+    std::unordered_map<ObjectKeyType, ObjectVersionType>* versions;
+    
 private:
     bool getNodeInfos(Env& env);
 
@@ -48,7 +47,6 @@ private:
     struct sockaddr_un managerAddr;
 
     Quorum quo;      //determine the quorum mechanism
-    std::unordered_map<ObjectKeyType, ObjectValueType>* data;  // client doesn't store data -Yaohong
 };
 
 
