@@ -123,6 +123,8 @@ sys/socket.h
 -
 unistd.h
 -
+gt_object.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 consistent_hash_ring.h
 /media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
 gt_storage_node.h

@@ -69,7 +69,7 @@ bool Client::getNodeInfos(Env& env){
 bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     ssize_t ret;
     std::pair<std::string, int> coordinator;
-    // Manager, to be removed
+    
     struct sockaddr_un randomNodeAddr;
     randomNodeAddr.sun_family = AF_UNIX;
     std::string address = ROOT;
@@ -84,8 +84,10 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
         return false;
     }
     Packet temp;
+    
     PacketHead tempHead = {3, 0, 0, 0, 0, 0};
     temp.head = tempHead;
+    std::cout << "key = " << key << " key size = " << key.size() << std::endl;
     memcpy(temp.key, key.data(), key.size());
     
     ret = send(env.clientfd, &temp, sizeof(Packet), 0);
@@ -105,11 +107,11 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
 
     // nodes
 #if DEBUG
-    std::cout << "test nodes begin, coordinator " << coordinator.first << std::endl;
+    std::cout << "test nodes begin, coordinator " << coordinator.first << " rank = " << coordinator.second << std::endl;
 #endif
-    //send requests to whole preference lists, temporary test
+    // send request (i.e. a key-value pair) to coordinator
     // type, ts, seq, ack, size, rank
-    PacketHead head = {2, 0, 0, 0, value.back().size(), 1};
+    PacketHead head = {2, 0, 0, 0, value.back().size(), coordinator.second};  // Yaohong
     Packet p;
     p.head = head;
     memcpy(p.key, key.data(), key.size());
@@ -122,7 +124,7 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     coorAddr += coordinator.first.data();
     strcpy (tempAddr.sun_path, coorAddr.data());
     // create socket
-    int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
+    int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);  // nodefd should be clientfd
     if (nodefd == -1) {
         std::cout<< "Client: fail to create socket with " << coordinator.first << ", " << strerror(errno) << std::endl;
     }
@@ -149,56 +151,101 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     }
     return true;
 }
-bool Client::get(Env& env, ObjectKeyType key, ObjectValueType value){
+
+
+bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     ssize_t ret;
-    std::vector<std::pair<std::string, int>> preferenceList;
-    preferenceList.push_back(std::pair<std::string, int>("node1", 2));
-    // nodes
+    std::pair<std::string, int> coordinator;
+    
+    struct sockaddr_un randomNodeAddr;
+    randomNodeAddr.sun_family = AF_UNIX;
+    std::string address = ROOT;
+    address += env.nodeIDs.back().data();  // Yaohong Wu
+    std::cout << "address of random node is " << address << std::endl;
+    strcpy (randomNodeAddr.sun_path, address.data());
+    
+    env.clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
+    ret = connect(env.clientfd, (struct sockaddr*)&randomNodeAddr, sizeof(randomNodeAddr));
+    if (ret == -1) {
+        std::cout << "Client fail to connect the random node, " << strerror(errno) << std::endl;
+        return false;
+    }
+    Packet temp;
+    
+    PacketHead tempHead = {3, 0, 0, 0, 0, 0};
+    temp.head = tempHead;
+    std::cout << "key = " << key << " key size = " << key.size() << std::endl;
+    memcpy(temp.key, key.data(), key.size());
+    
+    ret = send(env.clientfd, &temp, sizeof(Packet), 0);
+    if (ret == -1) {
+        std::cout << "Client fail to send the key, " << strerror(errno) << std::endl;
+        return false;
+    }
+    char buf[1068];
+    ret = recv(env.clientfd, &buf, sizeof(buf), 0);
+    if (ret == sizeof(buf)) {
+        memcpy(&temp, buf, sizeof(Packet));
+        std::cout << "Client receive " << temp.value << std::endl;
+        coordinator.first = temp.value;
+        coordinator.second = temp.head.rank;
+    }
+    shutdown(env.clientfd, SHUT_RDWR);
+    
+// nodes
 #if DEBUG
-    std::cout << "test nodes begin, size " << preferenceList.size() << std::endl;
+    std::cout << "test nodes begin, coordinator " << coordinator.first << " rank = " << coordinator.second << std::endl;
 #endif
-    //send requests to whole preference lists, temporary test
+    // send a request to coordinator 
     // type, ts, seq, ack, size, rank
-    PacketHead head = {2, 0, 0, 0, 0, 1};
+    PacketHead head = {2, 0, 0, 0, 0, coordinator.second};
     Packet p;
     p.head = head;
     memcpy(p.key, key.data(), key.size());
-//    memcpy(p.value, value.data()->data(), p.head.size);
 
-    std::vector<std::pair<std::string, int>>::iterator it;it = preferenceList.begin();
-    // load nodes.
+    // address of coordinator
     struct sockaddr_un tempAddr;
     tempAddr.sun_family = AF_UNIX;
-    std::string address = ROOT;
-    address += it->first.data();
+    address = ROOT;
+    address += coordinator.first.data();
     strcpy (tempAddr.sun_path, address.data());
+    
     // create socket
     int nodefd = socket(PF_UNIX, SOCK_STREAM, 0);
     if (nodefd == -1) {
-        std::cout<< "Client: fail to create socket with " << it->first << ", " << strerror(errno) << std::endl;
+        std::cout<< "Client: fail to create socket" << strerror(errno) << std::endl;
     }
+    
     // connect
     ret = connect(nodefd, (struct sockaddr*)&tempAddr, sizeof(tempAddr));
     if (ret == -1) {
-        std::cout << "Client fail to connect " << it->first << ", " << strerror(errno) << std::endl;
+        std::cout << "Client fail to connect " << coordinator.first << ", " << strerror(errno) << std::endl;
         exit(0);
     }
+    
 #if DEBUG
-    std::cout<<"Client: request packet to " << it->first << std::endl;
+    std::cout<<"Client: send a request packet to " << coordinator.first << std::endl;
 #endif
     ret = send(nodefd, &p, sizeof(p), 0);
+    
     if (ret == -1) {
         std::cout << "Client: send error, " << strerror(errno) << std::endl;
     }
 
-    char buf[1068];
+    //char buf[1068];
     ret = recv(nodefd, &buf, sizeof(buf), 0);
     if (ret == -1) {
         std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
     }
     if (ret == sizeof(Packet)) {
-        std::cout << "Client receive ack from " << (buf + sizeof(p.head) + 20) << std::endl;
+        std::cout << "Client's value = " << (buf + sizeof(p.head) + 20) << std::endl;
+        char* tmp;
+        memcpy(tmp, buf + sizeof(p.head) + 20, 1024);
+        std::string str(tmp);
+        value[0] = str;
     }
     return true;
 }
+
+
 void Client::finalize(Env &env){}

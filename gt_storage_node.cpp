@@ -25,6 +25,7 @@
 VirtualNode::VirtualNode(const std::string& vnodeID_, const std::string& nodeID_, const int& rank_):\
                          vnodeID(vnodeID_), nodeID(nodeID_), rank(rank_) {
     data = new std::unordered_map<ObjectKeyType, ObjectValueType>();
+    versions = new std::unordered_map<ObjectKeyType, ObjectVersionType>();
 }
 
 VirtualNode::~VirtualNode() {}
@@ -312,20 +313,26 @@ bool StorageNode::nodeHandler(int& nodefd, int& nodeAccept, Packet& p) {
     return true;
 }
 bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
-    //
+    
     std::vector<std::pair<std::string, int>> preferenceList;
-    preferenceList.push_back(std::pair<std::string, int>("node1", 2));
-    preferenceList.push_back(std::pair<std::string, int>("node2", 1));
-    preferenceList.push_back(std::pair<std::string, int>("node3", 1));
 
-    //
+    std::string key(p.key);
+    key.resize(20);
+    preferenceList = getPreferenceList(key, SIZE_PREFERENCE_LIST);
+    std::cout << "size of preference list = " << preferenceList.size() << std::endl;
+    
+    preferenceList.erase(preferenceList.begin()); // skip the first one, i.e. the coorrdinator
+    
     ssize_t bytecount;
-    if (p.head.size != 0) {
-        //write to all nodes on the list
+    if (p.head.size != 0) {  // write request 
+        // first write to local 
         write(p);
-//        std::cout << "I read"<< p.value << std::endl;
+        
+        // then write to all nodes on the list
         p.head.type = 1; // node communication
+        
         writeToNodes(p, preferenceList);
+        
         writeBackPack(p);
 
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
@@ -335,22 +342,21 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
             return false;
         }
 
-    } else {
-        //read
+    } else {  // read request
+        // first read from local
         read(p);// the head.size of the packet is changed
+        
+        // then read from all nodes on the list
         p.head.type = 1; // node communication
-        Packet temp;
-        temp.head = p.head;temp.head.size = 0;memcpy(temp.key, p.key, 20);
-        readFromNodes(temp, preferenceList);
-        if (p.head.timpStamp > temp.head.timpStamp) {
-            readBackPack(p);
-            bytecount = send(nodeAccept, &p, sizeof(p), 0);
-        }
+        
+        readFromNodes(p, preferenceList);
 
-        else {
-            readBackPack(temp);
-            bytecount = send(nodeAccept, &p, sizeof(p), 0);
-        }
+        readBackPack(p);
+        
+        std::cout << "p key = " << p.key << "p value = " << p.value << std::endl;
+        
+        bytecount = send(nodeAccept, &p, sizeof(p), 0);
+        
         if (bytecount == -1) {
             std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
             return false;
@@ -358,6 +364,8 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     }
     return true;
 }
+
+
 bool StorageNode::clientCoordinator(int& nodefd, int& nodeAccept, Packet& p) {
     ssize_t bytecount;
 
@@ -368,7 +376,7 @@ bool StorageNode::clientCoordinator(int& nodefd, int& nodeAccept, Packet& p) {
     std::pair<std::string, int> pair = findCoordinator(key);
 
     p.head.rank = pair.second;
-    memcpy(p.key, pair.first.data(), sizeof(pair.first.data()));
+    memcpy(p.value, pair.first.data(), sizeof(pair.first.data()));
     bytecount = send(nodeAccept, &p, sizeof(p), 0);
 
     if (bytecount == -1) {
@@ -404,7 +412,7 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
         nodesfd.push_back(nodefd);
         nodesAddr.push_back(tempAddr);
 #if DEBUG
-        std::cout << nodeID<< " send packet to " << it->first << std::endl;
+        std::cout << nodeID << " send packet to " << it->first << std::endl;
 #endif
         nodefd = nodesfd.back();
         ret = send(nodefd, &p, sizeof(p), 0);
@@ -418,7 +426,9 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
     std::mutex mtxcounter;
     int counter = 0;
 
-    for (int i = 0; i < 2; ++i) {
+    int w = QUORUM_W;
+    
+    for (int i = 0; i < w; ++i) {
         foo[i] = std::async(std::launch::async, [i, &nodesfd, &counter, &mtxcounter]{
             char buf[1068];
             int ret = recv(nodesfd[i], &buf, sizeof(buf), 0);
@@ -434,11 +444,11 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
             return ret;
         });
     }
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < w; ++i) {
         foo[i].get();
     }
 
-    if (counter == 2) {
+    if (counter == w) {
         std::cout << nodeID << " all send finish" << std::endl;
         return true;
     }
@@ -447,6 +457,8 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
         return false;
     }
 }
+
+
 bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list) {
     int ret;
     std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
@@ -484,13 +496,15 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
         }
     }
 
-    // check if num of return reach quo.w, write success, parallel
+    // check if num of return reach QUORUM_R, read success, parallel
     std::future<void> foo[MAX_THREAD];
     std::mutex mtxcounter;
     std::mutex mtxpacket;
     int counter = 0;
 
-    for (int i = 0; i < 2; ++i) {
+    int r = QUORUM_R;
+    
+    for (int i = 0; i < r; ++i) {
         foo[i] = std::async(std::launch::async, [i, &p, &nodesfd, &counter, &mtxpacket, &mtxcounter]{
             char buf[1068];
             int ret = recv(nodesfd[i], &buf, sizeof(buf), 0);
@@ -512,11 +526,11 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
             return;
         });
     }
-    for (int i = 0; i < 2; ++i) {
+    for (int i = 0; i < r; ++i) {
         foo[i].get();
     }
 
-    if (counter == 2) {
+    if (counter == r) {
         std::cout << nodeID << " all send finish" << std::endl;
         return true;
     }
@@ -526,9 +540,11 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
     }
 }
 
+
 std::pair<std::string, int> StorageNode::findCoordinator(ObjectKeyType key) {
     std::hash<ObjectKeyType> hasher;
     auto hashedKey = hasher(key);
+    std::cout << "key = " << key << std::endl;
     std::cout << "hashed key = " << hashedKey << std::endl;
 
     auto it = ring.find(hashedKey);
@@ -537,6 +553,8 @@ std::pair<std::string, int> StorageNode::findCoordinator(ObjectKeyType key) {
 
     return std::pair<std::string, int>(nodeID, rank);
 }
+
+
 void StorageNode::run() {
     int nodefd;
     int nodeAccept;
@@ -576,6 +594,69 @@ void StorageNode::run() {
     }
 
 }
+
+
+std::vector<std::pair<std::string, int>> StorageNode::getPreferenceList(const ObjectKeyType& objectKey, int sizeList){
+    std::hash<ObjectKeyType> hasher;
+    auto hashedKey = hasher(objectKey);
+    std::cout << "in get plist: object key = " << objectKey << " hashed key = " << hashedKey << std::endl;
+
+    std::vector<std::pair<std::string, int>> preferenceList;  // a list of storage nodes that should contain objectKey
+    auto cur = ring.find(hashedKey);
+    auto it = cur;
+    int k = 0, rank;
+    std::string nodeID;
+
+    for(;k < sizeList && cur != ring.end(); ++cur){
+        nodeID = (cur->second).getNodeID();
+
+        bool skip = false;
+        for(auto x : preferenceList){
+            if(nodeID == x.first){
+                skip = true;
+                break;
+            }
+        }
+
+        if(skip) continue;
+        rank = (cur->second).getRank();
+        preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
+        k++;
+        std::cout << "finding plist: virtual node key = " << (cur->first) << ", virtual node ID = " << (cur->second).getVNodeID() << std::endl;
+    }
+
+    cur = ring.begin();
+    for(; k < sizeList && cur != it; ++cur){
+        nodeID = (cur->second).getNodeID();
+
+        bool skip = false;
+        for(auto x : preferenceList){
+            if(nodeID == x.first){
+                skip = true;
+                break;
+            }
+        }
+
+        if(skip) continue;
+        rank = (cur->second).getRank();
+        preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
+        k++;
+        std::cout << "finding plist: virtual node key = " << (cur->first) << ", virtual node ID = " << (cur->second).getVNodeID() << std::endl;
+    }
+
+    if(k < sizeList){
+        std::cout << "too few storage node!" << std::endl;
+    }
+
+    for(auto x : preferenceList){
+        std::cout << "in plist: node ID = " << x.first << ", rank = " << x.second << std::endl;
+    }
+
+    return preferenceList;
+};
+
+
+
 
 // virtual node
 VirtualNodeHasher::VirtualNodeHasher() {}

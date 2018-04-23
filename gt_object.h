@@ -6,6 +6,7 @@
 
 typedef std::string ObjectKeyType;                   // 20B
 typedef std::vector<std::string> ObjectValueType;    // 1024B
+typedef unsigned int ObjectVersionType;              // 4B
 
 typedef struct __Msg {
     ObjectKeyType key;
@@ -52,7 +53,9 @@ typedef struct __Packet {
 #define MANAGER "/tmp/manager.domain"
 #define MANAGERID "manager.domain"
 
-
-
+#define SIZE_PREFERENCE_LIST 3
+#define QUORUM_W 2
+#define QUORUM_R 2
+#define QUORUM_N 3
 
 #endif

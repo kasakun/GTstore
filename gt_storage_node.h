@@ -18,12 +18,16 @@ public:
     bool operator==(const VirtualNode& other) const;
     bool writeKeyValuePair(ObjectKeyType key, ObjectValueType value);
     bool readKeyValuePair(ObjectKeyType key, ObjectValueType& value);
+    bool writeKeyVersionPair(ObjectKeyType key, ObjectVersionType version);
+    bool readKeyVersionPair(ObjectKeyType key, ObjectVersionType& version);
 
+    
 private:
     std::string vnodeID;                                       // its own ID
     std::string nodeID;                                        // the ID of the actual storage node
     int rank;                                                  // the rank among the virtual nodes of the same storage node
     Map* data;  // the actual key-value pairs
+    std::unordered_map<ObjectKeyType, ObjectVersionType>* versions;
 };
 
 
@@ -86,6 +90,9 @@ public:
 private:
     std::string constructVirtualNodeID(int i);
     void addNodesToRing(std::vector<StorageNode>& nodes);
+    std::vector<std::pair<std::string, int>> getPreferenceList(const ObjectKeyType& objectKey, int sizeList);  // preference list does not include coordinator
+    
+    
     
     std::vector<VirtualNode> vnodes;
 
