@@ -22,7 +22,7 @@ Consistent Hashing Table.
 Range of hash function.
 Should the ring be in every storage node so that a client can send its request to each storage node?
 
-### Client Pre-requst
+### Client Pre-reqeust
 Determine the object key position in the ring.
 Find the coordinator, i.e. the first storage node in the preference list, for an object?
 
@@ -54,20 +54,23 @@ Find the coordinator (a storage node) for an object key. Let the coordinator do 
 Initialize the client session with the manager and other control path operations. `env` stores the session info related to current client session.
 
 ### put(&env,key, value)
+Client find and contact coordinator to put. Coordinator write itself and to the others and return.
+
 ### get(&env,key)
+Client find and contact coordinator to get. Coordinator read itself and from the others and return.
+
 ### finalize(&env) 
 Control path cleanup operations.
 
-## Example
-Shopping cart
+## How to run
+Use cmake to compile, simply run in the root
+
+```
+$ cmake .
+$ make
+$ ./GTstore
+```
+The test case shows a procedure that, a client side send generate a pair of key and value.
+First put the pair to the nodes, and then get the value back.
 
 
-## List To Do
-
-## Manager to nodes communication
-
-## get, timestamp in database required
-
-## init, finalized
-
-## test file
