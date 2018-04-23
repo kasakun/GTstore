@@ -437,7 +437,7 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
     }
 
     if (counter == w) {
-        std::cout << "Coordinator " << nodeID << " all " << counter << " reads finish" << std::endl;
+        std::cout << "Coordinator " << nodeID << " all " << counter << " writes finish" << std::endl;
         return true;
     }
     else {

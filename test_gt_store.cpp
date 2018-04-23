@@ -25,7 +25,7 @@ int main(){
         ObjectKeyType key = "ywu669zchen606OQ5780";
         ObjectValueType value;
         value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
-        std::cout << "Key value is" << key << ", value is " << value.back().data() << std::endl;
+        std::cout << "Key value is " << key << ", value is " << value.back().data() << std::endl;
         Client client(1, MANAGER, q);
         client.init(session);
         
