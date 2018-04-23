@@ -115,11 +115,11 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
 #endif
     // send request (i.e. a key-value pair) to coordinator
     // type, ts, seq, ack, size, rank
-    PacketHead head = {2, (*versions)[key], 0, 0, value.back().size(), coordinator.second};  // Yaohong
+    PacketHead head = {2, (*versions)[key], 0, 0, value.size(), coordinator.second};  // Yaohong
     Packet p;
     p.head = head;
     memcpy(p.key, key.data(), key.size());
-    memcpy(p.value, value.data()->data(), p.head.size);
+    memcpy(p.value, value.data(), p.head.size);
 
     // load nodes.
     struct sockaddr_un tempAddr;
@@ -253,7 +253,7 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
         char* tmp = new char[1024];
         memcpy(tmp, buf + sizeof(p.head) + 20, 1024);
         std::string str(tmp);
-        value.push_back(str);
+        value = str;
         
         (*versions)[key] = *((unsigned int*)(buf + 4));
         //std::cout << "Client's version = " << (*versions)[key] << std::endl;

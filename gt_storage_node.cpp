@@ -254,8 +254,8 @@ bool StorageNode::write(Packet& p) {
     valueBuf.resize(p.head.size, 0);
 
     ObjectKeyType key = keyBuf;
-    ObjectValueType value;
-    value.push_back(valueBuf);
+    ObjectValueType value = valueBuf;
+
     Map map;
     std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
     
@@ -263,7 +263,7 @@ bool StorageNode::write(Packet& p) {
     ObjectKeyType tempk = key;
     ObjectValueType tempv;
     vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
-    std::cout << nodeID << " writes success! Value:" << tempv.back().data() << std::endl;
+    std::cout << nodeID << " writes success! Value:" << tempv.data() << std::endl;
     return true;
 }
 bool StorageNode::read(Packet& p) {
@@ -273,9 +273,9 @@ bool StorageNode::read(Packet& p) {
     ObjectKeyType key = keyBuf;
     ObjectValueType value;
     if (readFromLocalVNode(p.head.rank, key, value, p.head.timpStamp)){
-        p.head.size = value.back().size();
-        memcpy(p.value, value.back().data(), p.head.size);
-        std::cout << nodeID << " reads success! Value:" << value.back().data() << std::endl;
+        p.head.size = value.size();
+        memcpy(p.value, value.data(), p.head.size);
+        std::cout << nodeID << " reads success! Value:" << value.data() << std::endl;
         return true;
     } else {
         return false;

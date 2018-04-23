@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
+/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
 map
 -
 unordered_map
@@ -22,7 +22,7 @@ iostream
 limits
 -
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_client.cpp
+/media/sf_CS6210/Projects/Project4/GTstore/gt_client.cpp
 sys/types.h
 -
 sys/socket.h
@@ -36,19 +36,19 @@ stdlib.h
 time.h
 -
 gt_object.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 gt_client.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_client.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_client.h
 sys/un.h
 -
 unordered_map
 -
 gt_object.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_manager.cpp
+/media/sf_CS6210/Projects/Project4/GTstore/gt_manager.cpp
 iostream
 -
 string
@@ -66,9 +66,9 @@ unistd.h
 future
 -
 gt_manager.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_manager.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_manager.h
 vector
 -
 iostream
@@ -78,17 +78,17 @@ unordered_map
 limits
 -
 consistent_hash_ring.h
-/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
+/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
 gt_storage_node.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 string
 -
 vector
 -
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.cpp
+/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.cpp
 iostream
 -
 string
@@ -106,15 +106,15 @@ unistd.h
 future
 -
 gt_storage_node.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
 gt_object.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 consistent_hash_ring.h
-/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
+/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
 
-/home/chenzy/Desktop/Code/OS/GTstore/test_gt_store.cpp
+/media/sf_CS6210/Projects/Project4/GTstore/test_gt_store.cpp
 iostream
 -
 string
@@ -128,13 +128,13 @@ sys/socket.h
 unistd.h
 -
 gt_object.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_object.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_object.h
 consistent_hash_ring.h
-/home/chenzy/Desktop/Code/OS/GTstore/consistent_hash_ring.h
+/media/sf_CS6210/Projects/Project4/GTstore/consistent_hash_ring.h
 gt_storage_node.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_storage_node.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_storage_node.h
 gt_manager.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_manager.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_manager.h
 gt_client.h
-/home/chenzy/Desktop/Code/OS/GTstore/gt_client.h
+/media/sf_CS6210/Projects/Project4/GTstore/gt_client.h
 

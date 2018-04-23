@@ -5,7 +5,8 @@
 #include <vector>
 
 typedef std::string ObjectKeyType;                   // 20B
-typedef std::vector<std::string> ObjectValueType;    // 1024B
+//typedef std::vector<std::string> ObjectValueType;    // 1024B
+typedef std::string ObjectValueType;
 typedef unsigned int ObjectVersionType;              // 4B
 
 typedef struct __Msg {

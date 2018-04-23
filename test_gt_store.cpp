@@ -23,9 +23,8 @@ int main(){
         Env session;
         
         ObjectKeyType key = "ywu669zchen606OQ5780";
-        ObjectValueType value;
-        value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
-        std::cout << "Key value is " << key << ", value is " << value.back().data() << std::endl;
+        ObjectValueType value = "{Soap, 1}, {Phone, 3}, {Wine, 6}";
+        std::cout << "Key value is " << key << ", value is " << value.data() << std::endl;
         Client client(1, MANAGER, q);
         client.init(session);
         
@@ -37,7 +36,7 @@ int main(){
         sleep(2);
         ObjectValueType newValue;
         client.get(session, key, newValue);
-        std::cout << "After get(), value = " << newValue[0] << " version = " << (*client.versions)[key] << std::endl;
+        std::cout << "After get(), value = " << newValue << " version = " << (*client.versions)[key] << std::endl;
         
         client.finalize(session);
         
