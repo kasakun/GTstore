@@ -8,17 +8,14 @@
 #include <unordered_map>
 #include <sys/un.h>
 #include <sys/socket.h>
-//#include <zconf.h>
+
 #include <unistd.h>
 #include <future>
 
 #include "gt_storage_node.h"
 
-
 #define MAX_THREAD 4
-#define DEBUG 1
-
-
+#define DEBUG 0
 /* 
  * Virtual Node
  */
@@ -74,10 +71,6 @@ bool VirtualNode::readKeyVersionPair(ObjectKeyType key, ObjectVersionType& versi
     }
 }
 
-
-
-
-
 /* 
  * Storage Node
  */
@@ -99,16 +92,12 @@ StorageNode::~StorageNode() {}
 std::string StorageNode::getNodeID() const {
     return nodeID;
 }
-
 int StorageNode::getNumVirtualNodes() const {
     return numVirtualNodes;
 }
-
 std::vector<VirtualNode> StorageNode::getVirtualNodes() const {
     return vnodes;
 }
-
-
 bool StorageNode::writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value, ObjectVersionType version) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
@@ -116,8 +105,6 @@ bool StorageNode::writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType
     }
     return vnodes[rank].writeKeyValuePair(key, value) && vnodes[rank].writeKeyVersionPair(key, version);
 }
-
-
 bool StorageNode::readFromLocalVNode(int rank, ObjectKeyType key, ObjectValueType& value, ObjectVersionType& version) {
     if(rank < 0 || rank >= vnodes.size()) {
         std::cout << "wrong rank" << std::endl;
@@ -125,14 +112,9 @@ bool StorageNode::readFromLocalVNode(int rank, ObjectKeyType key, ObjectValueTyp
     }
     return vnodes[rank].readKeyValuePair(key, value) && vnodes[rank].readKeyVersionPair(key, version);
 }
-
-
-
 std::string StorageNode::constructVirtualNodeID(int i) {
     return nodeID + "_" + std::to_string(i);
 }
-
-
 bool StorageNode::init(){
     // first send a request to the manager and receive a list of storage nodes
     // then construct the ring using the list
@@ -159,11 +141,15 @@ bool StorageNode::init(){
     do{
         ret = recv(nodefd, &nipacket, sizeof(nipacket), 0);
         if(ret == sizeof(nipacket)){
+#if DEBUG
             std::cout << "Node: receive node list" << std::endl;
+#endif
             for(int i = 0; i < nipacket.size; ++i){
                 std::string nodeID = std::string(nipacket.nodes[i].nodeID);
                 int numVNodes = nipacket.nodes[i].numVNodes;
+#if DEBUG
                 std::cout << "Node: node ID = " << nodeID << " number of vnodes = " << numVNodes << std::endl;
+#endif
                 nodes.push_back(StorageNode(nodeID, numVNodes));
             }
         }
@@ -172,8 +158,6 @@ bool StorageNode::init(){
     
     addNodesToRing(nodes);
 }
-
-
 void StorageNode::addNodesToRing(std::vector<StorageNode> &nodes) {
     for(auto node : nodes){
         std::vector<VirtualNode> vnodes = node.getVirtualNodes();
@@ -182,66 +166,12 @@ void StorageNode::addNodesToRing(std::vector<StorageNode> &nodes) {
         }
     }
 }
-
-
-
 Packet StorageNode::unPack(char* buf) {
     Packet p;
     memcpy(&p, buf, sizeof(Packet));
     return p;
 }
-
-void StorageNode::writeBackPack(Packet& p) {
-    p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
-    p.head.seq = 0;       // sequence number of the packet
-    p.head.size = 0;      // size of the value
-
-    memcpy(p.key, nodeID.data(), sizeof(nodeID.data()));
-}
-
-void StorageNode::readBackPack(Packet& p) {
-    p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
-    p.head.seq = 0;       // sequence number of the packet
-}
-
-
-bool StorageNode::write(Packet& p) {
-    std::string keyBuf = p.key;
-    std::string valueBuf = p.value;
-
-    keyBuf.resize(20, 0);
-    valueBuf.resize(p.head.size, 0);
-
-    ObjectKeyType key = keyBuf;
-    ObjectValueType value;
-    value.push_back(valueBuf);
-    Map map;
-    std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
-    
-    writeToLocalVNode(p.head.rank, key, value, p.head.timpStamp);
-    ObjectKeyType tempk = key;
-    ObjectValueType tempv;
-    vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
-    std::cout << nodeID << ":" << tempv.back().data() << std::endl;
-    return true;
-}
-
-
-bool StorageNode::read(Packet& p) {
-    //get key
-    std::string keyBuf = p.key;
-    keyBuf.resize(20, 0);
-    ObjectKeyType key = keyBuf;
-    ObjectValueType value;
-    if (readFromLocalVNode(p.head.rank, key, value, p.head.timpStamp)){
-        p.head.size = value.back().size();
-        memcpy(p.value, value.back().data(), p.head.size);
-        return true;
-    } else {
-        return false;
-    }
-}
-
+// node server and message handler
 bool StorageNode::createListenSocket(int& nodefd) {
     struct sockaddr_un nodeAddr;
     int ret;
@@ -272,14 +202,13 @@ bool StorageNode::createListenSocket(int& nodefd) {
     }
     return true;
 }
-
 bool StorageNode::receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p) {
     int ret;
     ssize_t bytecount = 0;
     int opt = 1000;
 
     nodeAccept = accept(nodefd, NULL, NULL);
-    std::cout << nodeID << ": connected." << std::endl;
+//    std::cout << nodeID << ": connected." << std::endl;
     if (nodeAccept == -1) {
         std::cout <<  nodeID << " fail to accept, " << strerror(errno) << std::endl;
     }
@@ -297,7 +226,6 @@ bool StorageNode::receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet
     p = unPack(buf);
     if (bytecount == sizeof(Packet)) {
         // check the size of the packet
-        std::cout << nodeID << " receive " << bytecount << " bytes." << std::endl;
         p = unPack(buf);
         return true;
     } else {
@@ -305,7 +233,55 @@ bool StorageNode::receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet
         return false;
     }
 }
+//send back pack
+void StorageNode::writeBackPack(Packet& p) {
+    p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
+    p.head.seq = 0;       // sequence number of the packet
+    p.head.size = 0;      // size of the value
 
+    memcpy(p.key, nodeID.data(), sizeof(nodeID.data()));
+}
+void StorageNode::readBackPack(Packet& p) {
+    p.head.ack = p.head.seq + 1; // ack = seq + 1, succeeds, otherwise fails.
+    p.head.seq = 0;       // sequence number of the packet
+}
+// Each node read and write
+bool StorageNode::write(Packet& p) {
+    std::string keyBuf = p.key;
+    std::string valueBuf = p.value;
+
+    keyBuf.resize(20, 0);
+    valueBuf.resize(p.head.size, 0);
+
+    ObjectKeyType key = keyBuf;
+    ObjectValueType value;
+    value.push_back(valueBuf);
+    Map map;
+    std::pair<ObjectKeyType, ObjectValueType> pair (key, value);
+    
+    writeToLocalVNode(p.head.rank, key, value, p.head.timpStamp);
+    ObjectKeyType tempk = key;
+    ObjectValueType tempv;
+    vnodes[p.head.rank].readKeyValuePair(tempk, tempv);
+    std::cout << nodeID << " writes success! Value:" << tempv.back().data() << std::endl;
+    return true;
+}
+bool StorageNode::read(Packet& p) {
+    //get key
+    std::string keyBuf = p.key;
+    keyBuf.resize(20, 0);
+    ObjectKeyType key = keyBuf;
+    ObjectValueType value;
+    if (readFromLocalVNode(p.head.rank, key, value, p.head.timpStamp)){
+        p.head.size = value.back().size();
+        memcpy(p.value, value.back().data(), p.head.size);
+        std::cout << nodeID << " reads success! Value:" << value.back().data() << std::endl;
+        return true;
+    } else {
+        return false;
+    }
+}
+// Four Handlers
 bool StorageNode::managerHandler(int& nodefd, int& nodeAccept, Packet& p) {
     return true;
 }
@@ -340,8 +316,9 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     std::string key(p.key);
     key.resize(20);
     preferenceList = getPreferenceList(key, SIZE_PREFERENCE_LIST);
+#if DEBUG
     std::cout << "size of preference list = " << preferenceList.size() << std::endl;
-    
+#endif
     preferenceList.erase(preferenceList.begin()); // skip the first one, i.e. the coorrdinator
     
     ssize_t bytecount;
@@ -349,12 +326,9 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
         p.head.timpStamp++;  // update version, i.e. time stamp
         // first write to local 
         write(p);
-        
         // then write to all nodes on the list
         p.head.type = 1; // node communication
-        
         writeToNodes(p, preferenceList);
-        
         writeBackPack(p);
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
 
@@ -366,18 +340,11 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     } else {  // read request
         // first read from local
         read(p);// the head.size of the packet is changed
-        
         // then read from all nodes on the list
         p.head.type = 1; // node communication
-        
         readFromNodes(p, preferenceList);
-
         readBackPack(p);
-        
-        std::cout << "p key = " << p.key << "p value = " << p.value << std::endl;
-        
         bytecount = send(nodeAccept, &p, sizeof(p), 0);
-        
         if (bytecount == -1) {
             std::cout << nodeID << " fail to send ack, " << strerror(errno) << std::endl;
             return false;
@@ -385,8 +352,6 @@ bool StorageNode::clientHandler(int& nodefd, int& nodeAccept, Packet& p) {
     }
     return true;
 }
-
-
 bool StorageNode::clientCoordinator(int& nodefd, int& nodeAccept, Packet& p) {
     ssize_t bytecount;
 
@@ -406,7 +371,7 @@ bool StorageNode::clientCoordinator(int& nodefd, int& nodeAccept, Packet& p) {
     }
     return true;
 }
-
+//Coordinator Functions
 bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> list) {
     int ret;
     std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
@@ -457,7 +422,9 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
                 std::cout << "receive ack error, " << strerror(errno) << std::endl;
             }
             if (ret == sizeof(Packet)) {
+#if DEBUG
                 std::cout << "receive ack from " << (buf + 24) << std::endl;
+#endif
                 mtxcounter.lock();
                 ++counter;
                 mtxcounter.unlock();
@@ -470,7 +437,7 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
     }
 
     if (counter == w) {
-        std::cout << nodeID << " all send finish" << std::endl;
+        std::cout << "Coordinator " << nodeID << " all " << counter << " reads finish" << std::endl;
         return true;
     }
     else {
@@ -478,8 +445,6 @@ bool StorageNode::writeToNodes(Packet& p, std::vector<std::pair<std::string, int
         return false;
     }
 }
-
-
 bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list) {
     int ret;
     std::vector<struct sockaddr_un> nodesAddr; // quorum addresses
@@ -511,7 +476,9 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
         std::cout << nodeID<< " send request to " << it->first << std::endl;
 #endif
         nodefd = nodesfd.back();
-        ret = send(nodefd, &p, sizeof(p), 0);
+        Packet tempSend = p;
+        tempSend.head.size = 0;
+        ret = send(nodefd, &tempSend, sizeof(tempSend), 0);
         if (ret == -1) {
             std::cout << nodeID << " send error, " << strerror(errno) << std::endl;
         }
@@ -533,7 +500,9 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
                 std::cout << "receive error, " << strerror(errno) << std::endl;
             }
             if (ret == sizeof(Packet)) {
+#if DEBUG
                 std::cout << "receive value " << (buf + sizeof(p.head) + 20) << std::endl;
+#endif
                 Packet temp;
                 memcpy(&temp, buf, sizeof(Packet));
                 mtxpacket.lock();
@@ -552,7 +521,7 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
     }
 
     if (counter == r) {
-        std::cout << nodeID << " all send finish" << std::endl;
+        std::cout <<"Coordinator: "<< nodeID << " all " << counter << " reads finish" << std::endl;
         return true;
     }
     else {
@@ -560,22 +529,20 @@ bool StorageNode::readFromNodes(Packet& p, std::vector<std::pair<std::string, in
         return false;
     }
 }
-
-
+// Random selected Node
 std::pair<std::string, int> StorageNode::findCoordinator(ObjectKeyType key) {
     std::hash<ObjectKeyType> hasher;
     auto hashedKey = hasher(key);
+#if DEBUG
     std::cout << "key = " << key << std::endl;
     std::cout << "hashed key = " << hashedKey << std::endl;
-
+#endif
     auto it = ring.find(hashedKey);
     std::string nodeID = (it->second).getNodeID();
     int rank = (it->second).getRank();
 
     return std::pair<std::string, int>(nodeID, rank);
 }
-
-
 void StorageNode::run() {
     int nodefd;
     int nodeAccept;
@@ -615,13 +582,12 @@ void StorageNode::run() {
     }
 
 }
-
-
 std::vector<std::pair<std::string, int>> StorageNode::getPreferenceList(const ObjectKeyType& objectKey, int sizeList){
     std::hash<ObjectKeyType> hasher;
     auto hashedKey = hasher(objectKey);
+#if DEBUG
     std::cout << "in get plist: object key = " << objectKey << " hashed key = " << hashedKey << std::endl;
-
+#endif
     std::vector<std::pair<std::string, int>> preferenceList;  // a list of storage nodes that should contain objectKey
     auto cur = ring.find(hashedKey);
     auto it = cur;
@@ -643,7 +609,9 @@ std::vector<std::pair<std::string, int>> StorageNode::getPreferenceList(const Ob
         rank = (cur->second).getRank();
         preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
         k++;
+#if DEBUG
         std::cout << "finding plist: virtual node key = " << (cur->first) << ", virtual node ID = " << (cur->second).getVNodeID() << std::endl;
+#endif
     }
 
     cur = ring.begin();
@@ -662,24 +630,24 @@ std::vector<std::pair<std::string, int>> StorageNode::getPreferenceList(const Ob
         rank = (cur->second).getRank();
         preferenceList.push_back(std::pair<std::string, int>(nodeID, rank));
         k++;
+#if DEBUG
         std::cout << "finding plist: virtual node key = " << (cur->first) << ", virtual node ID = " << (cur->second).getVNodeID() << std::endl;
+#endif
     }
 
     if(k < sizeList){
         std::cout << "too few storage node!" << std::endl;
     }
 
+#if DEBUG
     for(auto x : preferenceList){
         std::cout << "in plist: node ID = " << x.first << ", rank = " << x.second << std::endl;
     }
-
+#endif
     return preferenceList;
 };
 
-
-
-
-// virtual node
+// virtual node Hasher
 VirtualNodeHasher::VirtualNodeHasher() {}
 VirtualNodeHasher::~VirtualNodeHasher() {}
 std::size_t VirtualNodeHasher::operator()(const VirtualNode& vnode) const {

@@ -4,7 +4,6 @@
 #include "gt_object.h"
 #include "consistent_hash_ring.h"
 
-
 using  Map = std::unordered_map<ObjectKeyType, ObjectValueType>;
 class VirtualNode{
 public:
@@ -30,7 +29,6 @@ private:
     std::unordered_map<ObjectKeyType, ObjectVersionType>* versions;
 };
 
-
 class VirtualNodeHasher{
 public:
     VirtualNodeHasher();
@@ -49,38 +47,21 @@ public:
     std::string getNodeID() const;
     int getNumVirtualNodes() const;
     std::vector<VirtualNode> getVirtualNodes() const;
-    
-    //bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value);
-    //bool readFromLocalVNode(int rank, ObjectKeyType& key, ObjectValueType& value);
-    
     bool writeToLocalVNode(int rank, ObjectKeyType key, ObjectValueType value, ObjectVersionType version);
     bool readFromLocalVNode(int rank, ObjectKeyType key, ObjectValueType& value, ObjectVersionType& version);
-
-    
     bool init();
-    
-    
     Packet unPack(char* buf);      //unpack buf to the packet
     bool createListenSocket(int& nodefd);
     bool receiveMessage(int& nodefd, int& nodeAccept, char* buf, Packet& p);
-
     bool managerHandler(int& nodefd, int& nodeAccept, Packet& p);
     bool nodeHandler(int& nodefd, int& nodeAccept, Packet& p);
     bool clientHandler(int& nodefd, int& nodeAccept, Packet& p);
     bool clientCoordinator(int& nodefd, int& nodeAccept, Packet& p);
     void run();
-
-    /*
-     * node communication
-     */
     bool write(Packet& p);  // write to a local virtual node
     bool read(Packet& p);  // read from a local virtual node
     void writeBackPack(Packet& p); //sendback ack, replace value with wirte nodeID
     void readBackPack(Packet& p);  //sendback ack and data
-
-    /*
-     * node communication
-     */
     bool writeToNodes(Packet& p, std::vector<std::pair<std::string, int>> preferenceList);
     bool readFromNodes(Packet& p, std::vector<std::pair<std::string, int>> list);
 
@@ -94,22 +75,10 @@ private:
     std::string constructVirtualNodeID(int i);
     void addNodesToRing(std::vector<StorageNode>& nodes);
     std::vector<std::pair<std::string, int>> getPreferenceList(const ObjectKeyType& objectKey, int sizeList);  // preference list does not include coordinator
-    
-    
-    
-    std::vector<VirtualNode> vnodes;
 
-    /* data store
-     * store -> store0 --- (key, value)
-     *                 --- (key, value)
-     *       -> store1
-     */
-    //std::vector<Map> store;  // no need to use store -Yaohong
+    std::vector<VirtualNode> vnodes;
     ConsistentHashRing<VirtualNode,VirtualNodeHasher> ring;
 };
-
-
-
 
 // << overload
 inline std::ostream& operator<<(std::ostream& os, const StorageNode& node) {

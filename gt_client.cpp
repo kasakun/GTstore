@@ -12,7 +12,7 @@
 #include "gt_client.h"
 
 #define MAX_THREAD 4
-#define DEBUG 1
+#define DEBUG 0
 #define ROOT "/tmp/"
 
 Client::Client() {
@@ -25,19 +25,6 @@ Client::Client(int id, char* addr, Quorum q) {
     quo = q;
 }
 Client::~Client() {}
-//quorum, addr, addrs, fd, fds, cli_fd
-void Client::init(Env& env) {
-    // connect to socket
-    int clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
-    // set env
-    env = {quo, clientfd, managerAddr}; //quorum, fd, addr, addrs
-    
-    // send request to manager to get all the names of storage nodes
-    getNodeInfos(env);
-    
-    versions = new std::unordered_map<ObjectKeyType, ObjectVersionType>();
-}
-
 bool Client::getNodeInfos(Env& env){
     ssize_t ret;
     env.clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
@@ -57,7 +44,9 @@ bool Client::getNodeInfos(Env& env){
     do{
         ret = recv(env.clientfd, &nipacket, sizeof(nipacket), 0);
         if(ret == sizeof(nipacket)){
-            std::cout << "client: receive node list" << std::endl;
+#if DEBUG
+            std::cout << "Client: receive node list" << std::endl;
+#endif
             for(int i = 0; i < nipacket.size; ++i){
                 std::string nodeID = std::string(nipacket.nodes[i].nodeID);
                 int numVNodes = nipacket.nodes[i].numVNodes;
@@ -66,9 +55,20 @@ bool Client::getNodeInfos(Env& env){
             }
         }
     }while(ret == 0);
-    shutdown(env.clientfd, SHUT_RDWR);    
+    shutdown(env.clientfd, SHUT_RDWR);
 }
-
+//quorum, addr, addrs, fd, fds, cli_fd
+void Client::init(Env& env) {
+    // connect to socket
+    int clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
+    // set env
+    env = {quo, clientfd, managerAddr}; //quorum, fd, addr, addrs
+    
+    // send request to manager to get all the names of storage nodes
+    getNodeInfos(env);
+    
+    versions = new std::unordered_map<ObjectKeyType, ObjectVersionType>();
+}
 bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     ssize_t ret;
     std::pair<std::string, int> coordinator;
@@ -77,7 +77,6 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     randomNodeAddr.sun_family = AF_UNIX;
     std::string address = ROOT;
     address += env.nodeIDs.back().data();  // Yaohong Wu
-    std::cout << "address of random node is " << address << std::endl;
     strcpy (randomNodeAddr.sun_path, address.data());
     
     env.clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
@@ -90,7 +89,9 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     
     PacketHead tempHead = {3, 0, 0, 0, 0, 0};
     temp.head = tempHead;
+#if DEBUG
     std::cout << "key = " << key << " key size = " << key.size() << std::endl;
+#endif
     memcpy(temp.key, key.data(), key.size());
     
     ret = send(env.clientfd, &temp, sizeof(Packet), 0);
@@ -107,7 +108,7 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
         coordinator.second = temp.head.rank;
     }
     shutdown(env.clientfd, SHUT_RDWR);
-
+    std::cout << "Coordinator is " << coordinator.first << " rank = " << coordinator.second << std::endl;
     // nodes
 #if DEBUG
     std::cout << "test put begin, coordinator " << coordinator.first << " rank = " << coordinator.second << std::endl;
@@ -149,13 +150,13 @@ bool Client::put(Env& env, ObjectKeyType key, ObjectValueType value) {
     if (ret == -1) {
         std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
     }
+#if DEBUG
     if (ret == sizeof(Packet)) {
         std::cout << "Client receive ack from " << (buf + 24) << std::endl;
     }
+#endif
     return true;
 }
-
-
 bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     ssize_t ret;
     std::pair<std::string, int> coordinator;
@@ -181,7 +182,9 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     
     PacketHead tempHead = {3, 0, 0, 0, 0, 0};
     temp.head = tempHead;
+#if DEBUG
     std::cout << "key = " << key << " key size = " << key.size() << std::endl;
+#endif
     memcpy(temp.key, key.data(), key.size());
     
     ret = send(env.clientfd, &temp, sizeof(Packet), 0);
@@ -256,8 +259,6 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     }
     return true;
 }
-
-
 void Client::finalize(Env &env){
     shutdown(clientfd, SHUT_RDWR);
     env.nodeIDs.clear();

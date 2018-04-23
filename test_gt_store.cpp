@@ -13,30 +13,31 @@
 
 
 int main(){
+
+    std::cout << "Welcome to key-value GTStore!" << std::endl;
     int pid = fork();
-    
     if (pid != 0) {
         // client
         sleep(3);
         Quorum q = {QUORUM_N, QUORUM_R, QUORUM_W};
         Env session;
         
-        ObjectKeyType key = "ywu669abcd1234567890";
+        ObjectKeyType key = "ywu669zchen606OQ5780";
         ObjectValueType value;
         value.push_back("{Soap, 1}, {Phone, 3}, {Wine, 6}");
-
+        std::cout << "Key value is" << key << ", value is " << value.back().data() << std::endl;
         Client client(1, MANAGER, q);
         client.init(session);
         
-        std::cout << "test put() " << std::endl;
+        std::cout << "Test put() " << std::endl;
         client.put(session, key, value);
-        std::cout << "before get(), version of key = " << (*client.versions)[key] << std::endl;
+        std::cout << "Before get(), version of key = " << (*client.versions)[key] << std::endl;
 
-        std::cout << "test get() " << std::endl;
+        std::cout << "Test get() " << std::endl;
         sleep(2);
         ObjectValueType newValue;
         client.get(session, key, newValue);
-        std::cout << "after get(), value = " << newValue[0] << " version = " << (*client.versions)[key] << std::endl;
+        std::cout << "After get(), value = " << newValue[0] << " version = " << (*client.versions)[key] << std::endl;
         
         client.finalize(session);
         

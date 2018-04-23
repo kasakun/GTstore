@@ -10,6 +10,7 @@
 
 #include "gt_manager.h"
 
+#define DEBUG 0
 bool Manager::createListenSocket(int& managerfd){
     struct sockaddr_un managerAddr;
     int ret;
@@ -41,14 +42,15 @@ bool Manager::createListenSocket(int& managerfd){
     return true;
 }
 
-
 bool Manager::receiveMessage(int& managerfd, int& managerAccept, char* buf, int& type){
     int ret;
     ssize_t bytecount = 0;
     int opt = 1000;  // hard code
 
     managerAccept = accept(managerfd, NULL, NULL);
+#if DEBUG
     std::cout << "manager: connected." << std::endl;
+#endif
     if (managerAccept == -1) {
         std::cout << "manager fail to accept, " << strerror(errno) << std::endl;
     }
@@ -66,7 +68,9 @@ bool Manager::receiveMessage(int& managerfd, int& managerAccept, char* buf, int&
     type = *((int*)buf);
     if (bytecount == sizeof(int)) {
         // check the size of the packet
+#if DEBUG
         std::cout << "manager receive " << bytecount << " bytes." << std::endl;
+#endif
         return true;
     } else {
         std::cout << strerror(errno) << std::endl;
@@ -91,8 +95,6 @@ bool Manager::requestHandler(int managerfd, int managerAccept, int type){
     }
     return true;
 }
-
-
 
 void Manager::run(){
     int managerfd;
