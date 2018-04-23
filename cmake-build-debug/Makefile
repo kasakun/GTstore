@@ -39,19 +39,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/chenzy/clion/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
+RM = /home/chenzy/clion/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /media/sf_CS6210/Projects/Project4/GTstore
+CMAKE_SOURCE_DIR = /home/chenzy/Desktop/Code/OS/GTstore
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug
+CMAKE_BINARY_DIR = /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/chenzy/clion/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -70,7 +70,7 @@ rebuild_cache/fast: rebuild_cache
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/chenzy/clion/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -80,9 +80,9 @@ edit_cache/fast: edit_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -111,17 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named GTstore
+# Target rules for targets named GTStore
 
 # Build rule for target.
-GTstore: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 GTstore
-.PHONY : GTstore
+GTStore: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 GTStore
+.PHONY : GTStore
 
 # fast build rule for target.
-GTstore/fast:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/build
-.PHONY : GTstore/fast
+GTStore/fast:
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/build
+.PHONY : GTStore/fast
 
 gt_client.o: gt_client.cpp.o
 
@@ -129,7 +129,7 @@ gt_client.o: gt_client.cpp.o
 
 # target to build an object file
 gt_client.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_client.cpp.o
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_client.cpp.o
 .PHONY : gt_client.cpp.o
 
 gt_client.i: gt_client.cpp.i
@@ -138,7 +138,7 @@ gt_client.i: gt_client.cpp.i
 
 # target to preprocess a source file
 gt_client.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_client.cpp.i
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_client.cpp.i
 .PHONY : gt_client.cpp.i
 
 gt_client.s: gt_client.cpp.s
@@ -147,7 +147,7 @@ gt_client.s: gt_client.cpp.s
 
 # target to generate assembly for a file
 gt_client.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_client.cpp.s
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_client.cpp.s
 .PHONY : gt_client.cpp.s
 
 gt_manager.o: gt_manager.cpp.o
@@ -156,7 +156,7 @@ gt_manager.o: gt_manager.cpp.o
 
 # target to build an object file
 gt_manager.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_manager.cpp.o
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_manager.cpp.o
 .PHONY : gt_manager.cpp.o
 
 gt_manager.i: gt_manager.cpp.i
@@ -165,7 +165,7 @@ gt_manager.i: gt_manager.cpp.i
 
 # target to preprocess a source file
 gt_manager.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_manager.cpp.i
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_manager.cpp.i
 .PHONY : gt_manager.cpp.i
 
 gt_manager.s: gt_manager.cpp.s
@@ -174,7 +174,7 @@ gt_manager.s: gt_manager.cpp.s
 
 # target to generate assembly for a file
 gt_manager.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_manager.cpp.s
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_manager.cpp.s
 .PHONY : gt_manager.cpp.s
 
 gt_storage_node.o: gt_storage_node.cpp.o
@@ -183,7 +183,7 @@ gt_storage_node.o: gt_storage_node.cpp.o
 
 # target to build an object file
 gt_storage_node.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.o
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_storage_node.cpp.o
 .PHONY : gt_storage_node.cpp.o
 
 gt_storage_node.i: gt_storage_node.cpp.i
@@ -192,7 +192,7 @@ gt_storage_node.i: gt_storage_node.cpp.i
 
 # target to preprocess a source file
 gt_storage_node.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.i
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_storage_node.cpp.i
 .PHONY : gt_storage_node.cpp.i
 
 gt_storage_node.s: gt_storage_node.cpp.s
@@ -201,7 +201,7 @@ gt_storage_node.s: gt_storage_node.cpp.s
 
 # target to generate assembly for a file
 gt_storage_node.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/gt_storage_node.cpp.s
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/gt_storage_node.cpp.s
 .PHONY : gt_storage_node.cpp.s
 
 test_gt_store.o: test_gt_store.cpp.o
@@ -210,7 +210,7 @@ test_gt_store.o: test_gt_store.cpp.o
 
 # target to build an object file
 test_gt_store.cpp.o:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_store.cpp.o
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/test_gt_store.cpp.o
 .PHONY : test_gt_store.cpp.o
 
 test_gt_store.i: test_gt_store.cpp.i
@@ -219,7 +219,7 @@ test_gt_store.i: test_gt_store.cpp.i
 
 # target to preprocess a source file
 test_gt_store.cpp.i:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_store.cpp.i
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/test_gt_store.cpp.i
 .PHONY : test_gt_store.cpp.i
 
 test_gt_store.s: test_gt_store.cpp.s
@@ -228,7 +228,7 @@ test_gt_store.s: test_gt_store.cpp.s
 
 # target to generate assembly for a file
 test_gt_store.cpp.s:
-	$(MAKE) -f CMakeFiles/GTstore.dir/build.make CMakeFiles/GTstore.dir/test_gt_store.cpp.s
+	$(MAKE) -f CMakeFiles/GTStore.dir/build.make CMakeFiles/GTStore.dir/test_gt_store.cpp.s
 .PHONY : test_gt_store.cpp.s
 
 # Help Target
@@ -239,7 +239,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... GTstore"
+	@echo "... GTStore"
 	@echo "... gt_client.o"
 	@echo "... gt_client.i"
 	@echo "... gt_client.s"

@@ -1,4 +1,4 @@
-The system is: Linux - 4.13.0-38-generic - x86_64
+The system is: Linux - 4.4.0-119-generic - x86_64
 Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
 Compiler: /usr/bin/cc 
 Build flags: 
@@ -10,7 +10,7 @@ The output was:
 
 Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.out"
 
-The C compiler identification is GNU, found in "/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/3.9.6/CompilerIdC/a.out"
+The C compiler identification is GNU, found in "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/3.9.6/CompilerIdC/a.out"
 
 Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
 Compiler: /usr/bin/c++ 
@@ -23,39 +23,33 @@ The output was:
 
 Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "a.out"
 
-The CXX compiler identification is GNU, found in "/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/3.9.6/CompilerIdCXX/a.out"
+The CXX compiler identification is GNU, found in "/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/3.9.6/CompilerIdCXX/a.out"
 
 Determining if the C compiler works passed with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_55419/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_55419.dir/build.make CMakeFiles/cmTC_55419.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_55419.dir/flags.make' has modification time 1.4 s in the future
-Building C object CMakeFiles/cmTC_55419.dir/testCCompiler.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_55419.dir/testCCompiler.c.o   -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
-Linking C executable cmTC_55419
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_55419.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_55419.dir/testCCompiler.c.o  -o cmTC_55419 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_9fa0e/fast"
+/usr/bin/make -f CMakeFiles/cmTC_9fa0e.dir/build.make CMakeFiles/cmTC_9fa0e.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9fa0e.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_9fa0e.dir/testCCompiler.c.o   -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTC_9fa0e
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9fa0e.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_9fa0e.dir/testCCompiler.c.o  -o cmTC_9fa0e 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
 Detecting C compiler ABI info compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_2061b/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_2061b.dir/build.make CMakeFiles/cmTC_2061b.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_2061b.dir/flags.make' has modification time 1.4 s in the future
-Building C object CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o
-/usr/bin/cc    -o CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o   -c /home/yaohong/Software/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/CMakeCCompilerABI.c
-Linking C executable cmTC_2061b
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2061b.dir/link.txt --verbose=1
-/usr/bin/cc     -v CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o  -o cmTC_2061b 
+Run Build Command:"/usr/bin/make" "cmTC_92ee5/fast"
+/usr/bin/make -f CMakeFiles/cmTC_92ee5.dir/build.make CMakeFiles/cmTC_92ee5.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o   -c /home/chenzy/clion/bin/cmake/share/cmake-3.9/Modules/CMakeCCompilerABI.c
+Linking C executable cmTC_92ee5
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92ee5.dir/link.txt --verbose=1
+/usr/bin/cc     -v CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o  -o cmTC_92ee5 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/cc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper
@@ -65,27 +59,23 @@ Thread model: posix
 gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.9) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2061b' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTFJcgS.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_2061b /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_92ee5' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/cc8mWP6Q.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_92ee5 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
 Parsed C implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_2061b/fast"]
-  ignore line: [make: Warning: File 'Makefile' has modification time 1.4 s in the future]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_2061b.dir/build.make CMakeFiles/cmTC_2061b.dir/build]
-  ignore line: [make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [make[1]: Warning: File 'CMakeFiles/cmTC_2061b.dir/flags.make' has modification time 1.4 s in the future]
-  ignore line: [Building C object CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o]
-  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o   -c /home/yaohong/Software/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/CMakeCCompilerABI.c]
-  ignore line: [Linking C executable cmTC_2061b]
-  ignore line: [/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2061b.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o  -o cmTC_2061b ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_92ee5/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_92ee5.dir/build.make CMakeFiles/cmTC_92ee5.dir/build]
+  ignore line: [make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp']
+  ignore line: [Building C object CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o   -c /home/chenzy/clion/bin/cmake/share/cmake-3.9/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTC_92ee5]
+  ignore line: [/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_92ee5.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc     -v CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o  -o cmTC_92ee5 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/cc]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper]
@@ -95,13 +85,13 @@ Parsed C implicit link information from above output:
   ignore line: [gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.9) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_2061b' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccTFJcgS.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_2061b /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_92ee5' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/cc8mWP6Q.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_s --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_92ee5 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o -lgcc --as-needed -lgcc_s --no-as-needed -lc -lgcc --as-needed -lgcc_s --no-as-needed /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccTFJcgS.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc8mWP6Q.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -118,7 +108,7 @@ Parsed C implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_2061b] ==> ignore
+    arg [cmTC_92ee5] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o] ==> ignore
@@ -130,7 +120,7 @@ Parsed C implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/5/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/5/../../..]
-    arg [CMakeFiles/cmTC_2061b.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [CMakeFiles/cmTC_92ee5.dir/CMakeCCompilerABI.c.o] ==> ignore
     arg [-lgcc] ==> lib [gcc]
     arg [--as-needed] ==> ignore
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -158,21 +148,17 @@ Parsed C implicit link information from above output:
 
 
 Detecting C [-std=c11] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_64020/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_64020.dir/build.make CMakeFiles/cmTC_64020.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_64020.dir/flags.make' has modification time 1.4 s in the future
-Building C object CMakeFiles/cmTC_64020.dir/feature_tests.c.o
-/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_64020.dir/feature_tests.c.o   -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_64020
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_64020.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_64020.dir/feature_tests.c.o  -o cmTC_64020 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_51d31/fast"
+/usr/bin/make -f CMakeFiles/cmTC_51d31.dir/build.make CMakeFiles/cmTC_51d31.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_51d31.dir/feature_tests.c.o
+/usr/bin/cc   -std=c11 -o CMakeFiles/cmTC_51d31.dir/feature_tests.c.o   -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_51d31
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51d31.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_51d31.dir/feature_tests.c.o  -o cmTC_51d31 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -182,21 +168,17 @@ make: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 Detecting C [-std=c99] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_51490/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_51490.dir/build.make CMakeFiles/cmTC_51490.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_51490.dir/flags.make' has modification time 1.4 s in the future
-Building C object CMakeFiles/cmTC_51490.dir/feature_tests.c.o
-/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_51490.dir/feature_tests.c.o   -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_51490
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_51490.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_51490.dir/feature_tests.c.o  -o cmTC_51490 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_758b6/fast"
+/usr/bin/make -f CMakeFiles/cmTC_758b6.dir/build.make CMakeFiles/cmTC_758b6.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_758b6.dir/feature_tests.c.o
+/usr/bin/cc   -std=c99 -o CMakeFiles/cmTC_758b6.dir/feature_tests.c.o   -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_758b6
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_758b6.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_758b6.dir/feature_tests.c.o  -o cmTC_758b6 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -206,21 +188,17 @@ make: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 Detecting C [-std=c90] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_b3d9e/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_b3d9e.dir/build.make CMakeFiles/cmTC_b3d9e.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_b3d9e.dir/flags.make' has modification time 1.4 s in the future
-Building C object CMakeFiles/cmTC_b3d9e.dir/feature_tests.c.o
-/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_b3d9e.dir/feature_tests.c.o   -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.c
-Linking C executable cmTC_b3d9e
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_b3d9e.dir/link.txt --verbose=1
-/usr/bin/cc      CMakeFiles/cmTC_b3d9e.dir/feature_tests.c.o  -o cmTC_b3d9e 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_87dc5/fast"
+/usr/bin/make -f CMakeFiles/cmTC_87dc5.dir/build.make CMakeFiles/cmTC_87dc5.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_87dc5.dir/feature_tests.c.o
+/usr/bin/cc   -std=c90 -o CMakeFiles/cmTC_87dc5.dir/feature_tests.c.o   -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.c
+Linking C executable cmTC_87dc5
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_87dc5.dir/link.txt --verbose=1
+/usr/bin/cc      CMakeFiles/cmTC_87dc5.dir/feature_tests.c.o  -o cmTC_87dc5 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: C_FEATURE:1c_function_prototypes
@@ -228,36 +206,30 @@ make: warning:  Clock skew detected.  Your build may be incomplete.
     Feature record: C_FEATURE:0c_static_assert
     Feature record: C_FEATURE:0c_variadic_macros
 Determining if the CXX compiler works passed with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_a933d/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_a933d.dir/build.make CMakeFiles/cmTC_a933d.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_a933d.dir/flags.make' has modification time 1.4 s in the future
-Building CXX object CMakeFiles/cmTC_a933d.dir/testCXXCompiler.cxx.o
-/usr/bin/c++     -o CMakeFiles/cmTC_a933d.dir/testCXXCompiler.cxx.o -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
-Linking CXX executable cmTC_a933d
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a933d.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_a933d.dir/testCXXCompiler.cxx.o  -o cmTC_a933d 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_1676c/fast"
+/usr/bin/make -f CMakeFiles/cmTC_1676c.dir/build.make CMakeFiles/cmTC_1676c.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1676c.dir/testCXXCompiler.cxx.o
+/usr/bin/c++     -o CMakeFiles/cmTC_1676c.dir/testCXXCompiler.cxx.o -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp/testCXXCompiler.cxx
+Linking CXX executable cmTC_1676c
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1676c.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_1676c.dir/testCXXCompiler.cxx.o  -o cmTC_1676c 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
 Detecting CXX compiler ABI info compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_9c86b/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_9c86b.dir/build.make CMakeFiles/cmTC_9c86b.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_9c86b.dir/flags.make' has modification time 1.4 s in the future
-Building CXX object CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o
-/usr/bin/c++     -o CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o -c /home/yaohong/Software/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/CMakeCXXCompilerABI.cpp
-Linking CXX executable cmTC_9c86b
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c86b.dir/link.txt --verbose=1
-/usr/bin/c++      -v CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_9c86b 
+Run Build Command:"/usr/bin/make" "cmTC_6a236/fast"
+/usr/bin/make -f CMakeFiles/cmTC_6a236.dir/build.make CMakeFiles/cmTC_6a236.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o
+/usr/bin/c++     -o CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o -c /home/chenzy/clion/bin/cmake/share/cmake-3.9/Modules/CMakeCXXCompilerABI.cpp
+Linking CXX executable cmTC_6a236
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a236.dir/link.txt --verbose=1
+/usr/bin/c++      -v CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_6a236 
 Using built-in specs.
 COLLECT_GCC=/usr/bin/c++
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper
@@ -267,27 +239,23 @@ Thread model: posix
 gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.9) 
 COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/
 LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/
-COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9c86b' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
- /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccz7CheR.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_9c86b /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6a236' '-shared-libgcc' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/cc34UJY7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_6a236 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
 Parsed CXX implicit link information from above output:
   link line regex: [^( *|.*[/\])(ld|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\]+-)?ld|collect2)[^/\]*( |$)]
-  ignore line: [Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp]
+  ignore line: [Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp]
   ignore line: []
-  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_9c86b/fast"]
-  ignore line: [make: Warning: File 'Makefile' has modification time 1.4 s in the future]
-  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_9c86b.dir/build.make CMakeFiles/cmTC_9c86b.dir/build]
-  ignore line: [make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp']
-  ignore line: [make[1]: Warning: File 'CMakeFiles/cmTC_9c86b.dir/flags.make' has modification time 1.4 s in the future]
-  ignore line: [Building CXX object CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o]
-  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o -c /home/yaohong/Software/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/CMakeCXXCompilerABI.cpp]
-  ignore line: [Linking CXX executable cmTC_9c86b]
-  ignore line: [/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9c86b.dir/link.txt --verbose=1]
-  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_9c86b ]
+  ignore line: [Run Build Command:"/usr/bin/make" "cmTC_6a236/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTC_6a236.dir/build.make CMakeFiles/cmTC_6a236.dir/build]
+  ignore line: [make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp']
+  ignore line: [Building CXX object CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o]
+  ignore line: [/usr/bin/c++     -o CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o -c /home/chenzy/clion/bin/cmake/share/cmake-3.9/Modules/CMakeCXXCompilerABI.cpp]
+  ignore line: [Linking CXX executable cmTC_6a236]
+  ignore line: [/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_6a236.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/c++      -v CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o  -o cmTC_6a236 ]
   ignore line: [Using built-in specs.]
   ignore line: [COLLECT_GCC=/usr/bin/c++]
   ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper]
@@ -297,13 +265,13 @@ Parsed CXX implicit link information from above output:
   ignore line: [gcc version 5.4.0 20160609 (Ubuntu 5.4.0-6ubuntu1~16.04.9) ]
   ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/]
   ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/5/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/5/../../../:/lib/:/usr/lib/]
-  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_9c86b' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
-  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/ccz7CheR.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_9c86b /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTC_6a236' '-shared-libgcc' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-linux-gnu/5/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper -plugin-opt=-fresolution=/tmp/cc34UJY7.res -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lc -plugin-opt=-pass-through=-lgcc_s -plugin-opt=-pass-through=-lgcc --sysroot=/ --build-id --eh-frame-hdr -m elf_x86_64 --hash-style=gnu --as-needed -dynamic-linker /lib64/ld-linux-x86-64.so.2 -z relro -o cmTC_6a236 /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o -L/usr/lib/gcc/x86_64-linux-gnu/5 -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/5/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/5/../../.. CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o -lstdc++ -lm -lgcc_s -lgcc -lc -lgcc_s -lgcc /usr/lib/gcc/x86_64-linux-gnu/5/crtend.o /usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crtn.o]
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/collect2] ==> ignore
     arg [-plugin] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/liblto_plugin.so] ==> ignore
     arg [-plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/5/lto-wrapper] ==> ignore
-    arg [-plugin-opt=-fresolution=/tmp/ccz7CheR.res] ==> ignore
+    arg [-plugin-opt=-fresolution=/tmp/cc34UJY7.res] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc_s] ==> ignore
     arg [-plugin-opt=-pass-through=-lgcc] ==> ignore
     arg [-plugin-opt=-pass-through=-lc] ==> ignore
@@ -320,7 +288,7 @@ Parsed CXX implicit link information from above output:
     arg [/lib64/ld-linux-x86-64.so.2] ==> ignore
     arg [-zrelro] ==> ignore
     arg [-o] ==> ignore
-    arg [cmTC_9c86b] ==> ignore
+    arg [cmTC_6a236] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crt1.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/../../../x86_64-linux-gnu/crti.o] ==> ignore
     arg [/usr/lib/gcc/x86_64-linux-gnu/5/crtbegin.o] ==> ignore
@@ -332,7 +300,7 @@ Parsed CXX implicit link information from above output:
     arg [-L/usr/lib/x86_64-linux-gnu] ==> dir [/usr/lib/x86_64-linux-gnu]
     arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
     arg [-L/usr/lib/gcc/x86_64-linux-gnu/5/../../..] ==> dir [/usr/lib/gcc/x86_64-linux-gnu/5/../../..]
-    arg [CMakeFiles/cmTC_9c86b.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
+    arg [CMakeFiles/cmTC_6a236.dir/CMakeCXXCompilerABI.cpp.o] ==> ignore
     arg [-lstdc++] ==> lib [stdc++]
     arg [-lm] ==> lib [m]
     arg [-lgcc_s] ==> lib [gcc_s]
@@ -358,21 +326,17 @@ Parsed CXX implicit link information from above output:
 
 
 Detecting CXX [-std=c++1z] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_587d3/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_587d3.dir/build.make CMakeFiles/cmTC_587d3.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_587d3.dir/flags.make' has modification time 1.4 s in the future
-Building CXX object CMakeFiles/cmTC_587d3.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_587d3.dir/feature_tests.cxx.o -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_587d3
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_587d3.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_587d3.dir/feature_tests.cxx.o  -o cmTC_587d3 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_67adc/fast"
+/usr/bin/make -f CMakeFiles/cmTC_67adc.dir/build.make CMakeFiles/cmTC_67adc.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_67adc.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++1z -o CMakeFiles/cmTC_67adc.dir/feature_tests.cxx.o -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_67adc
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_67adc.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_67adc.dir/feature_tests.cxx.o  -o cmTC_67adc 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -435,21 +399,17 @@ make: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 Detecting CXX [-std=c++14] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_9dee7/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_9dee7.dir/build.make CMakeFiles/cmTC_9dee7.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_9dee7.dir/flags.make' has modification time 1.4 s in the future
-Building CXX object CMakeFiles/cmTC_9dee7.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_9dee7.dir/feature_tests.cxx.o -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_9dee7
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_9dee7.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_9dee7.dir/feature_tests.cxx.o  -o cmTC_9dee7 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_06f9f/fast"
+/usr/bin/make -f CMakeFiles/cmTC_06f9f.dir/build.make CMakeFiles/cmTC_06f9f.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_06f9f.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++14 -o CMakeFiles/cmTC_06f9f.dir/feature_tests.cxx.o -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_06f9f
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_06f9f.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_06f9f.dir/feature_tests.cxx.o  -o cmTC_06f9f 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:1cxx_aggregate_default_initializers
@@ -512,21 +472,17 @@ make: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 Detecting CXX [-std=c++11] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_0d921/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_0d921.dir/build.make CMakeFiles/cmTC_0d921.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_0d921.dir/flags.make' has modification time 1.4 s in the future
-Building CXX object CMakeFiles/cmTC_0d921.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_0d921.dir/feature_tests.cxx.o -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_0d921
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_0d921.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_0d921.dir/feature_tests.cxx.o  -o cmTC_0d921 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_d38e0/fast"
+/usr/bin/make -f CMakeFiles/cmTC_d38e0.dir/build.make CMakeFiles/cmTC_d38e0.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d38e0.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++11 -o CMakeFiles/cmTC_d38e0.dir/feature_tests.cxx.o -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_d38e0
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d38e0.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_d38e0.dir/feature_tests.cxx.o  -o cmTC_d38e0 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers
@@ -589,21 +545,17 @@ make: warning:  Clock skew detected.  Your build may be incomplete.
 
 
 Detecting CXX [-std=c++98] compiler features compiled with the following output:
-Change Dir: /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
+Change Dir: /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp
 
-Run Build Command:"/usr/bin/make" "cmTC_a4df7/fast"
-make: Warning: File 'Makefile' has modification time 1.4 s in the future
-/usr/bin/make -f CMakeFiles/cmTC_a4df7.dir/build.make CMakeFiles/cmTC_a4df7.dir/build
-make[1]: Entering directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make[1]: Warning: File 'CMakeFiles/cmTC_a4df7.dir/flags.make' has modification time 1.4 s in the future
-Building CXX object CMakeFiles/cmTC_a4df7.dir/feature_tests.cxx.o
-/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_a4df7.dir/feature_tests.cxx.o -c /media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
-Linking CXX executable cmTC_a4df7
-/home/yaohong/Software/clion-2017.3.3/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_a4df7.dir/link.txt --verbose=1
-/usr/bin/c++       CMakeFiles/cmTC_a4df7.dir/feature_tests.cxx.o  -o cmTC_a4df7 
-make[1]: warning:  Clock skew detected.  Your build may be incomplete.
-make[1]: Leaving directory '/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
-make: warning:  Clock skew detected.  Your build may be incomplete.
+Run Build Command:"/usr/bin/make" "cmTC_2b452/fast"
+/usr/bin/make -f CMakeFiles/cmTC_2b452.dir/build.make CMakeFiles/cmTC_2b452.dir/build
+make[1]: Entering directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2b452.dir/feature_tests.cxx.o
+/usr/bin/c++    -std=c++98 -o CMakeFiles/cmTC_2b452.dir/feature_tests.cxx.o -c /home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/feature_tests.cxx
+Linking CXX executable cmTC_2b452
+/home/chenzy/clion/bin/cmake/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2b452.dir/link.txt --verbose=1
+/usr/bin/c++       CMakeFiles/cmTC_2b452.dir/feature_tests.cxx.o  -o cmTC_2b452 
+make[1]: Leaving directory '/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/CMakeTmp'
 
 
     Feature record: CXX_FEATURE:0cxx_aggregate_default_initializers

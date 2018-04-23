@@ -1,3 +1,3 @@
-/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/edit_cache.dir
-/media/sf_CS6210/Projects/Project4/GTstore/cmake-build-debug/CMakeFiles/GTstore.dir
+/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/chenzy/Desktop/Code/OS/GTstore/cmake-build-debug/CMakeFiles/GTStore.dir

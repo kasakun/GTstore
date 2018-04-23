@@ -68,7 +68,7 @@ Use cmake to compile, simply run in the root
 ```
 $ cmake .
 $ make
-$ ./GTstore
+$ ./GTStore
 ```
 The test case shows a procedure that, a client side send generate a pair of key and value.
 First put the pair to the nodes, and then get the value back.
