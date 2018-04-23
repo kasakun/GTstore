@@ -169,7 +169,7 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
     address += env.nodeIDs[r].data();  // Yaohong Wu
     
     
-    std::cout << "address of random node is " << address << std::endl;
+
     strcpy (randomNodeAddr.sun_path, address.data());
     
     env.clientfd = socket(PF_UNIX, SOCK_STREAM, 0);
@@ -201,6 +201,7 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
         coordinator.second = temp.head.rank;
     }
     shutdown(env.clientfd, SHUT_RDWR);
+    std::cout << "Coordinator is " << coordinator.first << " rank = " << coordinator.second << std::endl;
     
 // nodes
 #if DEBUG
@@ -248,14 +249,14 @@ bool Client::get(Env& env, ObjectKeyType key, ObjectValueType& value){
         std::cout << "Client receive ack error, " << strerror(errno) << std::endl;
     }
     if (ret == sizeof(Packet)) {
-        std::cout << "Client's value = " << (buf + sizeof(p.head) + 20) << std::endl;
+        //std::cout << "Client's value = " << (buf + sizeof(p.head) + 20) << std::endl;
         char* tmp = new char[1024];
         memcpy(tmp, buf + sizeof(p.head) + 20, 1024);
         std::string str(tmp);
         value.push_back(str);
         
         (*versions)[key] = *((unsigned int*)(buf + 4));
-        std::cout << "Client's version = " << (*versions)[key] << std::endl;
+        //std::cout << "Client's version = " << (*versions)[key] << std::endl;
     }
     return true;
 }
